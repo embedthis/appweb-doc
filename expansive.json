@@ -3,7 +3,7 @@
         "site": "https://embedthis.com/appweb/doc"
     },
     "control": {
-        "listen": "127.0.0.1:4000"
+        "listen": ":7070"
     },
     "debug": {
         "services": {

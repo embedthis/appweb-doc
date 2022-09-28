@@ -297,8 +297,8 @@ httpSendBlock(stream, WS_MSG_BINARY, buf, sizeof(buf), HTTP_BLOCK);</pre>
             message. This is the highest performance mode and consumes minimal memory. However it is more complex when the
             all returns having written less than requested. There is a sample that demonstrates this at:</p>
 
-            <pre class="ui code segment"><a href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output"
-                    >https://github.com/embedthis/appweb-samples/tree/master/websockets-output</a></pre>
+            <pre class="ui code segment"><a href="https://github.com/embedthis/appweb-doc/tree/master/samples/websockets-output"
+                    >https://github.com/embedthis/appweb-doc/tree/master/samples/websockets-output</a></pre>
             <h4>Message Framing</h4>
             <p>The WebSockFilter may split the message into frames such that no frame is larger than the limits specified by
             the LimitWebSocketsFrame directive. However, if the HTTP_MORE flag is specified to indicate there is more data to
@@ -306,7 +306,7 @@ httpSendBlock(stream, WS_MSG_BINARY, buf, sizeof(buf), HTTP_BLOCK);</pre>
             previous or subsequent messages.  i.e. frame boundaries will be preserved and sent as-is to the peer.</p>
             <h2>WebSocket Samples</h2>
             <p>See the Appweb samples for some specific WebSockets samples</p>
-            <pre class="ui code segment"><a href="https://github.com/embedthis/appweb-samples/tree/master">https://github.com/embedthis/appweb-samples/tree/master</a></pre>
+            <pre class="ui code segment"><a href="https://github.com/embedthis/appweb-doc/tree/master/samples">https://github.com/embedthis/appweb-doc/tree/master/samples</a></pre>
             <h2>WebSocket References</h2>
             <table title="Standards" class="ui table segment">
                 <thead>
