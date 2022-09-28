@@ -1,0 +1,52 @@
+{
+    title:  'Modules',
+    crumbs: [
+        { "Developer's Guide": '../developers/' },
+    ],
+}
+            <h1>Creating Appweb Modules</h1>
+            <p>Appweb supports extension modules that can augment the capability of Appweb by adding new features,
+            handlers, protocols or any arbitrary code.</p>
+            <p>Appweb includes four loadable modules: CGI, ESP, PHP and SSL. The core appweb HTTP server includes
+            some basic document serving functionality, but modules are used to extend the core with loadable web
+            frameworks and custom handlers.</p>
+            <p>This document describes the Appweb Module Interface and how to create Appweb modules. The Appweb Module
+            interface supports both dynamically loaded and statically linked modules from a single "C" code
+            base.</p><a id="overview"></a>
+            <h2>Overview</h2>
+            <p>To create an Appweb module, you must create an initialization function that is called when Appweb loads
+            your module. This must be named according to the form:</p>
+            <pre class="ui code segment">
+ma<b>Name</b>Init(Http *http, MprModule *module)
+</pre>
+            <p>where <b>Name</b> is the name of your module. For example: <em>maCgiHandlerInit</em> is the
+            library initialization entry point for the cgiHandler.
+            Note: The first letter must be upper case. This function will be
+            called immediately after loading the module code.</p>
+            <p>The init function is passed a reference to the Http service object and a module object for this module.</p>
+<pre class="ui code segment">
+int maSimpleModuleInit(Http *http, MprModule *mp)
+{
+    HttpStage   *handler;
+    if ((handler = httpCreateHandler(http, "simpleHandler")) == 0) {
+        return MPR_ERR_CANT_CREATE;
+    }
+    handler-&gt;open = openSimple;
+    handler-&gt;close = closeSimple;
+    handler-&gt;start = startSimple;
+    return 0;
+}
+</pre>
+            <p>You can put any custom code in the initialization function. Often a module will create a request handler
+            or request pipeline filter. If you call mprSetModuleFinalizer you can register a callback to run before
+            the module is stopped or unloaded.
+            <p>Modules can be loaded at startup in response to the <a href=
+            "../users/dir/module.html#loadModule">LoadModule</a> Appweb configuration directive. You can also load
+            modules at run-time via the <b>maLoadModule</b> "C" API.</p>
+            <p>To package your module, you must create a DLL/shared library containing your module. On Windows,
+            you also must export the initialization function. If you want to statically link your module, you need to ensure
+            the main program explicitly calls your initialization function during its initialization.</p>
+            <h2>More Info</h2>
+            <p>See the <a
+                href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">samples/simple-module</a>
+                source code sample for a working module example.</p>

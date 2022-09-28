@@ -1,0 +1,30 @@
+/*
+    start.me - MakeMe build file
+ */
+
+Me.load({
+    configure: {
+        requires: ['appweb'],
+    },
+    targets: {
+        /* 
+            Pre-compile the esp pages so the compiler is not required inside the jail
+         */
+        precompile: {
+            run: `appweb-esp -q compile`,
+        },
+        server: {
+            type:    'exe',
+            sources: '*.c',
+            depends: [ 'appweb', 'precompile'],
+        },
+        run: {
+            depends: ['server'],
+            run: './server',
+        },
+        cleanCache: {
+            type: 'clean',
+            action: "rm('cache/*')",
+        }
+    }
+})

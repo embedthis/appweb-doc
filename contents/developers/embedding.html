@@ -1,0 +1,140 @@
+{
+    title:  'Embedding',
+    crumbs: [ 
+        { "Developer's Guide": '../developers/' }, 
+    ],
+}
+            <h1 class="title">Embedding Appweb</h1>
+            <p>When extending and embedding Appweb in your application or system, you have three options:</p>
+            <ol>
+                <li>Use the existing Appweb main program and extend Appweb via a loadable module.</li>
+                <li>Use the existing Appweb main program and extend Appweb via the ESP web framework.</li>
+                <li>Link the Appweb HTTP library with your application main program.</li>
+            </ol>
+
+            <a id="loadable"></a>
+            <h2>Extending via a Loadable Module</h2>
+            <p>You can extend the Appweb server program by creating an Appweb loadable module. You do this by creating
+            a shared library that contains your application and some Appweb module interface code. This module is then
+            specified in the Appweb configuration file so that the Appweb program will load it. It requires about 10
+            lines of code to create an Appweb module.</p>
+
+            <h2>Extending via ESP</h2>
+            <p>The Embedded Server Pages (ESP) web framework allows the direct embedding of "C" language code in
+            HTML web pages. This is the easiest way to invoke "C" APIs in your program. ESP also supports the loading
+            of Model/View/Controller (MVC-based) applications. ESP will compile and load controller source code. Controllers
+            provide an easy and efficient way to invoke "C" code when requests are made to certain URIs.</p>
+
+            <h2>Embed the Appweb Library</h2>
+            <p>You can link the Appweb library with your application to enable it to listen for HTTP requests and thus
+            become a HTTP server itself. Embedding the Appweb library is easy and can be done with as little as one
+            line of code.</p>
+            
+            <a id="appwebProgram"></a>
+            <h2>The Appweb Server Program</h2>
+            <p>The Appweb product includes a fully-featured HTTP server program that uses the Appweb HTTP library. This
+            server (called <b>appweb</b>) is run by default when you install the Appweb binary distribution or run
+            "make install" after building from source.</p>
+            <p>The Appweb server program is ideal for embedded systems as it offers the following features:</p>
+            <ul>
+                <li>High performance</li>
+                <li>Extendable via loadable modules</li>
+                <li>Deterministic memory footprint and CPU loads</li>
+                <li>Configurable sandbox limits that control memory usage</li>
+                <li>Monitored and managed by the Appweb manager process</li>
+            </ul>
+            
+            <a id="module"></a>
+            <h2>Creating a Module</h2>
+            <p>You can extend the Appweb program by creating a loadable module for your application code.</p>
+            <p>To initialize your module and register with Appweb, you must create an initialization function that is
+            called when Appweb loads your module. This must be named according to the form:</p>
+            <code>
+http<b>Name</b>Init(MaHttp *http, MprModule *module)
+</code>
+            <p>Where <b>Name</b> is the name of your module.</p>
+            <code>
+int httpSimpleInit(Http *http, MprModule *module)
+{
+    /* Put custom code here */
+    return 0;
+}
+</code>
+            <p>See <a href="modules.html">Creating Appweb Modules</a> for more details.</p>
+
+            <a id="library"></a>
+            <h2>Embed the Appweb Library</h2>
+            <p>You can link the Appweb HTTP library with your main program to enable it to function as a HTTP
+            server itself. This is ideal if your application is large and/or has a complex I/O, eventing or threading
+            paradigm.</p>
+            <h3>Linking with the Appweb Library</h3>
+            <p>To include the Appweb library in your program you need to do the following things:</p>
+            <ol>
+                <li>Add <b>#include "appweb/appweb.h"</b> to the relevant source files.</li>
+                <li>Add the Appweb library to your Makefiles or Windows project files. This will mean adding
+                    libappweb.dll on Windows or libappweb.so on Unix.</li>
+                <li>Use one of the embedding APIs to create the HTTP server.</li>
+            </ol>
+            <h3>One Line Embedding</h3>
+            <p>The following code demonstrates the one-line Appweb embedding API. This will create and configure a web
+            server based on the "server.conf" configuration file.</p>
+            <code>
+#include "appweb/appweb.h"
+int main(int argc, char** argv)
+{
+    return maRunWebServer("server.conf");
+}
+</code>
+            <p>To build this sample and link with the Appweb library:</p>
+            <code>
+cc -o server server.c -lappweb
+</code>
+            <h3>Full Control API</h3>
+            <p>The Appweb library also provides a lower level embedding interface where you can precisely control how
+            the web server is created and configured. This API also exposes the inner event and threading
+            mechanisms.</p>
+            <p>This example creates a web server using the "server.conf" configuration file and will service events
+            until terminated. </p>
+            <code>
+#include "appweb/appweb.h"
+int main(int argc, char **argv)
+{
+    Mpr     *mpr;
+
+    /*
+        Initialize and start the portable runtime services.
+     */
+    if ((mpr = mprCreate(argc, argv, MPR_USER_EVENTS_THREAD)) == 0) {
+        mprError("Cannot create the web server runtime");
+        return -1;
+    }
+    if (mprStart() &lt; 0) {
+        mprError("Cannot start the web server runtime");
+        return -1;
+    }
+    if (httpCreate(HTTP_CLIENT_SIDE | HTTP_SERVER_SIDE) == 0) {
+        mprError("Cannot create the Http server");
+        return -1;
+    }
+    if (maLoadModules() &lt; 0) {
+        mprError("Cannot load modules");
+        return -1;
+    }
+    if (maParseConfig("server.conf") &lt; 0) {
+        mprError("Cannot parse the config file %s", "server.conf");
+        return -1;
+    }
+    if (httpStartEndpoints() &lt; 0) {
+        mprError("Cannot start the web server");
+        return -1;
+    }
+    mprServiceEvents(-1, 0);
+    mprDestroy();
+    return 0;
+}
+</code>
+            <p>The Appweb <a href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">Typical 
+            Server</a> sample demonstrates this technique more fully.</p>
+            <h3>More Details</h3>
+            <p>For more details about the embedding API, please consult the <a href="../ref/api/appweb.html">Appweb
+            API</a> and the <a href="../ref/native.html">Native APIs</a>.</p>

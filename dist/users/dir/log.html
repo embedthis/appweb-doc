@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Logging</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="description" content="Appweb Documentation">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+    <link href="https://embedthis.com/appweb/doc/users/dir/log.html" rel="canonical">
+    <link href="../../images/favicon.ico" rel="shortcut icon">
+    <link href="../../lib/semantic-ui/semantic.min.css" rel="stylesheet" type="text/css">
+    <link href="../../css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../../css/api.min.css" rel="stylesheet" type="text/css">
+    
+
+</head>
+<body class="show-sidebar">
+    <div class="sidebar">
+        <div class="ui large left vertical inverted labeled menu">
+            <div class="item">
+                <a href="../../" class="logo">Appweb Docs</a>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../../">Home</a>
+                    <a class="item" href="../../users/features.html">Appweb Features</a>
+                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="../../licensing/">Licensing</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../../start/">Getting Started</a>
+                    <a class="item" href="../../start/quick.html">Quick Start</a>
+                    <a class="item" href="../../start/installing.html">Installing Appweb</a>
+                    <a class="item" href="../../start/starting.html">Starting and Stopping</a>
+                    <a class="item" href="../../start/service.html">Running as a Service</a>
+                    <a class="item" href="../../start/releaseNotes.html">Release Notes</a>
+                    <a class="item" href="../../start/source.html">Building from Source</a>
+                    <a class="item" href="../../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../../start/proxy.html">Building with Proxy</a>
+                    <a class="item" href="../../start/openssl.html">Building with OpenSSL</a>
+                    <a class="item" href="../../start/php.html">Building with PHP</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../../users/">User's Guide</a>
+                    <a class="item" href="../../users/configuration.html">Configuring Appweb</a>
+                    <a class="item" href="../../users/directives.html">Configuration Directives</a>
+                    <a class="item" href="../../users/frameworks.html">Web Frameworks</a>
+                    <a class="item" href="../../users/modules.html">Using Loadable Modules</a>
+                    <a class="item" href="../../users/ports.html">Ports and Binding</a>
+                    <a class="item" href="../../users/routing.html">Routing Requests</a>
+                    <a class="item" href="../../users/stages.html">Request Pipeline</a>
+                    <a class="item" href="../../users/lang.html">Multi-Language Content</a>
+                    <a class="item" href="../../users/authentication.html">User Authentication</a>
+                    <a class="item" href="../../users/logFiles.html">Logging</a>
+                    <a class="item" href="../../users/caching.html">Caching</a>
+                    <a class="item" href="../../users/vhosts.html">Virtual Hosts</a>
+                    <a class="item" href="../../users/ssl.html">Secure Sockets (SSL)</a>
+                    <a class="item" href="../../users/client.html">Http Client</a>
+                    <a class="item" href="../../users/security.html">Security Considerations</a>
+                    <a class="item" href="../../users/monitor.html">Monitoring and Defending</a>
+                    <a class="item" href="../../users/uploading.html">File Upload</a>
+                    <a class="item" href="../../users/webSockets.html">WebSockets</a>
+                    <a class="item" href="../../users/man.html">Man Pages</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../../developers/">Developer's Guide</a>
+                    <a class="item" href="../../developers/embedding.html">Embedding Appweb</a>
+                    <a class="item" href="../../developers/modules.html">Creating Appweb Modules</a>
+                    <a class="item" href="../../developers/handlers.html">Creating Appweb Handlers</a>
+                    <a class="item" href="../../developers/action.html">Using the Action Handler</a>
+                    <a class="item" href="../../developers/stages.html">Creating Pipeline Stages</a>
+                    <a class="item" href="../../developers/rom.html">Serving Pages from ROM</a>
+                    <a class="item" href="../../developers/migrating.html">Migrating from Earlier Releases</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../../ref/">Reference Guide</a>
+                    <a class="item" href="../../ref/compatibility.html">Compatibility</a>
+                    <a class="item" href="../../ref/native.html">Native APIs</a>
+                    <a class="item" href="../../ref/architecture.html">Appweb Architecture</a>
+                    <a class="item" href="../../ref/memory.html">Appweb Memory Allocation</a>
+                    <a class="item" href="../../ref/multithread.html">Multithreaded Programming</a>
+                    <a class="item" href="../../standards/http.html">HTTP References</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../../users/samples.html">Samples</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../../developers/project.html">Project Resources</a>
+                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://github.com/embedthis/appweb">Appweb Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
+                    <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <span class="header item">Links</span>
+                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="http://twitter.com/embedthat">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="ui inverted masthead">
+        <div class="ui fixed inverted menu">
+            <div class="ui sidebar-launch button">
+                <i class="icon list layout"></i>
+            </div>
+            <div class="right menu">
+                <a class="item" href="https://embedthis.com/">Embedthis</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
+                    <span class="desktop-only">
+                        <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://embedthis.com/blog/">Blog</a>
+                        <a class="item" href="https://twitter.com/embedthat">Twitter</a>
+                    </span>
+
+            </div>
+        </div>
+        
+        <div class="ui breadcrumb">
+            <a class="section" href="../../">Home</a>
+            
+            <div class="divider">/</div>
+            <a class="section" href="../../users/">
+                User's Guide
+            </a>
+            
+            <div class="divider">/</div>
+            <a class="section" href="../configuration.html">
+                Configuration
+            </a>
+            
+            
+            <div class="divider">/</div>
+            <a class="active section" href="log.html">Logging</a>
+            
+        </div>
+        
+        <iframe class="version desktop-only" src="../../version.html"></iframe>
+
+    </div>
+    <div class="content">
+
+            <h1>Logging Directives</h1>
+            <a id="errorLog"></a>
+            <h2>ErrorLog</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Configure the Appweb diagnostic error log</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>ErrorLog path <br>
+                            &nbsp; &rarr; [size=bytes] <br>
+                            &nbsp; &rarr; [level=0-5] <br>
+                            &nbsp; &rarr; [backup=count] <br>
+                            &nbsp; &rarr; [anew]<br>
+                            &nbsp; &rarr; [stamp=period]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>ErrorLog error.log size=1MB level=2 backup=5 anew stamp=1hr</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The ErrorLog directive configures the diagnostic error log for Appweb. There is one such error log and all error messages and trace will be written to this log.</p> The given <em>path</em> may be an absolute filename or it may be relative to the Home directory. <p>The <em>size</em> parameter specifies a maximum size to write to a single log file. The <em>backup</em> parameter indicates how many backup log files to preserve. When the maximum size is exceeded, the log files will be renamed by appending a sequential number from zero up to the given path name. The highest number will be the oldest log file.</p>
+
+                            <p>The <em>anew</em> keyword specifies that a new log file will be created whenever Appweb is restarted.</p>
+
+                            <p>The <em>level</em> argument defines a logging verbosity level between 0 and 5 with 5 being the most verbose.</p>
+
+                            <p>The following levels are generally observed:</p>
+                            <table title="levels">
+                                <thead>
+                                    <tr>
+                                        <th>Level</th>
+                                        <th>Usage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>0</td>
+                                        <td>Essential messages, fatal errors and critical warnings</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Hard errors</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Configuration setup and soft warnings</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Useful informational messages</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Debug information</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Most verbose level of logging</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>If Appweb is invoked with a <em>--log</em> or <em>--verbose</em> argument, it will override the ErrorLog directive which will be ignored.</p>
+                            <p>A general overview of using log files is discussed in the Administration section on <a href="../logFiles.html">Log Files</a>.</p>
+                            <p>The <em>timestamp</em> option controls how frequently time stamps are appended to the log file. Timestamps are useful to frame the time window in which log file events occurred.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a id="trace"></a>
+            <h2>Trace</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Control the tracing of HTTP requests</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Trace [rx|tx] <br>
+                            &nbsp; &rarr; debug=level <br>
+                            &nbsp; &rarr; request=level <br>
+                            &nbsp; &rarr; result=level <br>
+                            &nbsp; &rarr; error=level <br>
+                            &nbsp; &rarr; context=level <br>
+                            &nbsp; &rarr; packet=level <br>
+                            &nbsp; &rarr; detail=level <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Trace request=1 error=2 result=2 context=3 packet=4 detail=5</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The Trace directive controls how HTTP requests are traced to the request log file.
+                            The following classes of information can be traces.
+                            <ul>
+                                <li>debug &mdash; development debug events</li>
+                                <li>request &mdash; core request events</li>
+                                <li>response &mdash; core response events</li>
+                                <li>errors &mdash; request errors</li>
+                                <li>context &mdash; request processing information</li>
+                                <li>packet &mdash; Low level packet information</li>
+                                <li>verbose &mdash; Network level events</li>
+                            </ul>
+                            <p>For each class, the level defines the log level at which tracing will occur.</p> <p>When tracing is enabled for a HTTP message, the headers and/or body of the message will be written to the log file. Binary body content will be encoded into printable hex characters. Tracing will be limited to at most <em>content</em> bytes per request. Content size defaults to 40K.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a name="traceLog"></a>
+            <h2>TraceLog</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Configure a request trace log.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>TraceLog path <br>
+                            &nbsp; &rarr; [anew]<br>
+                            &nbsp; &rarr; [backup=count] <br>
+                            &nbsp; &rarr; [formatter=common|detail]<br>
+                            &nbsp; &rarr; [level=0-5] <br>
+                            &nbsp; &rarr; [size=bytes] <br>
+                            &nbsp; &rarr; [stamp=period] </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual Host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>TraceLog request.log size=1MB backup=5 anew</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The TraceLog directive configures a request trace log that Appweb uses to write request trace information. The given path may be an absolute filename or it may be relative to the Home directory. The TraceLog directive applies per route and is inherited by default from outer routes in the config file.</p>
+
+                            <p>Two output formats are available. The <em>common</em> formatter writes single-line records in the Common Log standard format. These records are emitted at the completion of the rest. The <em>detail</em> format writes multi-line records with full capture of request and response headers and other details that are emitted at various stages of the processing of the request.</p>
+
+                            <p>The <em>size</em> parameter specifies a maximum size to write to a single log file. The <em>backup</em> parameter indicates how many backup log files to preserve. When the maximum size is exceeded, the log files will be renamed by appending a sequential number from zero up to the given path name. The highest number will be the oldest log file.</p>
+                            <p>The <em>anew</em> keyword specifies that a new log file will be created whenever Appweb is restarted.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+    </div>
+    <div class="terms ui basic center aligned segment">
+        <p>&copy; Embedthis Software. All rights reserved.</p>
+    </div>
+
+    <script src="../../lib/jquery/jquery.min.js"></script>
+    <script src="../../lib/jquery/jquery.slim.min.js"></script>
+    <script src="../../lib/semantic-ui/semantic.min.js"></script>
+    <script src="../../scripts/sidebar.min.js"></script>
+     
+
+    
+
+
+
+

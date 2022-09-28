@@ -1,0 +1,110 @@
+{
+    title:  'Web Frameworks',
+    crumbs: [
+        { "User's Guide": '../users/' },
+    ],
+}
+            <h1>Web Frameworks</h1>
+            <p>Dynamic web page creation needs a convenient and powerful server-side web framework. It is
+            slow and difficult to create a functional and appealing dynamic web application using the legacy <a href=
+            "#cgi">CGI</a> protocol. Its interface is too low level and it provides little assistance to
+            manipulate server-side data, render UI elements, and manage Ajax interactions.</p>
+            <p>In contrast, environments such as the <a href="#esp">ESP</a>
+            provide much more support for dynamic web content. However, not all frameworks are
+            equally suited for embedded applications</p>
+            <p>Appweb provides a rich set of options to use when creating web pages or web applications. This document
+            compares the alternatives and suggests where each option is best deployed.</p>
+            <a id="comparison"></a>
+            <h2>Comparison</h2>
+
+            <a id="esp"></a>
+            <h3>Embedded Server Pages</h3>
+            <p>ESP is a fast, efficient web framework that provides HTML templates, caching, Model-View-Controller paradigm,
+            and an application and scaffold generator. ESP uses the "C" language code
+            embedded in web pages for native-speed execution. It is very fast and compact.</p>
+            <p>To prevent name clashes on Linux and MacOSX, when Appweb is installed, the "<em>esp</em>" program built
+            by Appweb will be named "<em>appweb-esp</em>". This prevents clashing with the "<em>esp</em>" program
+            installed by the stand-alone ESP installation.</p>
+            <p>For more information about ESP, please see the <a href="https://embedthis.com/esp/">ESP Web Site</a>.</p>
+
+            <a id="action"></a>
+            <h3>Action Handler</h3>
+            <p>The action handler is a simple Appweb request handler that maps URIs to C functions. It does not provide
+            any other infrastructure or capabilities other than those offered by the Appweb APIs. Action routines
+            are very fast, as there is very little code run before invoking the action. The action handler is ideal
+            for simple bindings from URI to C code. Read more in the Developer's Guide under
+            <a href="../developers/action.html">Action Handler</a>.</p>
+
+            <h3>PHP Framework</h3>
+            <p>PHP is a widely-used
+            general-purpose scripting language that is especially suited for enterprise Web development. It provides an
+            object-oriented programming language, numerous extensions and a broad developer community. The power of PHP
+            comes at a price, it typically has a memory footprint of more than 5 MB for the PHP code alone. For embedded
+            systems, this is often too big and so we recommend using ESP instead.</p>
+
+            <a id="cgi"></a>
+            <h3>Common Gateway Interface (CGI)</h3>
+            <p>CGI stands for the Common Gateway Interface and it is the legacy extension interface for running
+            external programs to generate dynamic data. It is standard but slow. Unless you have legacy CGI programs or
+            need to run a scripting language via CGI, you are better served by using either ESP.
+            For more information, please read <a href="cgi.html">Using CGI</a>.</p>
+
+            <a id="fastcgi"></a>
+            <h3>Fast CGI</h3>
+            <p>FastCGI is an optimized CGI and is the preferable way to run CGI programs or to run PHP applications.</p>
+            <p>Whereas CGI launches a new process to serve each and every request, FastCGI launches one or more CGI applications and then maintains a persistent connection to server multiple requests.</p>
+
+            <a id="summary"></a>
+            <h2>Summary</h2>
+            <p>For embedded devices and applications: we recommend using <b>ESP</b>. It provides the fastest, most
+            compact web framework without compromising on functionality.</p>
+
+            <p>The following table may help summarize the differences:</p>
+            <table title="summary" class="ui celled table segment">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><b>ESP</b></th>
+                        <th><b>Action Handler</b></th>
+                        <th><b>CGI</b></th>
+                        <th><b>PHP</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><b>Target Use</b></td>
+                    <td>Web user interfaces, comms services</td>
+                    <td>Simple C functions to serve content</td>
+                    <td>Have existing CGI program</td>
+                    <td>Enterprise web pages and forms</td>
+                </tr>
+                <tr>
+                    <td><b>Memory (excluding core Appweb)</b></td>
+                    <td>200K plus app code</td>
+                    <td>5K</td>
+                    <td>External program</td>
+                    <td>20-50MB plus app code</td>
+                </tr>
+                <tr>
+                    <td><b>Performance</b></td>
+                    <td>Very fast</td>
+                    <td>Fast</td>
+                    <td>Very slow</td>
+                    <td>Medium speed but large memory consumption</td>
+                </tr>
+                <tr>
+                    <td><b>Advantages</b></td>
+                    <td>Efficient and powerful framework</td>
+                    <td>Simple, fast processing</td>
+                    <td>Standard in wide-use</td>
+                    <td>Large base of PHP code and developers</td>
+                </tr>
+                <tr>
+                    <td><b>Disadvantages</b></td>
+                    <td>No enterprise connectivity to MySQL</td>
+                    <td>No web templates or higher-level functionality</td>
+                    <td>Slow. Limit to forms. Low functionality</td>
+                    <td>Large memory footprint</td>
+                </tr>
+                </tbody>
+            </table>

@@ -1,0 +1,72 @@
+{
+    "meta": {
+        "site": "https://embedthis.com/appweb/doc"
+    },
+    "control": {
+        "listen": "127.0.0.1:4000"
+    },
+    "debug": {
+        "services": {
+            "compress": false,
+            "html": false,
+            "js": {
+                "minify": false,
+                "usemin": true,
+                "usemap": true
+            },
+            "gzip": false
+        }
+    },
+    "release": {
+        "services": {
+            "reload": {
+                "enable": true
+            },
+            "compress": true,
+            "css": {
+                "minify": true,
+                "usemin": true,
+                "usemap": false
+            },
+            "js": {
+                "minify": true,
+                "usemin": true,
+                "usemap": false
+            },
+            "gzip": true,
+            "html": {
+                "options": "--remove-comments --conservative-collapse --prevent-attributes-escaping --remove-empty-attributes --remove-optional-tags"
+            }
+        }
+    },
+    "dev": {
+        "services": {
+            "gzip": false,
+            "html": false,
+            "js": {
+                "minify": false,
+                "usemin": true,
+                "usemap": true
+            }
+        }
+    },
+    "prod": {
+        "services": {
+            "css": {
+                "minify": true,
+                "usemin": true,
+                "usemap": false
+            },
+            "gzip": true,
+            "html": {
+                "options": "--remove-comments --conservative-collapse --prevent-attributes-escaping --remove-empty-attributes --remove-optional-tags"
+            },
+            "js": {
+                "minify": true,
+                "usemin": true,
+                "usemap": false
+            },
+            "reload": false
+        }
+    }
+}

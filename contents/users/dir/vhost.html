@@ -1,0 +1,145 @@
+{
+    title:  'Virtual Hosts',
+    crumbs: [
+        { "User's Guide": '../../users/' },
+        { 'Configuration': '../configuration.html' },
+    ],
+}
+            <a id="namedVirtualHost"></a>
+            <h1>Virtual Host Directives</h1>
+            <h2>NameVirtualHost</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Nominates an IP address as using name based virtual hosting</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>NameVirtualHost IPaddr[:port]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>NameVirtualHost 206.148.97.56<br />
+                        &lt;VirtualHost 206.148.97.56&gt;<br />
+                        ...<br />
+                        &lt;/VirtualHost&gt;</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The NameVirtualHost directive specifies that an IP address will be used for name based
+                            virtual hosting. Appweb provides two virtual hosting mechanisms:</p>
+                            <ul>
+                                <li>IP based</li>
+                                <li>Name based</li>
+                            </ul>
+                            <p>IP based virtual hosting uses a dedicated IP address for each virtual host on a server.
+                            Name based hosting uses one IP address for a set of virtual hosts that are distinguished
+                            from each other by a "Host" HTTP header.</p>
+                            <p>The IPAddress argument may be "*" in which case addresses on which Appweb is listening
+                            will use name based virtual hosting.</p>
+                            <h3>Example of Name Based Virtual Hosting</h3>
+                            <p>This example shows two virtual hosts with independent document webs. Both share the same
+                            IP address and use the "Host" HTTP header to select the appropriate virtual host.</p>
+                            <pre>
+NameVirtualHost 206.148.97.56
+&lt;VirtualHost 206.148.97.56&gt;
+    ServerName www.acme.com
+    Documents /var/www/acme
+    ...
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 206.148.97.56&gt;
+    ServerName www.coyote.com
+    Documents /var/www/coyote
+    ...
+&lt;/VirtualHost&gt;
+</pre>
+                            <h3>Example of IP Based Virtual Hosting</h3>
+                            <p>This example shows two virtual hosts with independent document webs. Each has a
+                            dedicated IP address.</p>
+                            <pre>
+&lt;VirtualHost 206.148.97.56&gt;
+    ServerName www.acme.com
+    Documents /var/www/acme
+    ...
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 206.148.97.57&gt;
+    ServerName www.coyote.com
+    Documents /var/www/coyote
+    ...
+&lt;/VirtualHost&gt;
+</pre>
+                            <p>You can use both IP based and name based hosting on one server.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="security">Security</td>
+                        <td>
+                            <p>You should only ever use an IP address for the argument to the directive. Using a host
+                            name will cause a DNS lookup which makes the availability of your web server dependent on
+                            the DNS server.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a id="virtualHost"></a>
+            <h2>VirtualHost</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Create a new directive block that applies to a specific IP address. The VirtualHost block
+                            inherits the existing configuration at the point of the opening VirtualHost directive.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>&lt;VirtualHost [IPaddress][:port] [, [IPaddress][:port]]...&gt;<br />
+                        ...<br />
+                        &lt;/VirtualHost&gt;</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>
+                            <pre>
+&lt;VirtualHost *:80 *:8080&gt;
+    ServerName www.acme.com
+    Documents /var/www/acme
+    ....
+&lt;/VirtualHost&gt;
+</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The VirutalHost directive defines a block of directives that will apply to the nominated
+                            IP addresses. The IP addresses specify the set of IP addresses for this VirtualHost.
+                            Note: this does not cause Appweb to listen on these addresses. You will still need an
+                            appropriate Listen directive for each IP address. The IP address is of the form
+                            IP:PORT where the IP or PORT portion may be omitted. The IP address can be set to "*"
+                            in which case the VirtualHost will listen on all interfaces.</p>
+                            <p>If the IP address is also specified in a NameVirtualHost directive, the virtual host will
+                            use name based hosting. This requires the browser (as nearly all modern browsers do), to
+                            include the domain portion of the URL in the HTTP host header. Appweb examines this header
+                            and routes the request to the Virtual Host that has a corresponding ServerName</p>
+                            <p>NOTE: Multiple IP addresses may be specified per VirtualHost directive.</p>
+
+                            <p>The ServerName may begin with a "*" which means match any hosts that contains the following
+                            host name. For example "*.example.com" will then match blog.example.com and www.example.com.
+                            If the ServerName ends with "*" it will match any domain that contains the name. You can also
+                            set the ServerName to a regular expression such that it will match multiple domains. Regular
+                            expressions begin and end with a "/".</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>

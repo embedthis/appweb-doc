@@ -1,0 +1,22 @@
+{
+    "name": "appweb-doc",
+    "title": "Appweb Documentation",
+    "version": "8.3.0",
+    "description": "Appweb Documentation",
+    "dependencies": {
+        "appweb": "~8",
+        "esp": "~9",
+        "http": "~9",
+        "me-docstyle": "~1",
+        "mpr": "~9",
+        "osdep": "~1"
+    },
+    "devDependencies": {
+        "expansive": ">=0.6.0"
+    },
+    "directories": {
+        "export": "contents/lib"
+    },
+    "import": true,
+    "profile": "debug"
+}

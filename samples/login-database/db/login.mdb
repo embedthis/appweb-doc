@@ -1,0 +1,28 @@
+{
+    '_EspMigrations': {
+        hints: {
+            ncols: 2
+        },
+        schema: {
+            'id': { type: 'int', autoinc: true, index: true, key: true },
+            'version': { type: 'string' },
+        },
+        data: [
+            [ 1,'201004121637121',],
+        ],
+    },
+    'user': {
+        hints: {
+            ncols: 4
+        },
+        schema: {
+            'id': { type: 'int', autoinc: true, index: true, key: true },
+            'username': { type: 'string' },
+            'password': { type: 'string' },
+            'roles': { type: 'string' },
+        },
+        data: [
+            [ 1,'joshua','BF1:00128:NjmHiceSKNLMwuAq:CclS+mao0dIGF8GhuKj+Kbf4SBiTD+W+','user',],
+        ],
+    },
+}

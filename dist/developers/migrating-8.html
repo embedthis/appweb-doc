@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Migrating</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="description" content="Appweb Documentation">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+    <link href="https://embedthis.com/appweb/doc/developers/migrating-8.html" rel="canonical">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="../lib/semantic-ui/semantic.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/api.min.css" rel="stylesheet" type="text/css">
+    
+
+</head>
+<body class="show-sidebar">
+    <div class="sidebar">
+        <div class="ui large left vertical inverted labeled menu">
+            <div class="item">
+                <a href="../" class="logo">Appweb Docs</a>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../">Home</a>
+                    <a class="item" href="../users/features.html">Appweb Features</a>
+                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="../licensing/">Licensing</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../start/">Getting Started</a>
+                    <a class="item" href="../start/quick.html">Quick Start</a>
+                    <a class="item" href="../start/installing.html">Installing Appweb</a>
+                    <a class="item" href="../start/starting.html">Starting and Stopping</a>
+                    <a class="item" href="../start/service.html">Running as a Service</a>
+                    <a class="item" href="../start/releaseNotes.html">Release Notes</a>
+                    <a class="item" href="../start/source.html">Building from Source</a>
+                    <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
+                    <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
+                    <a class="item" href="../start/php.html">Building with PHP</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/">User's Guide</a>
+                    <a class="item" href="../users/configuration.html">Configuring Appweb</a>
+                    <a class="item" href="../users/directives.html">Configuration Directives</a>
+                    <a class="item" href="../users/frameworks.html">Web Frameworks</a>
+                    <a class="item" href="../users/modules.html">Using Loadable Modules</a>
+                    <a class="item" href="../users/ports.html">Ports and Binding</a>
+                    <a class="item" href="../users/routing.html">Routing Requests</a>
+                    <a class="item" href="../users/stages.html">Request Pipeline</a>
+                    <a class="item" href="../users/lang.html">Multi-Language Content</a>
+                    <a class="item" href="../users/authentication.html">User Authentication</a>
+                    <a class="item" href="../users/logFiles.html">Logging</a>
+                    <a class="item" href="../users/caching.html">Caching</a>
+                    <a class="item" href="../users/vhosts.html">Virtual Hosts</a>
+                    <a class="item" href="../users/ssl.html">Secure Sockets (SSL)</a>
+                    <a class="item" href="../users/client.html">Http Client</a>
+                    <a class="item" href="../users/security.html">Security Considerations</a>
+                    <a class="item" href="../users/monitor.html">Monitoring and Defending</a>
+                    <a class="item" href="../users/uploading.html">File Upload</a>
+                    <a class="item" href="../users/webSockets.html">WebSockets</a>
+                    <a class="item" href="../users/man.html">Man Pages</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/">Developer's Guide</a>
+                    <a class="item" href="../developers/embedding.html">Embedding Appweb</a>
+                    <a class="item" href="../developers/modules.html">Creating Appweb Modules</a>
+                    <a class="item" href="../developers/handlers.html">Creating Appweb Handlers</a>
+                    <a class="item" href="../developers/action.html">Using the Action Handler</a>
+                    <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
+                    <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../ref/">Reference Guide</a>
+                    <a class="item" href="../ref/compatibility.html">Compatibility</a>
+                    <a class="item" href="../ref/native.html">Native APIs</a>
+                    <a class="item" href="../ref/architecture.html">Appweb Architecture</a>
+                    <a class="item" href="../ref/memory.html">Appweb Memory Allocation</a>
+                    <a class="item" href="../ref/multithread.html">Multithreaded Programming</a>
+                    <a class="item" href="../standards/http.html">HTTP References</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/samples.html">Samples</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/project.html">Project Resources</a>
+                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://github.com/embedthis/appweb">Appweb Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
+                    <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <span class="header item">Links</span>
+                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="http://twitter.com/embedthat">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="ui inverted masthead">
+        <div class="ui fixed inverted menu">
+            <div class="ui sidebar-launch button">
+                <i class="icon list layout"></i>
+            </div>
+            <div class="right menu">
+                <a class="item" href="https://embedthis.com/">Embedthis</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
+                    <span class="desktop-only">
+                        <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://embedthis.com/blog/">Blog</a>
+                        <a class="item" href="https://twitter.com/embedthat">Twitter</a>
+                    </span>
+
+            </div>
+        </div>
+        
+        <div class="ui breadcrumb">
+            <a class="section" href="../">Home</a>
+            
+            <div class="divider">/</div>
+            <a class="section" href="../developers/">
+                Developer's Guide
+            </a>
+            
+            
+            <div class="divider">/</div>
+            <a class="active section" href="migrating-8.html">Migrating</a>
+            
+        </div>
+        
+        <iframe class="version desktop-only" src="../version.html"></iframe>
+
+    </div>
+    <div class="content">
+<h1>Migrating to Appweb 8</h1>
+<h2>Architectural Changes</h2>
+<p>Appweb 8 includes some major architectural changes to support the <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP/2</a> protocol. HTTP/2 is a higher performance binary protocol that supports multiplexing multiple request streams over a single network connection and offers decreased latency and improved efficiency. This necessitates some API changes and so handlers and filters may need some minor refactoring to work with Appweb 8. ESP, CGI and PHP applications should not need any changes.</p>
+<p>The architectural changes in Appweb 8 are:</p>
+<ul>
+<li>HTTP/2 protocol support and filter</li>
+<li>Improved pipeline handling to support HTTP/2 multiplexing</li>
+<li>New HttpNet structure defines the network socket that is shared among requests.</li>
+<li>The Upload filter is enabled by default and always part of pipeline</li>
+<li>Upload directory now not per route — needs to be defined before routing</li>
+<li>New Auth Type &ldquo;app&rdquo; for application defined authentication</li>
+<li>Removed the Send Connector as all I/O must now go through the Net Connector</li>
+<li>Improved packet level trace</li>
+<li>Improved OpenSSL support for either 1.0 or 1.2</li>
+<li>Improved PHP support for either PHP 5 or 7</li>
+<li>ESP improvements to make compiling more flexible and manage larger applications</li>
+</ul>
+<h2>Changed APIs</h2>
+<p>To assist with migrating to Appweb 8 you can set the preprocessor constant ME_COMPAT to &ldquo;1&rdquo; which will map prior definitions into the Appweb 8 equivalents. You should use this as a transitional aid only as these mappings will be removed in future releases.</p>
+<h3>Networks and Connections</h3>
+<p>The previous HttpConn structure contained information regarding the network connection and the current request. With HTTP/2 a single network connection must support multiple simultaneous requests. To support this, the HttpNet structure is introduced and it assumes the management of the network connection. The HttpConn structure is renamed HttpStream for clarity as it is no-longer responsible for the connection. It retains responsibility for a single request / response exchange with the peer.</p>
+<p>For compatibility, a CPP define is provided for HttpConn which maps to HttpStream. Similarly, defines are provided which map legacy HttpConn APIs to their HttpStream equivalents. However, you should refactor your applications and rename all HttpConn references to HttpStream. You should also change your &ldquo;conn&rdquo; variable declarations to be &ldquo;stream&rdquo; for clarity.</p>
+<p>Some HttpConn APIs have been migrated to HttpNet and consequently now take a HttpNet* parameter as their argument. Note: the HttpNet object owns the event dispatcher which is now shared across all HttpStream instances so that all activity on a network socket is serialized and non-blocking.</p>
+<p>Here is a list of the API changes. Please let us know at <a href="mailto:dev@embedthis.com">dev@embedthis.com</a> if we have missed any impacting change and we&rsquo;ll update the list.</p>
+<ul>
+<li>Added HttpNet structure and httpNet APIs including: httpCreateNet, httpDestroyNet, &hellip;</li>
+<li>The httpConn APIs are renamed to httpStream.</li>
+<li>These APIs which previously operated on HttpConn/HttpStream objects now operating on HttpNet instances: httpSetAsync, httpServiceQueues, httpEnableConnEvents, httpIOEvent, httpStealSocket.</li>
+<li>Changed httpRequest signature to add a protocol argument to nominate HTTP/1 or HTTP/2 for client requests. See <a href="http://127.0.0.1:4000/ref/api/http.html#group___http_tx_1gae53c8deff659f3aa5aec8aaeb9d7673e">httpRequest</a>.</li>
+<li>Changed httpTrace first argument from HttpConn to HttpTrace so that this API can be used for both HttpNet and HttpStream related trace. Use HttpStream.trace or HttpNet.trace as the trace instance for this API. See <a href="http://127.0.0.1:4000/ref/api/http.html#group___http_trace_1ga5f8b026696d0a7285da9a60046483348">httpTrace</a>.</li>
+<li>The httpCreateConn API is renamed to httpCreateStream and its arguments are changed to take a HttpNet argument and a desired protocol. An HttpNet instance must be created prior to creating a HttpStream. See <a href="http://127.0.0.1:4000/ref/api/http.html#group___http_stream_1ga2203fa59ea98e0a35417dde387123d29">httpCreateconn</a>.</li>
+<li>Web sockets ESP callbacks must now be prepared to handle multiple packets on their READABLE events. Previously Appweb 7 would only provide one packet per call.</li>
+<li>The &ldquo;AddConnector&rdquo; configuration directive is removed. The net connector is the only supported connector.</li>
+<li>Added the httpSetAuthStoreVerify API for globally setting the auth verify callback. See <a href="http://127.0.0.1:4000/ref/api/http.html#group___http_auth_1gaceb42561636cf7ff37c67b167c8df128">httpSetAuthStoreVerify</a>.</li>
+<li>Removed HttpTx.queues[]. These were aliases to HttpStream.readq and HttpStream.writeq which should be used instead.</li>
+<li>HttpQueue.conn is renamed HttpQueue.stream. User code that references q-&gt;conn should be changed to q-&gt;stream.</li>
+<li>The httpWriteBlock API when called with HTTP_BUFFER may yield. This is required to support HTTP/2 which uses flow control packets that must be received to permit output to flow.</li>
+<li>The espRender, espRenderString, espRenderBlock APIs may yield.</li>
+<li>The httpFinalize* APIs takes queue instead of HttpStream. Applications should use the queue HttpStream.writeq when calling httpFinalize APIs.</li>
+<li>All handlers must call httpFinalizeOutput / httpFinalize to finalize output.</li>
+<li>The httpNeedRetry API changed the URL argument to cchar<em> from char</em>.</li>
+<li>The httpSetRetries API and HttpConn.retries field are removed.</li>
+<li>The HttpTx.writeBlocked is migrated to HttpNet.writeBlocked.</li>
+<li>The define ME_MAX_BUFFER should be migrated to use ME_BUFSIZE instead.</li>
+<li>The httpIOEvent(stream) API now takes a HttpNet argument.</li>
+<li>The httpTracePacket API &ldquo;body&rdquo; argument is changed to be a HttpPacket reference.</li>
+<li>The Upload filter directory now not per route, as it must be defined before routing can proceed.</li>
+<li>The Upload filter always defined — to remove, do Reset pipeline and define route configuration. The PHP handler will do this automatically as PHP implements its own file upload.</li>
+</ul>
+<h2>ESP Changes</h2>
+<p>Here is a list of ESP changes:</p>
+<ul>
+<li>The esp.json &ldquo;esp.app.source&rdquo; configuration directive can specify a list of source files to build. Previously, ESP would only compile app.c.</li>
+<li>Support &ldquo;esp.app.tokens&rdquo; collection to specify CFLAGS, DFLAGS, LDFLAGS for compiler definitions and libraries.</li>
+<li>Handle source file names with &ldquo;-&rdquo; in the filename. These are mapped to underscore.</li>
+</ul>
+<h2>ME_COMPAT Definitions</h2>
+<p>To enable the compatibility mappings, configure with compat set to true.</p>
+<pre class="ui code segment">./configure --set compat=true</pre>
+
+<p>If you are building with Make, run make with ME_COMPAT=1.</p>
+<pre class="ui code segment">make ME_COMPAT=1</pre>
+
+<p>These are the mappings defined via ME_COMPAT:</p>
+<pre class="ui code segment">
+#define conn stream
+#define HttpConn HttpStream
+#define httpCreateConn httpCreateStream
+#define httpDestroyConn httpDestoryStream
+#define httpDisconnectConn httpDisconnectStream
+#define httpResetClientConn httpResetClientStream
+#define httpPrepClientConn httpPrepClientStream
+
+#define httpGetConnContext httpGetStreamContext
+#define httpGetConnEventMask httpGetStreamEventMask
+#define httpGetConnHost httpGetStreamHost
+#define httpSetConnContext httpSetStreamContext
+#define httpSetConnHost httpSetStreamHost
+#define httpSetConnData httpSetStreamData
+#define httpSetConnNotifier httpSetStreamNotifier
+#define httpSetConnUser httpSetStreamUser
+
+#define httpEnableConnEvents(stream) httpEnableNetEvents(stream->net)
+#define httpClientConn(stream) httpClientStream(stream)
+#define httpServerConn(stream) httpServerStream(stream)
+#define httpDisconnect(stream) httpDisconnectStream(stream)
+</pre>
+
+<p>You should use the ME_COMPAT mappings only as a transitional aid as they may be removed in a future release.</p>
+    </div>
+    <div class="terms ui basic center aligned segment">
+        <p>&copy; Embedthis Software. All rights reserved.</p>
+    </div>
+
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/jquery/jquery.slim.min.js"></script>
+    <script src="../lib/semantic-ui/semantic.min.js"></script>
+    <script src="../scripts/sidebar.min.js"></script>
+     
+
+    
+
+
+
+

@@ -1,0 +1,67 @@
+{
+    title:  'Action Handler',
+    crumbs: [
+        { "Developer's Guide": '../developers/' },
+    ],
+}
+            <h1>Using the Action Handler</h1>
+            <p>The Action handler is a simple Appweb handler that processes requires by invoking registered C
+            functions. The action handler is ideal for situations when you want to generate a simple response using
+            C code. The action handler employs a direct mapping from URIs to C functions with no further parsing or
+            analysis of the URI than that provided by the Appweb router.</p>
+            <a name="registering"></a>
+
+            <h2>Registering Actions</h2>
+            <p>Actions are registered by calling
+            <a href="../ref/api/http.html#http_8h_1a97b87c9cd5010bbd1188abfa67296768">httpDefineAction</a> and providing
+            the function to run and the corresponding URI.
+<pre class="code">
+static void hello(HttpStream *stream)
+{
+    httpWrite(stream, "Hello World\n");
+    httpFinalize(stream);
+}
+httpDefineAction("/action/hello", hello);</pre>
+
+            <p>The httpDefineAction call registers the hello C function to be invoked whenever the
+            /action/hello URI is requested.</p>
+
+            <a name="actions"></a>
+            <h2>Actions</h2>
+            <p>An action routine is responsible for rendering a complete response to the client. A response is
+            concluded by calling
+            <a href="../ref/api/http.html#group___http_tx_1ga1a328a25ac329fd5cfc9e1ab033b10db">httpFinalize</a>.
+            If you cannot yet complete the response without waiting,
+            it is best not to block, as this will consume a thread from the worker pool while waiting. Instead,
+            return from the action without calling httpFinalize and arrange for the response to be completed later.
+            Note: that the Appweb RequestTimeout and InactivityTimeout in appweb.conf may terminate a long running
+            request. If you need to extend these timeouts for a request, call
+            <a href="../ref/api/http.html#group___http_stream_1ga99922c1f07023f4ed5bcf39d37a86791">httpSetTimeout</a>.</p>
+
+            <a name="api"></a>
+            <h2>Appweb API</h2>
+            <p>The Appweb Native APIs consist of C language headers, function prototypes, structure definitions and
+            defines. They are divided into three API groups. You can use many of these APIs from within Action
+            routines.</p>
+            <table title="APIs" class="ui table segment">
+                <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="../ref/api/appweb.html">Appweb</a></td>
+                    <td>Appweb Http API</td>
+                </tr>
+                <tr>
+                    <td><a href="../ref/api/http.html">Http</a></td>
+                    <td>Http Client and Server Library API</td>
+                </tr>
+                <tr>
+                    <td class="nowrap"><a href="../ref/api/mpr.html">MPR</a></td>
+                    <td>Multithreaded Platform Runtime API</td>
+                </tr>
+                </tbody>
+            </table>

@@ -1,0 +1,24 @@
+/*
+    main.me -- MakeMe file for Appweb documentation
+ */
+
+Me.load({
+    settings: {
+        platforms: [ 'local' ],
+    },
+    targets: {
+        api: {
+            action: `
+                /*
+                    For packages, use the doxygen HTML directly from paks
+                 */
+                let base = me.dir.paks.join('*/doc')
+                let files = Path().files(base.join('api/*.html'))
+                for each (src in files) {
+                    let dest = src.trimComponents(base.components.length)
+                    apiLayout(src, Path('dist/ref').join(dest))
+                }
+            `
+        }
+    }
+})

@@ -1,0 +1,26 @@
+ 
+        <div class="ui fixed inverted menu">
+            <div class="ui sidebar-launch button">
+                <i class="icon list layout"></i>
+            </div>
+            <div class="right menu">
+                <@ partial('menu') @>
+            </div>
+        </div>
+        <@ if (meta.crumbs ) { @>
+        <div class="ui breadcrumb">
+            <a class="section" href="@~/">Home</a>
+            <@ for each (crumb in meta.crumbs ) { 
+                for (let [name, url] in crumb ) { @>
+            <div class="divider">/</div>
+            <a class="section" href="<@= url @>">
+                <@= name @>
+            </a>
+            <@ } } @>
+            <@ if (meta.url.path != 'index.html' && !meta.url.path.endsWith('/')) { @>
+            <div class="divider">/</div>
+            <a class="active section" href="<@= meta.destPath.basename @>"><@= meta.cookie || meta.title @></a>
+            <@ } @>
+        </div>
+        <@ } @>
+        <iframe class="version desktop-only" src="@~/version.html"></iframe>

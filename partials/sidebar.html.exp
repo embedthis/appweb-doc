@@ -1,0 +1,129 @@
+    <div class="sidebar">
+        <div class="ui large left vertical inverted labeled menu">
+            <div class="item">
+                <a href="@~/" class="logo">Appweb Docs</a>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="@~/">Home</a>
+                    <a class="item" href="@~/users/features.html">Appweb Features</a>
+                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="@~/licensing/">Licensing</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="@~/start/">Getting Started</a>
+                    <a class="item" href="@~/start/quick.html">Quick Start</a>
+                    <a class="item" href="@~/start/installing.html">Installing Appweb</a>
+                    <a class="item" href="@~/start/starting.html">Starting and Stopping</a>
+                    <a class="item" href="@~/start/service.html">Running as a Service</a>
+                    <a class="item" href="@~/start/releaseNotes.html">Release Notes</a>
+                    <a class="item" href="@~/start/source.html">Building from Source</a>
+                    <a class="item" href="@~/start/cgi.html">Building with CGI</a>
+                    <a class="item" href="@~/start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="@~/start/proxy.html">Building with Proxy</a>
+                    <a class="item" href="@~/start/openssl.html">Building with OpenSSL</a>
+                    <a class="item" href="@~/start/php.html">Building with PHP</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="@~/users/">User's Guide</a>
+                    <a class="item" href="@~/users/configuration.html">Configuring Appweb</a>
+                    <a class="item" href="@~/users/directives.html">Configuration Directives</a>
+                    <a class="item" href="@~/users/frameworks.html">Web Frameworks</a>
+                    <a class="item" href="@~/users/modules.html">Using Loadable Modules</a>
+                    <a class="item" href="@~/users/ports.html">Ports and Binding</a>
+                    <a class="item" href="@~/users/routing.html">Routing Requests</a>
+                    <a class="item" href="@~/users/stages.html">Request Pipeline</a>
+                    <a class="item" href="@~/users/lang.html">Multi-Language Content</a>
+                    <a class="item" href="@~/users/authentication.html">User Authentication</a>
+                    <a class="item" href="@~/users/logFiles.html">Logging</a>
+                    <a class="item" href="@~/users/caching.html">Caching</a>
+                    <a class="item" href="@~/users/vhosts.html">Virtual Hosts</a>
+                    <a class="item" href="@~/users/ssl.html">Secure Sockets (SSL)</a>
+                    <a class="item" href="@~/users/client.html">Http Client</a>
+                    <a class="item" href="@~/users/security.html">Security Considerations</a>
+                    <a class="item" href="@~/users/monitor.html">Monitoring and Defending</a>
+                    <a class="item" href="@~/users/uploading.html">File Upload</a>
+                    <a class="item" href="@~/users/webSockets.html">WebSockets</a>
+                    <a class="item" href="@~/users/man.html">Man Pages</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="@~/developers/">Developer's Guide</a>
+                    <a class="item" href="@~/developers/embedding.html">Embedding Appweb</a>
+                    <a class="item" href="@~/developers/modules.html">Creating Appweb Modules</a>
+                    <a class="item" href="@~/developers/handlers.html">Creating Appweb Handlers</a>
+                    <a class="item" href="@~/developers/action.html">Using the Action Handler</a>
+                    <a class="item" href="@~/developers/stages.html">Creating Pipeline Stages</a>
+                    <a class="item" href="@~/developers/rom.html">Serving Pages from ROM</a>
+                    <a class="item" href="@~/developers/migrating.html">Migrating from Earlier Releases</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="@~/ref/">Reference Guide</a>
+                    <a class="item" href="@~/ref/compatibility.html">Compatibility</a>
+                    <a class="item" href="@~/ref/native.html">Native APIs</a>
+                    <a class="item" href="@~/ref/architecture.html">Appweb Architecture</a>
+                    <a class="item" href="@~/ref/memory.html">Appweb Memory Allocation</a>
+                    <a class="item" href="@~/ref/multithread.html">Multithreaded Programming</a>
+                    <a class="item" href="@~/standards/http.html">HTTP References</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="@~/users/samples.html">Samples</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="@~/developers/project.html">Project Resources</a>
+                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://github.com/embedthis/appweb">Appweb Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
+                    <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <span class="header item">Links</span>
+                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="http://twitter.com/embedthat">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<@ partial('sidebar-scripts') @>

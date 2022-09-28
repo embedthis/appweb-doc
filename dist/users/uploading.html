@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Uploading</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="description" content="Appweb Documentation">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+    <link href="https://embedthis.com/appweb/doc/users/uploading.html" rel="canonical">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="../lib/semantic-ui/semantic.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/api.min.css" rel="stylesheet" type="text/css">
+    
+
+</head>
+<body class="show-sidebar">
+    <div class="sidebar">
+        <div class="ui large left vertical inverted labeled menu">
+            <div class="item">
+                <a href="../" class="logo">Appweb Docs</a>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../">Home</a>
+                    <a class="item" href="../users/features.html">Appweb Features</a>
+                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="../licensing/">Licensing</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../start/">Getting Started</a>
+                    <a class="item" href="../start/quick.html">Quick Start</a>
+                    <a class="item" href="../start/installing.html">Installing Appweb</a>
+                    <a class="item" href="../start/starting.html">Starting and Stopping</a>
+                    <a class="item" href="../start/service.html">Running as a Service</a>
+                    <a class="item" href="../start/releaseNotes.html">Release Notes</a>
+                    <a class="item" href="../start/source.html">Building from Source</a>
+                    <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
+                    <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
+                    <a class="item" href="../start/php.html">Building with PHP</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/">User's Guide</a>
+                    <a class="item" href="../users/configuration.html">Configuring Appweb</a>
+                    <a class="item" href="../users/directives.html">Configuration Directives</a>
+                    <a class="item" href="../users/frameworks.html">Web Frameworks</a>
+                    <a class="item" href="../users/modules.html">Using Loadable Modules</a>
+                    <a class="item" href="../users/ports.html">Ports and Binding</a>
+                    <a class="item" href="../users/routing.html">Routing Requests</a>
+                    <a class="item" href="../users/stages.html">Request Pipeline</a>
+                    <a class="item" href="../users/lang.html">Multi-Language Content</a>
+                    <a class="item" href="../users/authentication.html">User Authentication</a>
+                    <a class="item" href="../users/logFiles.html">Logging</a>
+                    <a class="item" href="../users/caching.html">Caching</a>
+                    <a class="item" href="../users/vhosts.html">Virtual Hosts</a>
+                    <a class="item" href="../users/ssl.html">Secure Sockets (SSL)</a>
+                    <a class="item" href="../users/client.html">Http Client</a>
+                    <a class="item" href="../users/security.html">Security Considerations</a>
+                    <a class="item" href="../users/monitor.html">Monitoring and Defending</a>
+                    <a class="item" href="../users/uploading.html">File Upload</a>
+                    <a class="item" href="../users/webSockets.html">WebSockets</a>
+                    <a class="item" href="../users/man.html">Man Pages</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/">Developer's Guide</a>
+                    <a class="item" href="../developers/embedding.html">Embedding Appweb</a>
+                    <a class="item" href="../developers/modules.html">Creating Appweb Modules</a>
+                    <a class="item" href="../developers/handlers.html">Creating Appweb Handlers</a>
+                    <a class="item" href="../developers/action.html">Using the Action Handler</a>
+                    <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
+                    <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../ref/">Reference Guide</a>
+                    <a class="item" href="../ref/compatibility.html">Compatibility</a>
+                    <a class="item" href="../ref/native.html">Native APIs</a>
+                    <a class="item" href="../ref/architecture.html">Appweb Architecture</a>
+                    <a class="item" href="../ref/memory.html">Appweb Memory Allocation</a>
+                    <a class="item" href="../ref/multithread.html">Multithreaded Programming</a>
+                    <a class="item" href="../standards/http.html">HTTP References</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/samples.html">Samples</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/project.html">Project Resources</a>
+                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://github.com/embedthis/appweb">Appweb Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
+                    <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <span class="header item">Links</span>
+                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="http://twitter.com/embedthat">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="ui inverted masthead">
+        <div class="ui fixed inverted menu">
+            <div class="ui sidebar-launch button">
+                <i class="icon list layout"></i>
+            </div>
+            <div class="right menu">
+                <a class="item" href="https://embedthis.com/">Embedthis</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
+                    <span class="desktop-only">
+                        <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://embedthis.com/blog/">Blog</a>
+                        <a class="item" href="https://twitter.com/embedthat">Twitter</a>
+                    </span>
+
+            </div>
+        </div>
+        
+        <div class="ui breadcrumb">
+            <a class="section" href="../">Home</a>
+            
+            <div class="divider">/</div>
+            <a class="section" href="../users/">
+                User's Guide
+            </a>
+            
+            
+            <div class="divider">/</div>
+            <a class="active section" href="uploading.html">Uploading</a>
+            
+        </div>
+        
+        <iframe class="version desktop-only" src="../version.html"></iframe>
+
+    </div>
+    <div class="content">
+
+            <h1>File Upload</h1>
+            <p>Appweb has an integrated file upload filter that accepts and processes file upload requests.
+            The Appweb upload filter intercepts uploaded files, saves them to disk and passes details about the
+            uploaded file to the request handler for processing.</p>
+            <p>File upload uses multi-part mime encoding to transport files over HTTP POST requests. This is specified in
+            the IETF standard <a href="http://www.ietf.org/rfc/rfc2388.txt">RFC 2388</a>. </p>
+
+            <a id="overview"></a>
+            <h2>Overview</h2>
+            <p>Because uploaded files can be very large, Appweb uses specialized handling for the receipt, storage and
+            processing of uploaded files. When an upload request is received, Appweb will accept and store the
+            uploaded file before starting the request handler to respond to the request. The request handler does not
+            directly receive the uploaded file. Rather, Appweb passes the name of the temporary file holding the uploaded file.
+            Appweb expects that the handler will process, copy or move the temporary file before completing the request.
+            Once the handler has completed, Appweb will remove any remaining upload temporary files.</p>
+
+            <a id="directives"></a>
+            <h2>Appweb Upload Directives</h2>
+            <p>There are three other appweb.conf directives that relate specifically to upload filter.</p>
+            <ul>
+                <li><a href="dir/sandbox.html#limitUpload">LimitUpload</a> &mdash; This specifies the maximum size an
+                    uploaded file may be.</li>
+                <li><a href="dir/route.html#uploadDir">UploadDir</a> &mdash; This specifies the directory to hold
+                    uploaded files.</li>
+                <li><a href="dir/route.html#uploadAutoDelete">UploadAutoDelete</a> &mdash; This specifies if the
+                    uploaded files should be automatically deleted from the upload directory after the handler has
+                    completed processing the request.</li>
+            </ul>
+
+            <a id="details"></a>
+            <h2>Upload File Details</h2>
+            <p>Once a file is uploaded, the Appweb handler responsible for processing the request will receive details about
+            uploaded files via the request parameters.
+            Different request handlers expose these request parameters
+            in different ways. </p>
+
+            <h3>ESP Uploads</h3>
+            <p>ESP provides direct access to the internal Appweb uploaded files structure. Each uploaded file is described
+            by a <a href="../ref/api/http.html#group___http_upload_file">HttpUploadFile</a> structure.
+            These structures are stored in an MprHash table indexed by their HTML file upload ID.</p>
+            <p>The <a href="../ref/api/http.html#group___http_upload_file">HttpUploadFile</a> structure is defined as:
+            <pre class="ui code segment">
+typedef HttpUploadFile {
+    cchar *filename;        /* Local (temp) name of the file */
+    cchar *clientFilename;  /* Client side name of the file */
+    cchar *contentType;     /* Content type */
+    ssize size;             /* Uploaded file size */
+} HttpUploadFile;
+</pre>
+            <p>You can access uploaded files via:</p>
+<pre class="ui code segment">
+HttpStream      *stream;
+HttpUploadFile  *file;
+MprKey          *kp;
+stream = getStream();
+for (ITERATE_KEY_DATA(stream-&gt;rx-&gt;files, kp, file)) {
+    render("FILENAME %s\n", file-&gt;filename);
+    render("CLIENT_NAME %s\n", file-&gt;clientFilename);
+    render("TYPE %s\n", file-&gt;contentType);
+    render("SIZE %d\n", file-&gt;size);
+}
+</pre>
+
+            <a id="post"></a>
+            <h2>Alternative Upload Technique</h2>
+            <p>File upload using POST requests is one way to upload files. Another is to use the HTTP PUT method.
+            This uploads a file without encoding and can offer higher performance. The HTTP DELETE method can then
+            be used to delete files from the server.</p>
+
+            <h3>CGI Upload</h3>
+            <p>CGI provides access to the uploaded files via environment variables that start with <em>FILE_</em>. The variables
+            end with an <em>ID</em> which is a sequential index for the file beginning at <em>0</em> for the first file.</p>
+            <ul>
+                <li>FILE_CLIENT_FILENAME_ID &mdash; the client specified filename </li>
+                <li>FILE_CONTENT_TYPE_ID &mdash; the file mime content type</li>
+                <li>FILE_FILENAME_ID &mdash; the local temporary filename containing the data</li>
+                <li>FILE_SIZE_ID &mdash; the size of the uploaded file</li>
+            </ul>
+
+            <h3>PHP Uploads</h3>
+            <p>PHP has its own file upload handler and should not be confused with the higher performing Appweb
+            upload filter. If you wish to use the PHP upload mechanism, you must disable the upload filter for
+            your PHP requests. Do this by removing the <em>AddInputFilter uploadFilter</em> in the appweb.conf
+            configuration file.</p>
+
+            <p>If you wish to use the Appweb upload filter with PHP, you will see environment variables in the
+            _POST collection. The naming is the same as that for the CGI handler described above.</p>
+
+    </div>
+    <div class="terms ui basic center aligned segment">
+        <p>&copy; Embedthis Software. All rights reserved.</p>
+    </div>
+
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/jquery/jquery.slim.min.js"></script>
+    <script src="../lib/semantic-ui/semantic.min.js"></script>
+    <script src="../scripts/sidebar.min.js"></script>
+     
+
+    
+
+
+
+

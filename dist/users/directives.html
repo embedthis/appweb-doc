@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Configuration directives</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="description" content="Appweb Documentation">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+    <link href="https://embedthis.com/appweb/doc/users/directives.html" rel="canonical">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="../lib/semantic-ui/semantic.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/api.min.css" rel="stylesheet" type="text/css">
+    
+
+</head>
+<body class="show-sidebar">
+    <div class="sidebar">
+        <div class="ui large left vertical inverted labeled menu">
+            <div class="item">
+                <a href="../" class="logo">Appweb Docs</a>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../">Home</a>
+                    <a class="item" href="../users/features.html">Appweb Features</a>
+                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="../licensing/">Licensing</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../start/">Getting Started</a>
+                    <a class="item" href="../start/quick.html">Quick Start</a>
+                    <a class="item" href="../start/installing.html">Installing Appweb</a>
+                    <a class="item" href="../start/starting.html">Starting and Stopping</a>
+                    <a class="item" href="../start/service.html">Running as a Service</a>
+                    <a class="item" href="../start/releaseNotes.html">Release Notes</a>
+                    <a class="item" href="../start/source.html">Building from Source</a>
+                    <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
+                    <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
+                    <a class="item" href="../start/php.html">Building with PHP</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/">User's Guide</a>
+                    <a class="item" href="../users/configuration.html">Configuring Appweb</a>
+                    <a class="item" href="../users/directives.html">Configuration Directives</a>
+                    <a class="item" href="../users/frameworks.html">Web Frameworks</a>
+                    <a class="item" href="../users/modules.html">Using Loadable Modules</a>
+                    <a class="item" href="../users/ports.html">Ports and Binding</a>
+                    <a class="item" href="../users/routing.html">Routing Requests</a>
+                    <a class="item" href="../users/stages.html">Request Pipeline</a>
+                    <a class="item" href="../users/lang.html">Multi-Language Content</a>
+                    <a class="item" href="../users/authentication.html">User Authentication</a>
+                    <a class="item" href="../users/logFiles.html">Logging</a>
+                    <a class="item" href="../users/caching.html">Caching</a>
+                    <a class="item" href="../users/vhosts.html">Virtual Hosts</a>
+                    <a class="item" href="../users/ssl.html">Secure Sockets (SSL)</a>
+                    <a class="item" href="../users/client.html">Http Client</a>
+                    <a class="item" href="../users/security.html">Security Considerations</a>
+                    <a class="item" href="../users/monitor.html">Monitoring and Defending</a>
+                    <a class="item" href="../users/uploading.html">File Upload</a>
+                    <a class="item" href="../users/webSockets.html">WebSockets</a>
+                    <a class="item" href="../users/man.html">Man Pages</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/">Developer's Guide</a>
+                    <a class="item" href="../developers/embedding.html">Embedding Appweb</a>
+                    <a class="item" href="../developers/modules.html">Creating Appweb Modules</a>
+                    <a class="item" href="../developers/handlers.html">Creating Appweb Handlers</a>
+                    <a class="item" href="../developers/action.html">Using the Action Handler</a>
+                    <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
+                    <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../ref/">Reference Guide</a>
+                    <a class="item" href="../ref/compatibility.html">Compatibility</a>
+                    <a class="item" href="../ref/native.html">Native APIs</a>
+                    <a class="item" href="../ref/architecture.html">Appweb Architecture</a>
+                    <a class="item" href="../ref/memory.html">Appweb Memory Allocation</a>
+                    <a class="item" href="../ref/multithread.html">Multithreaded Programming</a>
+                    <a class="item" href="../standards/http.html">HTTP References</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/samples.html">Samples</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/project.html">Project Resources</a>
+                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://github.com/embedthis/appweb">Appweb Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
+                    <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <span class="header item">Links</span>
+                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="http://twitter.com/embedthat">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="ui inverted masthead">
+        <div class="ui fixed inverted menu">
+            <div class="ui sidebar-launch button">
+                <i class="icon list layout"></i>
+            </div>
+            <div class="right menu">
+                <a class="item" href="https://embedthis.com/">Embedthis</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
+                    <span class="desktop-only">
+                        <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://embedthis.com/blog/">Blog</a>
+                        <a class="item" href="https://twitter.com/embedthat">Twitter</a>
+                    </span>
+
+            </div>
+        </div>
+        
+        <div class="ui breadcrumb">
+            <a class="section" href="../">Home</a>
+            
+            <div class="divider">/</div>
+            <a class="section" href="../users/">
+                User's Guide
+            </a>
+            
+            
+            <div class="divider">/</div>
+            <a class="active section" href="directives.html">Configuration directives</a>
+            
+        </div>
+        
+        <iframe class="version desktop-only" src="../version.html"></iframe>
+
+    </div>
+    <div class="content">
+
+            <h1>Configuration Directives</h1>
+            <p>This is the list of Appweb supported configuration directives.</p>
+            <table title="directives" class="ui table segment">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="dir/route.html#action">Action</a></td>
+                        <td>CGI program to handle specific content.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#addInputFilter">AddInputFilter</a></td>
+                        <td>Add an input filter to the processing pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#addHandler">AddHandler</a></td>
+                        <td>Add a handler for processing given file extensions.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#addLanguageSuffix">AddLanguageSuffix</a></td>
+                        <td>Add a supported language and filename suffix to use for this language.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#addLanguageDir">AddLanguageDir</a></td>
+                        <td>Add a per-language content directory.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#addOutputFilter">AddOutputFilter</a></td>
+                        <td>Add an output filter to the processing pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#addType">AddType</a></td>
+                        <td>Add a MIME type specification.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#alias">Alias</a></td>
+                        <td>Map URLs to directories.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#allow">Allow</a></td>
+                        <td>Define which servers can access content.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#authAutoLogin">AuthAutoLogin</a></td>
+                        <td>Automatically login as the designated user.</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a href="dir/auth.html#authDigestQop">AuthDigestQop</a></td>
+                        <td>Define the quality of protection for Digest Authentication.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#authGroupFile">AuthGroupFile</a></td>
+                        <td>Define the name of the user group file for authentication.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#authStore">AuthStore</a></td>
+                        <td>Define the authentication method: "config" or "system".</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#authName">AuthName</a></td>
+                        <td>Define the realm of users to be permitted access to this set of documents.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#authType">AuthType</a></td>
+                        <td>Define the type of authentication to use: Basic, Digest or Form.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#authUserFile">AuthUserFile</a></td>
+                        <td>Define the file of user names.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#cache">Cache</a></td>
+                        <td>Configure client and server side caching.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#serverName">CanonicalName</a></td>
+                        <td>Define a name for the server to use when creating redirections.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#cgiEscape">CgiEscape</a></td>
+                        <td>Escape shell special characters in CGI environment variables.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#cgiPrefix">CgiPrefix</a></td>
+                        <td>Define a prefix string for URI query and form variables when passing to CGI programs.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#chroot">Chroot</a></td>
+                        <td>Define the directory for a "chroot jail" in which Appweb will execute.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#condition">Condition</a></td>
+                        <td>Define a conditional test for a route.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#crossOrigin">CrossOrigin</a></td>
+                        <td>Define cross-origin sharing exceptions for the route.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#defaultLanguage">DefaultLanguage</a></td>
+                        <td>Set the default language to use for a route.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#defense">Defense</a></td>
+                        <td>Define a defensive response for attack monitoring.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#deny">Deny</a></td>
+                        <td>Define which servers cannot access content.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/dir.html#directoryIndex">DirectoryIndex</a></td>
+                        <td>Define the default index file to service for directory requests.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#documents">Documents</a></td>
+                        <td>Directory containing web content.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#errorDocument">ErrorDocument</a></td>
+                        <td>Define an error document to serve.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/log.html#errorLog">ErrorLog</a></td>
+                        <td>Define the location and format of the error log.</td>
+                    </tr>
+                    <tr><td><a href="dir/esp.html#espApp">EspApp</a></td>
+                        <td>Define an ESP application.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#exitTimeout">ExitTimeout</a></td>
+                        <td>Define the timeout period to wait for requests to complete before exiting or restarting.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#fastConnect">FastConnect</a></td>
+                        <td>Configure FastCGI for the route.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#groupAccount">GroupAccount</a></td>
+                        <td>Define the O/S account group used by Appweb.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#header">Header</a></td>
+                        <td>Manage the response headers.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#home">Home</a></td>
+                        <td>Define the directory containing configuration files.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#ignoreEncodingErrors">IgnoreEncodingErrors</a></td>
+                        <td>Ignore UTF-8 encoding errors in WebSockets</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/dir.html#indexOptions">IndexOptions</a></td>
+                        <td>Define the options for directory listings.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/dir.html#indexOrder">IndexOrder</a></td>
+                        <td>Define the order of processing directory index options.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#inactivityTimeout">InactivityTimeout</a></td>
+                        <td>Maximum request and connection inactivity duration.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitCache">LimitCache</a></td>
+                        <td>Set the maximum size of the Appweb cache for responses and sessions.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitCacheItem">LimitCacheItem</a></td>
+                        <td>Set the maximum size of a single item in the Appweb cache.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitChunk">LimitChunk</a></td>
+                        <td>Set the maximum transfer chunk encoding size.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitClients">LimitClients</a></td>
+                        <td>Set the limit of simultaneous clients.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitRequests">LimitConnections</a></td>
+                        <td>Set the limit of simultaneous client connections.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitRequests">LimitConnectionsPerClient</a></td>
+                        <td>Set the limit of simultaneous client connections per client.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitFiles">LimitFiles</a></td>
+                        <td>Set the maximum number of open files or sockets on a Unix system.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitKeepAlive">LimitKeepAlive</a></td>
+                        <td>Define the re-use count for a connection.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitMemory">LimitMemory</a></td>
+                        <td>Limit the total memory usage of Appweb. This is a hard limit.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitPacket">LimitPacket</a></td>
+                        <td>Set the maximum packet size for pipeline queues and stages.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitProcesses">LimitProcesses</a></td>
+                        <td>Maximum number of CGI processes to spawn.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitRequestsPerClient">LimitRequestsPerClient</a></td>
+                        <td>Set the limit of simultaneous requests for a single IP address.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitRequestBody">LimitRequestBody</a></td>
+                        <td>Set the maximum size of the incoming request body.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitRequestForm">LimitRequestForm</a></td>
+                        <td>Set the maximum size of the incoming request form data.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitRequestHeader">LimitRequestHeader</a></td>
+                        <td>Set the maximum total request header size.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitRequestHeaderLines">LimitRequestHeaderLines</a></td>
+                        <td>Set the maximum number of request header lines.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitResponseBody">LimitResponseBody</a></td>
+                        <td>Set the maximum response body size.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitSessions">LimitSessions</a></td>
+                        <td>Set the limit of simultaneous client sessions.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitStreams">LimitStreams</a></td>
+                        <td>Set the limit of HTTP/2 streams per connection.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitUpload">LimitUpload</a></td>
+                        <td>Set the maximum file upload size.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitUri">LimitUri</a></td>
+                        <td>Set the maximum size of a request URI.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitWebSocketsFrame">LimitWebSocketsFrame</a></td>
+                        <td>Limit the maximum size of a Web Sockets Message Frame.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitWebSocketsMessage">LimitWebSocketsMessage</a></td>
+                        <td>Limit the maximum size of a Web Sockets Message.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitWebSocketsPacket">LimitWebSocketsPacket</a></td>
+                        <td>Limit the maximum size of a Web Sockets Message Packet.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitWorkers">LimitWorkers</a></td>
+                        <td>Limit the maximum size of a Web Sockets Message.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#listen">Listen</a></td>
+                        <td>Define the IP address and port on which to listen.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/module.html#loadModule">LoadModule</a></td>
+                        <td>Load an Appweb module.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/module.html#loadModulePath">LoadModulePath</a></td>
+                        <td>Specify a list of directories to search for modules.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/log.html#log">Log</a></td>
+                        <td>Control the tracing of HTTP events.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#map">Map</a></td>
+                        <td>Control the mapping of requests by extension.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#memoryPolicy">MemoryPolicy</a></td>
+                        <td>Define the action to take when memory is depleted.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#methods">Methods</a></td>
+                        <td>Control the acceptable HTTP method verbs.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#monitor">Monitor</a></td>
+                        <td>Monitor a resource for attacks and trigger a defensive response.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/dir.html#options">Options</a></td>
+                        <td>Control directory listing options.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#order">Order</a></td>
+                        <td>Specify the order in which the allow and deny directives apply.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#param">Param</a></td>
+                        <td>Define a route step to test request param values.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#prefix">Prefix</a></td>
+                        <td>Define a route prefix to trim from the URI.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#preserveFrames">PreserveFrames</a></td>
+                        <td>Preserve WebSocket frames.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="dir/route.html#redirect">Redirect</a></td>
+                        <td>Redirect requests to a new target.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#requestHeader">RequestHeader</a></td>
+                        <td>Define a HTTP request header test for a route.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#requestParseTimeout">RequestParseTimeout</a></td>
+                        <td>Maximum time to parse a request or response HTTP headers.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#requestTimeout">RequestTimeout</a></td>
+                        <td>Maximum request duration.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#require">Require</a></td>
+                        <td>Define which authenticated users will be permitted access to content.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#route">Reroute</a></td>
+                        <td>Open a previously defined route to add or modify directives.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#resetPipeline">ResetPipeline</a></td>
+                        <td>Reset the input and output pipeline for a block.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/auth.html#role">Role</a></td>
+                        <td>Defines an authentication role with associated abilities.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#route">Route</a></td>
+                        <td>Define a block of directives to apply to a URL route.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#routeName">RouteName</a></td>
+                        <td>Set the route name.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#scriptAlias">ScriptAlias</a></td>
+                        <td>Map a URL to a directory for CGI processing.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#setConnector">SetConnector</a></td>
+                        <td>Set the connector stage for a block.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#setHandler">SetHandler</a></td>
+                        <td>Set the handler to process requests.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#source">Source</a></td>
+                        <td>Define source code for the handler to use.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#startWorkers">StartWorkers</a></td>
+                        <td>Number of worker threads to pre-allocate and preserve.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#stealth">Stealth</a></td>
+                        <td>Control stealth mode.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#target">Target</a></td>
+                        <td>Define the target action to take for a route to serve a response to the client.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#threadStack">ThreadStack</a></td>
+                        <td>Stack size for each thread.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#serverName">ServerName</a></td>
+                        <td>Define the server names to be served by a host or virtual host.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#sessionCookie">SessionCookie</a></td>
+                        <td>Control the visibility of the session cookie in the browser.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#sessionTimeout">SessionTimeout</a></td>
+                        <td>Maximum session state inactivity duration.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/ssl.html#sslCaCertificateFile">SSLCACertificateFile</a></td>
+                        <td>Define the location of the client certificate file.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="dir/ssl.html#sslCertificateFile">SSLCertificateFile</a></td>
+                        <td>Define the server certificate.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/ssl.html#sslCertificateKeyFile">SSLCertificateKeyFile</a></td>
+                        <td>Define the server's private key.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/ssl.html#sslCipherSuite">SSLCipherSuite</a></td>
+                        <td>Set the cipher suite to use for SSL.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/ssl.html#sslEngine">SSLEngine</a></td>
+                        <td>Enable SSL processing for a block.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/ssl.html#sslProtocol">SSLProtocol</a></td>
+                        <td>Set the SSL protocols to enable.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/ssl.html#sslVerifyClient">SSLVerifyClient</a></td>
+                        <td>Verify the identity of the client certificate.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/ssl.html#sslVerifyIssuer">SSLVerifyIssuer</a></td>
+                        <td>Verify the identity of the issuer or the client certificate.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#streamInput">StreamInput</a></td>
+                        <td>Control if request body content is buffered or streamed to the handler.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#target">Target</a></td>
+                        <td>Define a route target.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/log.html#trace">Trace</a></td>
+                        <td>Define what request events to trace.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/log.html#traceLog">TraceLog</a></td>
+                        <td>Define the location and format of the request trace log.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#typesConfig">TypesConfig</a></td>
+                        <td>Specify the location of the MIME types file.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/module.html#unloadModule">UnloadModule</a></td>
+                        <td>Unload an Appweb module.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#update">Update</a></td>
+                        <td>Define an update modification for a route.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#uploadDir">UploadDir</a></td>
+                        <td>Set the directory for uploaded files.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#uploadDir">UploadAutoDelete</a></td>
+                        <td>Control if files are auto-deleted after uploading.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/server.html#userAccount">UserAcount</a></td>
+                        <td>Define the O/S user account used by Appweb.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/vhost.html#virtualHost">VirtualHost</a></td>
+                        <td>Create a directory block for virtual hosting for an IP address.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+    </div>
+    <div class="terms ui basic center aligned segment">
+        <p>&copy; Embedthis Software. All rights reserved.</p>
+    </div>
+
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/jquery/jquery.slim.min.js"></script>
+    <script src="../lib/semantic-ui/semantic.min.js"></script>
+    <script src="../scripts/sidebar.min.js"></script>
+     
+
+    
+
+
+
+

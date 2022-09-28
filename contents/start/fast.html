@@ -1,0 +1,30 @@
+{
+    title:  'Building with FastCGI',
+    crumbs: [
+        { "Getting Started": '../start/' },
+    ],
+}
+            <h1>Building Appweb with FastCGI Support</h1>
+
+            <p>Appweb includes support for <a href="https://en.wikipedia.org/wiki/FastCGI">FastCGI</a> on Unix like systems.
+                However it is not enabled by default to minimize the security surface. If you wish to use FastCGI, you need to enable FastCGI and rebuild Appweb.</p>
+
+            <p>To build Appweb with FastCGI support via <a href="https://www.embedthis.com/makeme">MakeMe</a>, use the following:</p>
+<pre class="ui code segment">
+./configure --with fast
+me</pre>
+
+<p>If you are building with <em>make</em>, use:</p>
+<pre class="ui code segment">
+make ME_COM_FAST=1</pre>
+
+            <h3>FastCGI Configuration</h3>
+            <p>There is no default configuration for FastCGI in the supplied appweb.conf. You will need to add directives to your appweb.conf once Appweb is built with FastCGI support. The FastCGI handler is configured via the <a href="../users/dir/route.html#fastConnect">FastConnect</a> configuration directive.</p>
+
+            <p>For example, to run PHP scripts using FastCGI:</p>
+<pre class="ui code segment">
+Action application/x-php /usr/local/bin/php-cgi
+FastConnect 127.0.0.1 launch
+AddHandler fastHandler php
+Target run $1
+</pre>

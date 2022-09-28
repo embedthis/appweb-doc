@@ -1,0 +1,47 @@
+{
+    title:  'Multithreaded Programming',
+    crumbs: [
+        { 'Reference': '../ref/' },
+    ],
+}
+
+            <h1>Multithreaded Programming</h1>
+            <a id="overview"></a>
+            <h2>Overview</h2>
+            <p>Programming in a multithreaded environment can be difficult. Sometimes programming errors surface due to timing related issues as multiple threads interact. Multithread locks can become tangled and bugs can be difficult to reproduce. To alleviate these problems and enable the benefits of a multi-threaded core, Appweb provides a suite of facilities to make multithreaded programming easier, more reliable, and more efficient.</p>
+
+            <h3>The Problem of Multithreaded I/O Events</h3>
+            <p>A particularly thorny issue in multithreaded servers is how to handle I/O without consuming a thread for each request. It is not practical to dedicate a thread to each HTTP request. A single browser will often send 6-10 simultaneous requests. If each request consumed a thread for the duration, the web server would quickly consume too many threads and system performance would greatly suffer. </p>
+
+            <p>One solution is to use a thread pool. This allows a request to borrow a thread from a thread pool while the request is active and return the thread when it cannot immediately continue with servicing the request. A thread may not be able to continue because it is waiting for I/O from the client, or waiting for I/O to the client to drain over the network. Returning the thread to the pool allows other requests to use the thread while the first request is waiting for network I/O. When the network is ready, a thread can be obtained from the pool and the original request can continue. For this to work, an efficient network event service is essential. Appweb uses such a thread pool and event service to efficiently manage thread resources. </p>
+
+            <p>However, this use of such an event service and thread pool raises another problem: races between the foreground request thread and the background async I/O event thread. It is easy for these two threads to simultaneously interact and corrupt critical data structures. A typical solution is to use multithread locks to serialize access to such data, but this is a crude solution and often leads to brittle applications. Appweb has a better solution that effectively serializes all activity for a request: per-request event dispatchers.</p>
+
+            <a id="dispatchers"></a>
+            <h3>Event Dispatchers</h3>
+            <p>The Multithreaded Portable Runtime (MPR) used by Appweb has a facility called Event Dispatchers. These are event queues on which all I/O and other event activity for a request can be queued and serviced. Each request has its own dispatcher and so events for a request are serialized.  When a network I/O event is received by Appweb for a request, an event is queued on the request's dispatcher. If the request is currently active (using a thread from the thread pool), the event is queued and no immediate action is taken. When the request has finished its current activity, it will service events on its dispatcher queue and eventually service the I/O event. If the request is currently idle, a thread is assigned from the thread pool for the request, and the thread is resumed to service the request's dispatcher queue. This greatly simplifies Appweb as all activity for a request is thus serialized via the dispatcher queue.</p>
+
+            <p>By using event dispatchers, multithread locking is not required on every API &mdash; because activity is serialized by the dispatcher. This significantly boosts performance and reduces the risk of lock contention.</p>
+
+            <a id="multithreaded"></a>
+            <h3>Multithreaded Appweb</h3>
+            <p>By using request dispatchers, Appweb serializes all request activity, yet it can support many simultaneous requests due to its multithreaded core. Appweb efficiently utilizes thread resources by using a thread pool and not permanently dedicating threads to requests. Threads are temporarily assigned only as required by active requests.</p>
+
+            <a id="safety"></a>
+            <h3>Thread Safety</h3>
+            <p>Most Appweb APIs are not thread safe unless explicitly documented. Consequently, you must not call Appweb APIs from foreign (non-Appweb) threads or from Appweb threads while operating on another dispatcher. To operate on a connection or request, you must run such code from an event running on the appropriate dispatcher. </p>
+
+            <p>To communicate or call Appweb APIs for a request or connection, you must create an event that will invoke your code or API on the connection's event dispatcher. To do this, use:
+            <a href="../ref/api/http.html#group___http_stream_1ga10254442a823620d2ccd8b4334f71c38">httpCreateEvent</a>. This API is thread-safe and may be called from any Appweb or non-Appweb thread.</p>
+
+            <pre class="ui code segment">
+httpCreateEvent(q-&gt;stream-&gt;seqno, callback, data);
+</pre>
+            <p>This call will schedule the function <em>callback</em> to run from the stream dispatcher.</p>
+
+            <h4>Interacting with External Libraries or Services</h4>
+            <p>You can pass memory/messages from external libraries into Appweb via httpCreateEvent by using the MPR_EVENT_STATIC_DATA flag to indicate the message is not Appweb managed memory. When the event invokes your callback and you have finished with the memory, you can call free() if the memory was originally allocated directly or indirectly from malloc().</p>
+
+            <a id="locking"></a>
+            <h3>Locking</h3>
+            <p>If you have a requirement for a data structure that will be accessed and manipulated simultaneously by multiple threads, the MPR provides a suite of locking primitives. See <a href="../ref/api/mpr.html#group___mpr_sync">MprSynch</a> for the MPR Multithreaded Synchronization Services.</p>

@@ -1,0 +1,54 @@
+{
+    title:  'Installing on Windows',
+    crumbs: [
+        { 'Getting Started': '../start/' },
+        { 'Installing': 'installing.html' },
+    ],
+}
+            <h1>Installing on Windows</h1>
+            <p>The Embedthis Appweb install package for Windows is an installation executable compressed in a ZIP file
+            called:</p>
+            <pre class="code">
+appweb-VERSION-BUILD-MS-WIN-i686.exe.zip
+</pre>
+            <p>The distribution image contains the binary distribution, documentation and development headers, and
+            libraries in the one package. During installation you will have the option of installing the full package
+            or portions of the distribution.</p><a id="exe"></a>
+            <h2>Installing the EXE Image</h2>
+            <ol>
+                <li>Login with administrator privileges.</li>
+                <li>Run winzip and extract the contents of the zipped EXE install image to a folder of your
+                choosing.</li>
+                <li>Browse to the location holding the EXE install image and run it.</li>
+            </ol><a id="removing"></a>
+            <h2>Removing Appweb</h2>
+            <ol>
+                <li>Login with administrator privileges.</li>
+                <li>Run the <b>Add / Remove Programs</b> applet from the <b>control panel</b>.</li>
+                <li>Select <b>Embedthis Appweb</b> and choose remove.</li>
+            </ol><a id="silentInstallation"></a>
+            <h2>Silent Installation</h2>
+            <p>If you need to do batch or unattended installations, you can install Appweb silently. Use the
+            <b>/silent</b> switch to suppress questions and <b>/verysilent</b> to suppress all visual
+            output.</p>
+
+            <a id="running"></a>
+            <h2>Running Appweb</h2>
+            <p>Appweb will start when the installation procedure completes and will launch your browser directed at the
+            Appweb local home page. Thereafter, Appweb will automatically start if the system is rebooted.</p>
+            <p>If you wish to manually stop Appweb, right click on the Appweb Monitor icon in the system tray (lower
+            left corner of the task bar) and select the <b>Stop Appweb</b> option.
+            To restart Appweb, select the <b>Start Appweb</b> option.</p>
+
+            <p>Alternatively, you can run appweb manually in a command window.:</p>
+            <pre class="code">
+cd \Program Files\Embedthis Appweb
+bin\appweb
+</pre>
+            <p>Appweb is configured by default to listen on port 7777. To test that it is serving pages, point your
+            browser at http://localhost:7777. To tailor the Embedthis Appweb configuration, including the default port,
+            you may wish to edit the <b>appweb.conf</b> configuration file.</p>
+            <p>To get all the options for Appweb, run:</p>
+            <pre class="code">
+bin\appweb --help
+</pre>

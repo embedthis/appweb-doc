@@ -1,0 +1,6 @@
+
+        <div class="feedback">
+            <% renderFeedback("*"); %>
+        </div>
+        <@ renderScripts() @>
+

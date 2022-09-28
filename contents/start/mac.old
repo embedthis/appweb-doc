@@ -1,0 +1,53 @@
+{
+    title:  'Installing on Mac',
+    crumbs: [
+        { 'Getting Started': '../start/' },
+        { 'Installing': 'installing.html' },
+    ],
+}
+            <h1>Installing on MAC OS X</h1>
+            <p>The Embedthis Appweb install distribution for Mac OS X is published as a an installable pkg file.</p>
+
+            <a id="pkg"></a>
+            <h2>Installing the PKG Image</h2>
+            <ol>
+                <li>Double click on the PKG image.</li>
+            </ol>
+
+            <a id="removing"></a>
+            <h2>Removing Appweb</h2>
+            <ol>
+                <li>Run a terminal and change directory to the installation directory for Appweb. </li>
+                <li>Run the remove script in the install directory for Appweb by typing:</li>
+            </ol>
+            <pre class="ui code segment">
+sudo ./uninstall
+</pre>
+
+            <a id="running"></a>
+            <h2>Running Appweb</h2>
+            <p>Appweb will start when the installation procedure completes.
+            Thereafter, Appweb will automatically start when the system is rebooted.</p>
+            <p>If you wish to manually stop Appweb type:</p>
+            <pre class="ui code segment">
+sudo appman stop
+</pre>
+            <p>To restart Appweb:</p>
+            <pre class="ui code segment">
+sudo appman start
+</pre>
+            <p>Alternatively, you can run appweb manually (if not already running):</p>
+            <pre class="ui code segment">
+cd /etc/appweb
+appweb
+</pre>
+            <p>Appweb is configured by default to listen on port 80. To test that it is serving pages, point your
+            browser at http://localhost. To tailor the Embedthis Appweb configuration, including the default port,
+            you may wish to edit the appweb.conf configuration file.</p>
+            <p>To get all the options for Appweb read the man page via:</p>
+            <pre class="ui code segment">
+man appweb
+</pre>or get the command help via:
+            <pre class="ui code segment">
+appweb --help
+</pre>

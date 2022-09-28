@@ -1,0 +1,43 @@
+{
+    title:  'Building with OpenSSL',
+    crumbs: [
+        { "Getting Started": '../start/' },
+    ],
+}
+            <h1>Building Appweb from Source</h1>
+            <p>Appweb includes support for multiple SSL stacks including: </p>
+            <ul>
+                <li><a href="https://tls.mbed.org/">mbedTLS</a></li>
+                <li><a href="https://www.openssl.org/">OpenSSL</a></li>
+            </ul>
+
+            <p>MbedTLS is a compact TLS implementation suitable for using in embedded devices. Appweb includes the MbedTLS distribution and will build with it by default.</p>
+            <p>OpenSSL is a leading open source SSL stack that is faster, but bigger. Appweb includes support for OpenSSL, but you must build or obtain the OpenSSL libraries yourself.</p>
+
+            <h3>Downloading OpenSSL the Source Code</h3>
+            <p>You can download OpenSSL from the <a href="https://www.openssl.org/">https://www.openssl.org/</a> web site. Alternatively, most Linux distributions include OpenSSL with their default distribution.</p>
+
+            <p>To use OpenSSL on Windows or MacOS you must first download OpenSSL (https://www.openssl.org/source/) and build it from source. We support the latest stable and LTS releases only. Once OpenSSL is built, you will need to supply the Appweb project with the pathname to your OpenSSL source code directory.
+
+            <h3>Building Appweb with OpenSSL via Make</h3>
+
+            <p>If you are building with <em>make</em>, first copy the built OpenSSL libraries to your build/*/bin directory. Then set the path to your OpenSSL source directory when you run make:</p>
+
+<pre class="ui code segment">
+make ME_COM_OPENSSL=1 ME_COM_OPENSSL_PATH=/path/to/openssl SHOW=1</pre>
+
+            <h3>Building Appweb with OpenSSL via MakeMe</h3>
+            <p>If you are building with <a href="https://www.embedthis.com/makeme">MakeMe</a>, then use the following:</p>
+            <pre class="ui code segment">
+./configure --with openssl=/path/to/openssl
+me</pre>
+
+            <h3>Building Appweb with OpenSSL via Visual Studio</h3>
+
+            <p>To set the path to your OpenSSL source directory, select "View -> Property Manager". Select "appweb" and edit the "product"  property page by expanding Debug. In the "product Property Pages" dialog, add a User Macro definition for the OpenSSL source directory.</p>
+
+<pre class="ui code segment">
+ME_COM_OPENSSL_PATH     path/to/openssl</pre>
+
+            <h3>Building Appweb with OpenSSL via Xcode on Mac OS</h3>
+            <p>To set the path to your OpenSSL source directory, click on "appweb-macosx-default" on the left to display the project settings. Select under "PROJECT" the "appweb-macosx-openssl_10" project and click on "Build Settings" in the panel in the center. Scroll down to define the path to your OpenSSL source code directory in the ME_COM_OPENSSL_PATH property.</p>

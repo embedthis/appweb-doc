@@ -1,0 +1,94 @@
+{
+    title:  'Migrating',
+    crumbs: [
+        { "Developer's Guide": '../developers/' },
+    ],
+}
+            <h1>Migrating to Appweb 4.X</h1>
+            <p>This document provides some guidance when upgrading to the latest Appweb release.</p>
+
+            <h2>Appweb 1-3</h2>
+            <p>If you are migrating from Appweb 1, 2 or 3, you should regard the latest Appweb as a next generation web server. You can migrate code from Appweb 1, 2 or 3 to Appweb latest, however, you should anticipate significant refactoring work in the transition.</p>
+
+            <h2>Changes in Appweb 4</h2>
+            <p>Appweb 4 provides equivalent or greater functionality to that in Appweb 3. While Appweb 4 may have a different interface or API, the capabilities of Appweb 3 have been continued in Appweb 4, and in many cases, the features have been enhanced.</p>
+
+            <h3>New Capabilities</h3>
+            <p>The following new capabilities have been added to Appweb 4 (and have no equivalent in Appweb 3). These additions should not require adjustment for applications developed under Appweb 3.</p>
+            <ul>
+                <li>Multi-Language support</li>
+                <li>Embedded Server Pages (ESP) web framework</li>
+                <li>Routing engine with request routing and rewrite</li>
+                <li>Integrated content caching</li>
+                <li>Enhanced cross-platform building (via MakeMe)</li>
+                <li>High performance event loop architecture</li>
+                <li>Extended security sandbox limits</li>
+                <li>Flexible request tracing and logging</li>
+            </ul>
+
+            <h3>Changed Capabilities</h3>
+            <p>The following capabilities have been changed and may impact your Appweb 3 applications.</p>
+            <ul>
+                <li>The core Appweb Http engine has been extracted, enhanced and is now a separate library. All the
+                APIs have a "http" prefix instead of an "ma" prefix.</li>
+                <li>The stand-alone Appweb command line program is upgraded with new switches and options.</li>
+                <li>The build system is upgraded and simplified. Appweb 4.6+ and Appweb 5 use the MakeMe build system.
+                    New configure options and cross compiling capabilities have been added. See more details below
+                in  <a href="#makeme">MakeMe Changes</a>.</li>
+            </ul>
+
+            <a name="makeme"></a>
+            <h3>MakeMe Changes</h3>
+            <p>When migrating from an Appweb version that used Bit for building, please not the following changes:</p>
+            <ul>
+                <li>All MakeMe files have a "<em>.me</em>" extension instead of "<em>.bit</em>".</li>
+                <li>The generated header is now named "<em>me.h</em>" instead of "<em>bit.h</em>".</li>
+                <li>The <em>me.h</em> header definitions use a <em>ME_</em> prefix instead of "<em>BIT_</em>".</li>
+                <li>The OS header is now named <em>osdep.h</em> instead of "<em>bitos.h</em>".</li>
+            </ul>
+            <h3>Removed Capabilities</h3>
+            <ul>
+                <li>The EGI handler has been removed and deprecated in favor of the ESP handler which has equivalent and extended functionality.</li>
+            </ul>
+
+            <h3>Changed APIs</h3>
+            <p>Many of the internal APIs in Appweb 4 have been changed. This is due to the utilization of a common Http library between Appweb and ESP.  Appweb 3 APIs have been renamed/converted on a function by function basis to equivalent APIs in Appweb 4. The APIs have very similar names to the previous counterpart.</p>
+
+            <h3>Memory Allocator</h3>
+            <p>Appweb 4 includes a high performance memory allocator and generational garbage collector. The allocator is a fast and immediate coalescing allocator. It is optimized for frequent allocations of small blocks and uses a background collector to free unused memory.</p>
+
+            <p>The garbage collector is somewhat unusual in a C program. However, garbage collection is especially well suited to long running applications like a web server since it virtually eliminates memory leaks. Unlike traditional memory allocation where <em>free</em> must be called, Appweb 4 uses the opposite approach: memory that must be retained needs to be actively managed to prevent garbage collection. This means that a <em>managed reference</em> must be held for all active memory. See <a href="../ref/memory.html">Memory Allocation</a> for more details.</p>
+
+            <p>The Appweb 3 memory API required a memory context argument for all memory allocations. This required many APIs to have a memory context as the first parameter. Appweb 4 does not require this and these APIs have removed the memory context parameter.</p>
+
+            <a id="config"></a>
+            <h2>Migrating Appweb Configuration Files</h2>
+            <p>The Appweb 4 configuration file is substantially the same as the Appweb 3. 'Include' directives can now contain wild cards and there are several new directives supporting Routing, Multi-language support and the Embedded Server Pages web framework. The big change is that Route directives replace the Directory and Location directives. </p>
+
+            <h3>Routes vs Directory/Location Directives</h3>
+            <p>Appweb 4 uses a more flexible Route directive instead of the Appweb 2/3 Directory and Location directives. The Route directive has more flexibility and allows powerful regular expression URI parsing and routing. In nearly all cases, Location and Directory directives should easily migrate to Route directives. <p>See <a href="../users/configuration.html">Configuring Appweb</a> and <a href=
+            "../users/configuration.html#directives">Configuration Directives</a> for more details.</p>
+
+            <a id="modules"></a>
+            <h2>Migrating Modules and Handlers</h2>
+            <p>Appweb 4 modules use modified API signatures to initialize with Appweb. In Appweb 4, the MPR module is pre-created and passed into the module. See the <a href="modules.html">Creating Modules</a> document for more details. </p>
+
+            <p>In many cases, the new Embedded Server Pages (ESP) web framework provides a simpler and more flexible way to add functionality to Appweb compared with custom handlers and modules. ESP allows the easy binding of "C" language functions to request URIs via powerful Controllers and the Appweb routing engine.</p>
+
+            <h2>Embedded Server Pages</h2>
+            <p>ESP is the single biggest change in Appweb 4. ESP is a powerful Model/View/Controller web framework that offers:</p>
+            <ul>
+                <li>Transparent compilation of ESP programs and web pages</li>
+                <li>Embedded C code directly in web pages</li>
+                <li>Template web pages with layout pages</li>
+                <li>Caching of compiled ESP and web pages</li>
+                <li>Caching of generated request responses</li>
+                <li>Model/View/Controller framework</li>
+                <li>Ajax jQuery integration and support</li>
+                <li>Native code level performance</li>
+                <li>Compact memory footprint</li>
+            </ul>
+
+            <a id="cgi"></a>
+            <h2>Migrating CGI Programs</h2>
+            <p>CGI programs should migrate unchanged. The CGI handler in Appweb 4 offers much higher performance by using pipes for I/O instead of files.</p>

@@ -1,0 +1,70 @@
+{
+    title:  'Migrating',
+    crumbs: [
+        { "Developer's Guide": '../developers/' },
+    ],
+}
+            <h1>Migrating from Earlier Versions</h1>
+            <p>Appweb 4 to 8 are highly compatible. Code written for Appweb 4 to 6 should migrate to Appweb 8 with few changes required.</p>
+
+            <p>If you are migrating from Appweb 1-3, you should regard Appweb latest as a next generation web server. You can migrate code from Appweb 1-3 to Appweb latest, however, you should anticipate significant refactoring work in the transition, especially with regard to memory allocations.</p>
+
+            <a id="changes"></a>
+            <h2>Migrating to Appweb 9</h2>
+            <p>Appweb 8 adds support for the FastCGI protocol and HTTP Proxies. Appweb 9 is API compatible with Appweb 8. Appweb 9 has improved and optimized pipeline processing and so the timing of certain operations may be modified. Applications, handlers and filters should need very little refactoring to work with Appweb 9. </p>
+
+            <h2>Migrating to Appweb 8</h2>
+            <p>Appweb 8 adds support for the HTTP/2 protocol. HTTP/2 is a higher performance binary protocol that supports multiplexing multiple request streams over a single network connection. This necessitates some API changes and so applications, handlers and filters may need some minor refactoring to work with Appweb 8. See the separate document <a href="migrating-8.html">Migrating to Appweb 8</a> for details.</p>
+
+            <h2>Changes in Appweb 7</h2>
+            <p>Appweb 7 removes deprecated APIs and contains bug fixes. There are no major new features.</p>
+
+            <h2>Changes in Appweb 6</h2>
+            <p>Appweb 6 APIs are substantially compatible with Appweb 4-5, though previously deprecated APIs have been removed.</p>
+
+            <h2>Changes in Appweb 5</h2>
+            <p>Appweb 5 APIs are substantially compatible with Appweb 4, though previously deprecated APIs have been removed. The following new capabilities were added for Appweb 5.</p>
+            <ul>
+                <li>ESP is now a stand-alone product and can be run separately</li>
+                <li>ESP applications are now configured via <em>esp.json</em> configuration files</li>
+                <li>Appweb and ESP are now more modular and heavily use the Pak tool to install and manage
+                    extension components from the <a href="https://embedthis.com/catalog/">Online Pak Catalog</a>.
+            </ul>
+            <p>Appweb 4.6+ and Appweb 5 use the MakeMe build system. New configure options and cross compiling capabilities have been added. See more details below in  <a href="#makeme">MakeMe Changes</a>.</p>
+
+            <h2>Changes in Appweb 4</h2>
+            <p>Appweb 4 provides equivalent or greater functionality to that in Appweb 3. While Appweb 4 may have a different interface or API, the capabilities of Appweb 3 have been continued in Appweb 4, and in many cases, the features have been enhanced. See the separate document <a href="migrating-4-5.html">Migrating to Appweb 4 for details.</a></p>
+
+            <p>The following new capabilities have been added to Appweb 4 (and have no equivalent in Appweb 3). These additions should not require adjustment for applications developed under Appweb 3.</p>
+            <ul>
+                <li>Multi-Language support</li>
+                <li>Embedded Server Pages (ESP) web framework</li>
+                <li>Routing engine with request routing and rewrite</li>
+                <li>Integrated content caching</li>
+                <li>Enhanced cross-platform building (via MakeMe)</li>
+                <li>High performance event loop architecture</li>
+                <li>Extended security sandbox limits</li>
+                <li>Flexible request tracing and logging</li>
+            </ul>
+
+            <p>The following capabilities have been changed and may impact your Appweb 3 applications.</p>
+            <ul>
+                <li>The core Appweb Http engine has been extracted, enhanced and is now a separate library. All the APIs have a "http" prefix instead of an "ma" prefix.</li>
+                <li>The stand-alone Appweb command line program is upgraded with new switches and options.</li>
+                <li>The build system is upgraded and simplified. Appweb 4.6+ and Appweb 5 use the MakeMe build system. New configure options and cross compiling capabilities have been added. See more details below in  <a href="#makeme">MakeMe Changes</a>.</li>
+            </ul>
+
+            <a name="makeme"></a>
+            <p>When migrating from an Appweb version that used Bit for building, please not the following changes:</p>
+            <ul>
+                <li>All MakeMe files have a "<em>.me</em>" extension instead of "<em>.bit</em>".</li>
+                <li>The generated header is now named "<em>me.h</em>" instead of "<em>bit.h</em>".</li>
+                <li>The <em>me.h</em> header definitions use a <em>ME_</em> prefix instead of "<em>BIT_</em>".</li>
+                <li>The OS header is now named <em>osdep.h</em> instead of "<em>bitos.h</em>".</li>
+                <li>The EGI handler has been removed and deprecated in favor of the ESP handler which has equivalent and extended functionality.</li>
+            </ul>
+
+            <h3>Memory Allocator</h3>
+            <p>Appweb version 4 to 8 include a high performance memory allocator and generational garbage collector. The allocator is a fast and immediate coalescing allocator. It is optimized for frequent allocations of small blocks and uses a background collector to free unused memory. If you are upgrading from Appweb 1-3, you will need to change how you are doing memory allocations.</p>
+
+            <p>The garbage collector is somewhat unusual in a C program. However, garbage collection is especially well suited to long running applications like a web server since it virtually eliminates memory leaks. Unlike traditional memory allocation where <em>free</em> must be called, Appweb 4 uses the opposite approach: memory that must be retained needs to be actively managed to prevent garbage collection. This means that a <em>managed reference</em> must be held for all active memory. See <a href="../ref/memory.html">Memory Allocation</a> for more details.</p>

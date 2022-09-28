@@ -1,0 +1,49 @@
+/*
+    start.me - MakeMe build file
+ */
+
+Me.load({
+    configure: {
+        requires: ['appweb'],
+    },
+    targets: {
+        certs: {
+            type: 'file'
+            files: '../../src/certs/samples/self.*',
+            path: '.',
+        },
+        precompile: {
+            run: `appweb-esp compile`
+        },
+        makedev: {
+            action: `
+                if (App.uid == 0) {
+                    let dev = Path('dev')
+                    dev.makeDir()
+                    for each (name in [ 'random', 'urandom' ]) {
+                        dev.join(name).remove()
+                        let [,maj,min] = Cmd.run('ls -l /dev/' + name).match(/(\\d*), *(\\d*)/)
+                        // print('mknod dev/' + name + ' c ' + maj + ' ' + min)
+                        try {
+                            Cmd.run('mknod dev/' + name + ' c ' + maj + ' ' + min)
+                        } catch (e) {
+                            if (Config.OS != 'macosx') {
+                                throw e
+                            }
+                        }
+                    }
+                } else {
+                    throw 'Must run as root'
+                }
+            `
+        },
+        run: {
+            depends: [ 'makedev', 'precompile' ],
+            run: 'appweb',
+        },
+        cleanup: {
+            type: 'clean',
+            action: "rm('error.log*')",
+        },
+    },
+})

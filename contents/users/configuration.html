@@ -1,0 +1,135 @@
+{
+    title:  'Configuration',
+    crumbs: [
+        { "User's Guide": '../users/' },
+    ],
+}
+            <h1>Configuring Appweb</h1>
+            <p>The Appweb operation is typically controlled by an Appweb configuration file. This configuration file is
+            read when Appweb starts up, and it manages every aspect of Appweb's configuration including what ports and
+            addresses to listen to, what modules to load, where to find the web pages and how to log requests.</p>
+            <p>Appweb can also be configured programmatically. For details, please read the <a href=
+            "../ref/api/appweb.html">Appweb API</a>.</p>
+            <p>The top-level configuration file is usually called <b>appweb.conf</b> and is read once when appweb is
+            started. Changes to the configuration file will require Appweb to be restarted.</p>
+            <p>An alternative configuration file may be specified by using the <b>--config</b> Appweb command
+            option.</p>
+            <pre class="ui code segment">
+appweb --config myConfigFile.conf
+</pre>The configuration file may include other configuration files and it is normal practice to partition the
+configuration file into sections &mdash; especially application definitions.
+            <h2>Apache Compatible</h2>
+            <p>The Appweb configuration file closely matches that used by the Apache web server. Compatibility with the
+            <a href="http://httpd.apache.org/docs/2.2/configuring.html">Apache</a> configuration file has been a goal
+            to minimize learning time and switching costs. While the level of compatibility is high, there are a few
+            differences:</p>
+            <ul>
+                <li>The Appweb configuration file is processed in a single-pass.</li>
+                <li>A subset of Apache directives are supported.</li>
+                <li>For enhanced security, Appweb has a few extra security directives</li>
+            </ul>
+            <p>By processing directives on a single-pass, Appweb is more efficient, but the order of directives does
+            matter with Appweb.</p><a id="syntax"></a>
+            <h2>Configuration File Syntax</h2>
+            <p>Configuration directives are one per line and are case-insensitive for the directive names. Lines
+            beginning with a "#" character are comments and are ignored.</p>
+            <h2>Sample configuration file</h2>
+            <pre class="ui code segment">
+Home "."
+ErrorLog error.log
+ServerName http://localhost:7777
+Documents "/var/web"
+Listen 7777
+LoadModule espHandler mod_esp
+AddHandler espHandler esp
+</pre>
+            <a id="blocks"></a>
+            <h2>Configuration Blocks</h2>
+            <p>The configuration file is comprised of several directive groups or blocks:</p>
+            <ul>
+                <li>Global Directives</li>
+                <li>Route Blocks</li>
+                <li>Virtual Host Blocks</li>
+            </ul>
+            <p>When a new block is defined, it inherits the settings of the outer block. New directives defined inside
+            a block are local to that block.</p>
+            <h2>Global Directives</h2>
+            <p>A directive is regarded as global if it is not enclosed in a block. You cannot nest blocks of a like
+            kind. i.e. you cannot nest a directory block inside a directory block.</p>
+            <h2>Route Blocks</h2>
+            <p>A Route block defines a group of directives that apply to a specific URL. The block is created by the
+            <b>Route</b> directive.</p>
+            <pre class="ui code segment">
+&lt;Route "/myapp/"&gt;
+    SetHandler esp
+&lt;/Route&gt;
+</pre>
+            <p>This will configure Appweb to pass requests that begin with the URL "/myapp" to the
+                <em>esp</em> handler.</p>
+            <h2>Virtual Host Blocks</h2>
+            <p>A Virtual host block defines a group of directives that apply to a virtual sub-server. A virtual server
+            may be associated with a virtual server name or with an IP address. Virtual hosts enable you to segment the
+            web server to serve unique content for different domains or IP addresses.</p>
+            <p>Here is an example of an IP-based virtual host.</p>
+            <pre class="ui code segment">
+&lt;VirtualHost&gt;
+    Documents /var/www/mycorp
+    ...
+&lt;/VirtualHost&gt;
+</pre>
+            <p>Here is an example of a Name-based virtual host.</p>
+            <pre class="ui code segment">
+&lt;VirtualHost&gt;
+    ServerName www.mycorp.org
+    Documents /var/www/mycorp
+    ...
+&lt;/VirtualHost&gt;
+</pre>
+            <p>See <a href="vhosts.html">Virtual Hosting</a> for more details.</p><a id="include"></a>
+            <h2>Include Directives</h2>
+            <p>The <b>include</b> directive allows other files to be included in the configuration file. The include
+            directive can be a single filename or filename with wildcards.</p>
+            <pre class="ui code segment">
+Include myconfig.conf
+Include conf/applications/*.conf
+</pre>
+            <a id="conditional"></a>
+            <h2>Conditional Directives</h2>
+            <p>The configuration file supports conditional processing via the <b>&lt;if&gt;</b> directive. The
+            <b>if</b> directive tests a symbolic value and if true, it enables parsing the nested directives. If the
+            value is false, the nested directives are ignored.</p>
+            <pre class="ui code segment">
+&lt;if ESP_MODULE&gt;
+    LoadModule espHandler mod_esp
+&lt;/if&gt;
+</pre>
+            <p>This will load the file handler if it has been enabled via the <b>configure</b> command.</p>
+            <h2>Supported Conditional Values</h2>
+            <table title="values" class="ui table segment">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BLD_DEBUG</td>
+                        <td>True if this is a DEBUG build</td>
+                    </tr>
+                    <tr>
+                        <td>NAME_MODULE</td>
+                        <td>True if the module if enabled, where NAME is the name of the module.</td>
+                    </tr>
+                </tbody>
+            </table><a id="order"></a>
+            <h2>Order of Processing</h2>
+            <p>The configuration file is parsed in a single top-to-bottom pass. The order of directives is important
+            as certain directives depend on others. For example, you must define the Home before using the
+            LoadModule directive. Also, block level directives inherit their configuration from the outer block.
+            For example: a Route block will inherit the outer configuration and may modify that inside the Route block.</p>
+
+            <a id="directives"></a>
+            <h2>Configuration File Directives</h2>
+            <p>Consult the <a href="directives.html">Configuration Directives</a> for a full list of the
+            supported appweb.conf directives.</p>

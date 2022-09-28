@@ -1,0 +1,73 @@
+{
+    title:  'Virtual Hosts',
+    crumbs: [
+        { "User's Guide": '../users/' },
+    ],
+}
+            <h1>Virtual Hosts</h1>
+            <p>Virtual hosting is the capability of a single system to serve multiple web domain addresses. For example, 
+            a single server could respond to requests for www.acme.com and www.coyote.com. This is clearly useful for
+            public web sites, but virtual hosting is also an excellent technique to manage separate content within a
+            single domain. For example, the administration interface and the user interfaces can be implemented as
+            separate virtual hosts.</p><a id="configurationDirectives"></a>
+            <h2>Configuration Directives</h2>
+            <p>Virtual hosts are created by grouping configuration directives within a VirtualHost directive block.
+            Directives within the block apply only to the virtual host.</p>
+            <pre class="ui code segment">
+&lt;VirtualHost&gt;
+    ServerName www.acme.com
+    Documents /var/www/acmeDocs
+      ...
+&lt;/VirtualHost&gt;
+</pre>
+            <p>The VirtualHost directive may optionally take a list of IP:PORT endpoints on which to attach. Only these
+            endpoints will be connected to the virtual host. For example:
+            <pre class="ui code segment">
+&lt;VirtualHost *:80, *:443&gt;
+    ServerName www.acme.com
+    Documents /var/www/acme
+    ...
+&lt;/VirtualHost&gt;
+</pre>
+            <p>The VirtualHost directive creates a new Host and routes for that host. The settings of outer directives
+            are inherited, but the routes are not inherited.</p> 
+            <h2>Name-Based Virtual Hosts</h2>
+            <p>Name-based virtual hosts allow multiple virtual hosts to share an IP address by using the HTTP Host
+            header to distinguish which virtual host should service the request.</p>
+            <h3>Example</h3>
+            <pre class="ui code segment">
+&lt;VirtualHost&gt;
+    ServerName www.acme.com
+    Documents /var/www/acme
+    ...
+&lt;/VirtualHost&gt;
+&lt;VirtualHost&gt;
+    ServerName www.coyote.com
+    Documents /var/www/coyote
+    ...
+&lt;/VirtualHost&gt;
+</pre>
+            <p>In this example www.acme.com and www.coyote.com will listen on all endpoints.</p>
+
+            <p>The <em>ServerName</em> directive supports wild cards and regular expressions. In this manner, a single
+            virtual host block may serve multiple domains. For example</p> 
+            <code>ServerName *.example.com    # matches anything.example.com
+ServerName www.example.*    # matches any domain containing www.example.
+ServerName /example.com|acme.com|coyote.com/</code>
+            <a id="ipBasedVirtualHosts"></a>
+            <h2>IP-based Virtual Hosts</h2>
+            <p>IP-based virtual hosts allow multiple virtual hosts to be supported on a single server. Each IP-based
+            virtual host consumes a separate IP address.</p>
+            <pre class="ui code segment">
+&lt;VirtualHost 206.148.97.56&gt;
+    ServerName www.acme.com
+    Documents /var/www/acme
+    ...
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 206.148.97.57&gt;
+    ServerName www.coyote.com
+    Documents /var/www/coyote
+    ...
+&lt;/VirtualHost&gt;
+</pre>
+            <p>In this example, www.acme.com and www.coyote.com are separate virtual hosts.</p>

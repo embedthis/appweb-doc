@@ -1,0 +1,89 @@
+{
+    title:  'SSL',
+    crumbs: [
+        { "User's Guide": '../users/' },
+    ],
+}
+            <h1>Configuring SSL</h1>
+            <p>Appweb supports the Secure Sockets Layer (SSL) protocol for authenticating systems and encrypting data.
+            Use of this protocol enables secure data transmission to and from clients in a standards-based manner.</p>
+            <p>This document provides step-by-step instructions for configuring SSL in Appweb. If you are unfamiliar
+            with SSL, please read the <a href="sslOverview.html">SSL Overview</a> first.</p><a id="sslQuickStart"></a>
+            <h2>SSL Quick Start</h2>
+            <p>The default binary installation of Appweb will support SSL for all network interfaces. You
+            can immediately test SSL access to documents by using the <b>https://</b> scheme.
+            For example, to access the home page using SSL, use this URL in your browser:</p>
+            <pre class="ui code segment">
+https://localhost/
+</pre>
+            <h3>Self-Signed Certificate</h3>
+            <p>Appweb is shipped with a self-signed certificate to identify the web server.</p>
+            <p><b>SECURITY WARNING</b>: This certificate is suitable for testing purposes only and
+            your browser will issue a warning when you access the server. For
+            production use, you should obtain your own service certificate from signing authorities such as <a href="http://www.verisign.com">Verisign</a>.</p><a id="sslConfigurationDirectives"></a>
+            <h2>SSL Configuration Directives</h2>
+            <p>Appweb uses several configuration file directives to control SSL and manage secure access to the server. These directives can be specified in the Default Server section or in a Virtual Host section. </p>
+            <p>The relevant SSL directives are:</p>
+            <ul>
+                <li><a href="dir/ssl.html#sslCertificateFile">SSLCertificateFile</a></li>
+                <li><a href="dir/ssl.html#sslCertificateKeyFile">SSLCertificateKeyFile</a></li>
+                <li><a href="dir/ssl.html#sslCipherSuite">SSLCipherSuite</a></li>
+                <li><a href="dir/ssl.html#listenSecure">ListenSecure</a></li>
+            </ul>
+            <p>There are some additional directives that are necessary should you wish to have Appweb verify client
+            certificates. These directives are:</p>
+            <ul>
+                <li><a href="dir/ssl.html#sslVerifyClient">SSLVerifyClient</a></li>
+                <li><a href="dir/ssl.html#sslVerifyIssuer">SSLVerifyIssuer</a></li>
+                <li><a href="dir/ssl.html#sslCaCertificateFile">SSLCACertificateFile</a></li>
+                <li><a href="dir/ssl.html#sslCaCertificatePath">SSLCACertificatePath</a></li>
+            </ul><a id="sslConfigurationExample"></a>
+            <h2>SSL Configuration Example</h2>
+            <p>Consider the default Appweb SSL configuration in the appweb.conf configuration file:</p>
+            <pre class="ui code segment">
+SSLCertificateFile "self.crt"
+SSLCertificateKeyFile "self.key"
+ListenSecure 443
+</pre>
+            <p>This set of directives enables SSL on port 443 for all network interfaces and uses the default supplied
+                self-signed certificate to identify the server.</p>
+            <p>The <a href="dir/ssl.html#listenSecure">ListenSecure</a> directive instructs Appweb to process requests
+                from all interfaces on port 443 using current SSL configuration.</p>
+            <p>The <a href="dir/ssl.html#sslCertificateFile">SSLCertificateFile</a> directive specifies the server
+            certificate to use and the <a href="dir/ssl.html#sslCertificateKeyFile">SSLCertificateKeyFile</a> directive
+            specifies the server private key for signing.</p>
+            <p><b>SECURITY WARNING</b>: You must obtain or generate a SSL certificate before using this
+            example in a production environment.</p>
+            <p>The server key file is a PEM encoded private key. You may supply either an encrypted private key or a
+            decrypted private key. If you use an encrypted private key, the server will prompt you for a pass-phrase to
+            decrypt the key when the server boots.</p><a id="generatingKeys"></a>
+<!--
+            <h2>Generating Keys and Certificates</h2>
+            <p>To generate a request file that you can send to a certificate issuing authority such as <a href=
+            "http://www.verisign.com">Verisign</a>, use the following openssl command or equivalent command from your
+            SSL provider:</p>
+            <pre class="ui code segment">
+openssl genrsa -des3 -out server.key 1024
+openssl req -new -key server.key -out server.csr
+</pre>
+            <p>This will generate a server key in the file "server.key" and will generate a certificate request in the
+            file "server.csr" that you can send to the issuing authority. The issuing authority will generate a server
+            certificate for your server and they will sign it with their private key. Subsequently, clients will be
+            able to use the signing authorities public key to decrypt your server certificate and thus verify the
+            identity of your server when negotiating a SSL session. When running these commands, you will be prompted
+            to enter a pass-phrase password to decrypt the server private key. REMEMBER this password.</p>
+            <p><b>SECURITY WARNING</b>: Safeguard the "server.key" private key jealously. If this falls into malicious
+            hands, then your server identity may be hijacked by another site.</p><a id="sslProviders"></a>
+-->
+            <a name="sslProviders"></a>
+            <h2>SSL Providers</h2>
+            <p>Appweb employs an open architecture SSL Provider interface so that customers can select or create an SSL
+            provider for their needs.</p>
+            <p>Appweb provides multiple SSL implementations:</p>
+            <ul>
+                <li>MbedTLS -- designed for embedded use. This is the default SSL stack and is pre-integrated with Appweb. It is configured and enabled by default.</li>
+                <li>OpenSSL -- designed for enterprise use. See <a href="http://www.openssl.org">http://www.openssl.org</a>.</li>
+            </ul>
+
+            <p>The binary installation will use the MbedTLS provider by default.</p>
+            <p>To build with OpenSSL, please consult the projects/README.md file included with the source code.</p>

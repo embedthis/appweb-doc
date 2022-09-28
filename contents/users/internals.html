@@ -1,0 +1,74 @@
+{
+    title:  'Internals',
+    crumbs: [
+        { "User's Guide": '../users/' },
+    ],
+}
+            <h1>Embedthis Appweb&trade; Internals</h1>
+            <p>The core of Appweb is an event-driven, multi-threaded HTTP pipeline above which modules are loaded to
+            provide content specific handling and to extend its functionality.</p>
+            <p><img src="../images/modules.jpg" alt="modules" /></p>
+            <p>Appweb has the following features:</p>
+            <ul>
+                <li>High performance event based request engine.</li>
+                <li>Multi-threaded core for sync and async processing.</li>
+                <li>Modular architecture with dynamic module loading.</li>
+                <li>Garbage collector based memory allocator provides fast allocations and eliminates memory leaks.</li>
+                <li>Portable runtime layer to isolate platform dependencies.</li>
+                <li>Sandboxing to limit resource consumption for more robust operation.</li>
+                <li>Safe programming layer to prevent buffer overrun exploits.</li>
+                <li>Apache compatible configuration.</li>
+                <li>Extensive logging and debug trace.</li>
+            </ul>
+            
+            <a id="pipeline"></a>
+            <h2>Request Pipeline</h2>
+            <p>Appweb has an efficient, zero-copy request bidirectional pipeline to process requests and generate
+            responses. This consists of a mechanism of queues, packets, buffering and event scheduling. The pipeline
+            architecture is highly optimized and supports the efficient transmission of data without copying. It uses
+            sendfile, async I/O and vectored, scatter/gather writes to the network to avoid the costly aggregation of
+            data and headers in a single buffer before writing to the network. <img src="../images/pipeline.jpg"
+            alt="pipeline" /> 
+            
+            <a id="security"></a></p>
+            <h2>Security</h2>
+            <p>Most web servers have become gradually become more secure by a painful process of patching. 
+            Developing a web server to be secure by design from the inception is much easier than trying to 
+            graft-on security after the fact. Securing embedded web servers is even more difficult than enterprise web
+            servers , as it must be done without increasing memory footprint or degrading performance.</p>
+            
+            <a id="mpr"></a>
+            <h2>Embedthis Portable Runtime (MPR)</h2>
+            <p>Appweb has been designed to be secure from the foundation up by using a Portable Runtime (MPR). The MPR
+            is a cross-platform layer that permits over 97% of the Appweb code to be portable. It includes many
+            mechanisms to assist in the creation of secure application. One such facility is a safe string and buffer
+            handling module to help eliminate buffer overflows that have plagued many products.</p>
+            
+            <a id="sandboxing"></a>
+            <h2>Sandboxing</h2>
+            <p>Appweb closely controls its use of system resources via a technique known as "sandboxing". This means
+            running the web server within tightly controlled limits so that request errors will not compromise system
+            operation. Appweb has also been hardened against several common denial of service attacks.</p>
+            <p>Appweb can be configured to:</p>
+            <ul>
+                <li>Preallocate memory and not grow beyond predefined memory limits</li>
+                <li>Reject requests that are too large</li>
+                <li>Reject URLs that are too long</li>
+                <li>Run single-threaded or use a limited pool of reusable threads to service requests</li>
+                <li>Be run by a designated user account or user group</li>
+            </ul>
+            <p>To build on this foundation, Appweb also provides a Secure Sockets Layer and Digest
+            authentication.</p>
+            
+            <a id="more"></a>
+            <h2>Want More?</h2>
+            <p>To learn more about Appweb, please read:</p>
+            <ul>
+                <li><a href="../users/">User's Guide</a></li>
+                <li><a href="goals.html">Appweb Design Goals</a></li>
+                <li><a href="uses.html">Appweb Target Uses</a></li>
+                <li><a href="../ref/architecture.html">Appweb Architecture</a></li>
+                <li><a href="https://embedthis.com/appweb/">Appweb Web Site</a></li>
+                <li><a href="https://embedthis.com/appweb/download.html">Appweb Download</a></li>
+                <li><a href="https://embedthis.com">Embedthis Web Site for Commercial Licenses and Support</a></li>
+            </ul>

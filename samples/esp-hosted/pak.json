@@ -1,0 +1,15 @@
+{
+    "name": "demo",
+    "title": "Demo Application",
+    "version": "1.0.0",
+    "import": true,
+    "profile": "dev",
+    "devDependencies": {
+        "esp": ">=7.0"
+    },
+    "directories": {
+        "dist": "dist",
+        "controllers": "controllers",
+        "export": "contents/lib"
+    }
+}

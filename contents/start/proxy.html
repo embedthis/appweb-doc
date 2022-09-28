@@ -1,0 +1,31 @@
+{
+    title:  'Building with the Appweb Proxy',
+    crumbs: [
+        { "Getting Started": '../start/' },
+    ],
+}
+            <h1>Building Appweb with Proxy Support</h1>
+
+            <p>Appweb includes support for proxying HTTP requests on Unix like systems. However it is not enabled by default to minimize the security surface. If you wish to use the Proxy module, you need to enable it and rebuild Appweb.</p>
+
+            <p>To build Appweb with Proxy support via <a href="https://www.embedthis.com/makeme">MakeMe</a>, use the following:</p>
+<pre class="ui code segment">
+./configure --with proxy
+me</pre>
+
+<p>If you are building with <em>make</em>, use:</p>
+<pre class="ui code segment">
+make ME_COM_PROXY=1</pre>
+
+            <h3>Proxy Configuration</h3>
+            <p>There is no default configuration for Proxy in the supplied appweb.conf. You will need to add directives to your appweb.conf once Appweb is built with Proxy support. The Proxy handler is configured via the <a href="../users/dir/route.html#proxyConnect">ProxyConnect</a> configuration directive.</p>
+
+            <p>For example:</p>
+<pre class="ui code segment">
+&lt;Route ^/proxy/(.*)$>
+    Reset pipeline
+    SetHandler proxyHandler
+    Prefix /proxy
+    ProxyConnect 127.0.0.1:9999
+&lt;/Route>
+</pre>

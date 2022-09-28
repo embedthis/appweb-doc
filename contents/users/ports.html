@@ -1,0 +1,51 @@
+{
+    title:  'Ports and Binding',
+    crumbs: [
+        { "User's Guide": '../users/' },
+    ],
+}
+            <h1>Ports and Binding</h1>
+            <p>Appweb can listen for HTTP requests on multiple IP addresses and ports. Incoming requests may be served
+            by a single server, or they may be processed by different logical servers often called virtual hosts. The
+            process of opening TCP/IP ports to listen for requests is called binding. By default, Appweb will listen on
+            all the interface network cards in the system, but the Appweb configuration file allows explicit control
+            over which interfaces, IP addresses and ports are used.</p>
+            <h2>Listen Directive</h2>
+            <p>The <a href="dir/server.html#listen">Listen</a> configuration file directive specifies the IP endpoints
+            on which Appweb will listen for incoming HTTP requests. It takes the form:</p>
+            <pre class="ui code segment">
+Listen [IP][:PORT]
+</pre>
+            <p>The IP address and port components are optional, but at least one must be present. If the IP address is
+            absent, Appweb will listen on all network interfaces including the loop-back adapter. If the PORT is
+            absent, Appweb will listen on the default port which is typically configured to be port 80.</p>For example:
+            <pre class="ui code segment">
+Listen 80
+Listen 209.108.201.67:8888
+Listen 209.108.201.68
+</pre>
+            <h2>IPv6</h2>
+            <p>Appweb will listen on both IPv4 and IPv6 endpoints. To specify IPv6 endpoints you need to use IPv6
+            encoding. IPv6 addresses have eight colon separated segments. For example:</p>
+            <pre class="ui code segment">
+2001:0db8:85a3:08d3:1319:8a2e:0370:7348
+</pre>
+            <p>Because IPv6 addresses contain a colon character, you need to enclose the IPv6 address in brackets if
+            you want to also specify a network port when using the Listen directive.</p>
+            <pre class="ui code segment">
+Listen [2001:0db8:85a3:08d3:1319:8a2e:0370:7348]:7777
+</pre>
+            <p>This notation is also used in http addresses:</p>
+            <pre class="ui code segment">
+http://[2001:0db8:85a3:08d3:1319:8a2e:0370:7348]:7777/
+</pre>
+            <p>These two documents are useful IPv6 references:</p>
+            <ul>
+                <li><a href="http://www.enterprisenetworkingplanet.com/netsp/article.php/3633211">Understand IPv6
+                Addresses</a></li>
+                <li><a href="http://en.wikipedia.org/wiki/IPv6">Wikipedia IPv6</a></li>
+            </ul>
+            <h2>Virtual Hosts</h2>
+            <p>When a Listen directive is defined inside a Virtual Host, all requests on that endpoint will be managed
+            by the directives inside the VirtualHost block. See the <a href=
+            "dir/vhost.html#virtualHost">VirtualHost</a> configuration file directive for more information.</p>

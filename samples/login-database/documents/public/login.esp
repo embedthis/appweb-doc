@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link href="login.css" rel="stylesheet" type="text/css" />
+    <title>login.esp</title>
+</head>
+<body>
+    <h1>Please log in</h1>
+    <form name="details" method="post" action="/user/login">
+        <table border="0">
+            <tr><td>Username</td><td><input type="text" name="username" value='<%= param("username") %>'></td></tr>
+            <tr><td>Password</td><td><input type="password" name="password" value='<%= param("password") %>'></td></tr>
+        </table>
+        <input type="submit" name="submit" value="OK">
+        <% inputSecurityToken(); %>
+    </form>
+</body>
+</html>

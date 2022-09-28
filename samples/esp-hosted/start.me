@@ -1,0 +1,15 @@
+/*
+    start.me - MakeMe build file
+ */
+
+Me.load({
+    targets: {
+        cleanup: {
+            type: 'clean',
+            action: "rm(['*.o', 'cache/*'])",
+        },
+        run: {
+            run: 'appweb -v',
+        }
+    }
+})

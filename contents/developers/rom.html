@@ -1,0 +1,69 @@
+{
+    title:  'Serving from ROM',
+    crumbs: [
+        { "Developer's Guide": '../developers/' },
+    ],
+}
+            <h1>Serving Pages from ROM</h1>
+            <p>To enable Appweb to be used on embedded systems without file systems, Appweb supports the compilation of
+            web pages and configuration files into C code that can be stored in Read-Only-Memory (ROM) and fetched by
+            Appweb to respond to relevant requests.</p>
+
+            <p>Appweb has a virtual file system interface that allows the run-time switching between serving web pages
+            on a disk-based file system and a compiled ROM based store of web pages.
+            This ROM facility may also be used to enhance security by preventing the modification of web documents,
+            or in performance critical situations were the serving of web pages from memory may be an effective
+            optimization.</p>
+            
+            <h2>Configuring Appweb</h2>
+            <p>To build Appweb with support for ROM based file systems, you need to run configure with the <em>--rom</em>
+            option. For example:</p>
+
+            <pre class="ui code segment">./configure --rom</pre>
+
+            <p>With the --rom option, configure will set the ME_ROM compiler definition to <em>1</em> and will enable
+            the ROM file system.</p>
+
+            <h2>Compiling Web Pages</h2>
+            <p>The Appweb <b>makerom</b> program is used to compile web documents, configuration files, and any other
+            files that you would like to be compiled into C code. The makerom program will parse the files and convert
+            them into C data structures which can then be compiled by your C/C++ compiler and linked into your
+            application. For example:</p>
+
+            <pre class="ui code segment">find appweb.conf *.crt *.key web -print | xargs makerom --mount /rom >rom.c</pre>
+
+            <p>This will create a list of all files and then convert these files into C structures in the file rom.c.
+            The compiled files will have a virtual filename that begins with <em>/rom</em>. The generated code will contain
+            a function <em>mprGetRomFiles</em> that will be called by Appweb to resolve the ROM file system data.</p>
+
+            <p>The <b>makerom</b> program takes these options:</p>
+            <table title="Switches" class="ui table width">
+                <thead>
+                    <tr>
+                        <th>Switch</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>--mount path</td>
+                        <td>Specifies the mount point for the ROM file system. All files in the rom file system
+                            will have this path prepended. </td>
+                    </tr>
+                    <tr>
+                        <td>--strip prefix</td>
+                        <td>Specifies a prefix to strip from the start of each of the compiled file names.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Running Appweb</h2>
+            <p>When you run Appweb, you will need to specify the ROMed version of appweb.conf to configure Appweb.
+            Use the <em>--conf</em> option.</p>
+
+            <pre class="ui code segment">appweb --conf /rom/appweb.conf</pre>
+
+            <h2>Changing the Mount Path</h2>
+            <p>By default, the ROM file system mount path is set to <em>/rom</em>. This is configured from the
+            <em>mpr.romMount</em> property in main.me. This is convered to the ME_MPR_ROM_MOUNT configuration setting
+            when <em>configure</em> is run.</p>

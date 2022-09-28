@@ -1,0 +1,57 @@
+{
+    title:  'Building with the PHP module',
+    crumbs: [
+        { "Getting Started": '../start/' },
+    ],
+}
+            <h1>Building Appweb with PHP Support</h1>
+
+            <p><b>The Appweb PHP modules is deprecated. Please use the <a href="php.html">FastCGI handler for PHP</a> support instead.</p>
+
+            <p>Appweb includes support for the <a href="https://php.net/">PHP Web Framework</a> via a the FastCGI handler which runs the PHP php-cgi program.</p>
+
+            <h3>Using PHP</h3>
+            <p>If you wish to use PHP handler, build with FastCGI and enable the fastHandler in your appweb.conf.</p>
+
+            <p>To build Appweb with FastCGI support consult <a href="./fastcgi.html">Building with CGI</a>.</p>
+
+            <h3>Using the in-memory PHP handler</h3>
+            <p>The appweb-php package implements the Appweb in-memory handler for PHP 5.X and does not include the source code for PHP which is very large. PHP 7 is not supported.</p>
+
+            <p>The Appweb PHP handler is called mod_php.so and the handler loads the actual external PHP library which is called libphp*.so on Linux and libphp*.dll on Windows.
+
+            <h3>Building Appweb with PHP</h3>
+
+            <p>Perform the following steps at the top level of the appweb source tree.</p>
+
+            <p>Starting with Appweb 7.1.1 and 8.0, the appweb-php package is included with the Appweb source distribution. Some earlier releases may have included the package which resides at src/appweb-php. If your distribution does not include appweb-php, use the following steps to download it.</p>
+
+            <h3>Download appweb-php</h3>
+            <pre class="ui code segment">pak install appweb-php</pre>
+
+            <p>Alternatively, if you wish to install appweb-php manually:</p>
+<pre class="ui code segment">
+cd appweb-src-home
+curl https://github.com/embedthis/appweb-php/archive/master.tar.gz >appweb-php.tgz
+mkdir src/appweb-php
+cd src/appweb-php
+tar --strip-components 1 -xvf ../appweb-php.tgz
+</pre>
+
+            <h3>Building with PHP</h3>
+            <p>Visit: <a href="https://php.net/">https://php.net/</a> to access the PHP source and instructions for building.</p>
+
+            <h3>Configuring and building with PHP</h3>
+            <p>Once PHP is built, you can configure Appweb for building with PHP. If you are building with <a href="https://www.embedthis.com/makeme">MakeMe</a>, then use the following:</p>
+            <pre class="ui code segment">
+./configure --with php=/path/to/php-source
+me</pre>
+            <p>If you are building with <em>make</em> first copy the built PHP library into your build/*/bin directory. Then use:</p>
+<pre class="ui code segment">
+make ME_COM_PHP=1 ME_COM_PHP_PATH=/path/to/php</pre>
+
+            <h3>Configuration</h3>
+            <p>The PHP handler is enabled via the <em>appweb.conf</em> configuration file directives:</p>
+<pre class="ui code segment">
+LoadModule phpHandler libmod_php
+AddHandler phpHandler php</pre>

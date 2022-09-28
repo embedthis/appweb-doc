@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SSL</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="description" content="Appweb Documentation">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+    <link href="https://embedthis.com/appweb/doc/users/ssl.html" rel="canonical">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="../lib/semantic-ui/semantic.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/api.min.css" rel="stylesheet" type="text/css">
+    
+
+</head>
+<body class="show-sidebar">
+    <div class="sidebar">
+        <div class="ui large left vertical inverted labeled menu">
+            <div class="item">
+                <a href="../" class="logo">Appweb Docs</a>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../">Home</a>
+                    <a class="item" href="../users/features.html">Appweb Features</a>
+                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="../licensing/">Licensing</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../start/">Getting Started</a>
+                    <a class="item" href="../start/quick.html">Quick Start</a>
+                    <a class="item" href="../start/installing.html">Installing Appweb</a>
+                    <a class="item" href="../start/starting.html">Starting and Stopping</a>
+                    <a class="item" href="../start/service.html">Running as a Service</a>
+                    <a class="item" href="../start/releaseNotes.html">Release Notes</a>
+                    <a class="item" href="../start/source.html">Building from Source</a>
+                    <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
+                    <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
+                    <a class="item" href="../start/php.html">Building with PHP</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/">User's Guide</a>
+                    <a class="item" href="../users/configuration.html">Configuring Appweb</a>
+                    <a class="item" href="../users/directives.html">Configuration Directives</a>
+                    <a class="item" href="../users/frameworks.html">Web Frameworks</a>
+                    <a class="item" href="../users/modules.html">Using Loadable Modules</a>
+                    <a class="item" href="../users/ports.html">Ports and Binding</a>
+                    <a class="item" href="../users/routing.html">Routing Requests</a>
+                    <a class="item" href="../users/stages.html">Request Pipeline</a>
+                    <a class="item" href="../users/lang.html">Multi-Language Content</a>
+                    <a class="item" href="../users/authentication.html">User Authentication</a>
+                    <a class="item" href="../users/logFiles.html">Logging</a>
+                    <a class="item" href="../users/caching.html">Caching</a>
+                    <a class="item" href="../users/vhosts.html">Virtual Hosts</a>
+                    <a class="item" href="../users/ssl.html">Secure Sockets (SSL)</a>
+                    <a class="item" href="../users/client.html">Http Client</a>
+                    <a class="item" href="../users/security.html">Security Considerations</a>
+                    <a class="item" href="../users/monitor.html">Monitoring and Defending</a>
+                    <a class="item" href="../users/uploading.html">File Upload</a>
+                    <a class="item" href="../users/webSockets.html">WebSockets</a>
+                    <a class="item" href="../users/man.html">Man Pages</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/">Developer's Guide</a>
+                    <a class="item" href="../developers/embedding.html">Embedding Appweb</a>
+                    <a class="item" href="../developers/modules.html">Creating Appweb Modules</a>
+                    <a class="item" href="../developers/handlers.html">Creating Appweb Handlers</a>
+                    <a class="item" href="../developers/action.html">Using the Action Handler</a>
+                    <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
+                    <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../ref/">Reference Guide</a>
+                    <a class="item" href="../ref/compatibility.html">Compatibility</a>
+                    <a class="item" href="../ref/native.html">Native APIs</a>
+                    <a class="item" href="../ref/architecture.html">Appweb Architecture</a>
+                    <a class="item" href="../ref/memory.html">Appweb Memory Allocation</a>
+                    <a class="item" href="../ref/multithread.html">Multithreaded Programming</a>
+                    <a class="item" href="../standards/http.html">HTTP References</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/samples.html">Samples</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/project.html">Project Resources</a>
+                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://github.com/embedthis/appweb">Appweb Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
+                    <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <span class="header item">Links</span>
+                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="http://twitter.com/embedthat">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="ui inverted masthead">
+        <div class="ui fixed inverted menu">
+            <div class="ui sidebar-launch button">
+                <i class="icon list layout"></i>
+            </div>
+            <div class="right menu">
+                <a class="item" href="https://embedthis.com/">Embedthis</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
+                    <span class="desktop-only">
+                        <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://embedthis.com/blog/">Blog</a>
+                        <a class="item" href="https://twitter.com/embedthat">Twitter</a>
+                    </span>
+
+            </div>
+        </div>
+        
+        <div class="ui breadcrumb">
+            <a class="section" href="../">Home</a>
+            
+            <div class="divider">/</div>
+            <a class="section" href="../users/">
+                User's Guide
+            </a>
+            
+            
+            <div class="divider">/</div>
+            <a class="active section" href="ssl.html">SSL</a>
+            
+        </div>
+        
+        <iframe class="version desktop-only" src="../version.html"></iframe>
+
+    </div>
+    <div class="content">
+
+            <h1>Configuring SSL</h1>
+            <p>Appweb supports the Secure Sockets Layer (SSL) protocol for authenticating systems and encrypting data.
+            Use of this protocol enables secure data transmission to and from clients in a standards-based manner.</p>
+            <p>This document provides step-by-step instructions for configuring SSL in Appweb. If you are unfamiliar
+            with SSL, please read the <a href="sslOverview.html">SSL Overview</a> first.</p><a id="sslQuickStart"></a>
+            <h2>SSL Quick Start</h2>
+            <p>The default binary installation of Appweb will support SSL for all network interfaces. You
+            can immediately test SSL access to documents by using the <b>https://</b> scheme.
+            For example, to access the home page using SSL, use this URL in your browser:</p>
+            <pre class="ui code segment">
+https://localhost/
+</pre>
+            <h3>Self-Signed Certificate</h3>
+            <p>Appweb is shipped with a self-signed certificate to identify the web server.</p>
+            <p><b>SECURITY WARNING</b>: This certificate is suitable for testing purposes only and
+            your browser will issue a warning when you access the server. For
+            production use, you should obtain your own service certificate from signing authorities such as <a href="http://www.verisign.com">Verisign</a>.</p><a id="sslConfigurationDirectives"></a>
+            <h2>SSL Configuration Directives</h2>
+            <p>Appweb uses several configuration file directives to control SSL and manage secure access to the server. These directives can be specified in the Default Server section or in a Virtual Host section. </p>
+            <p>The relevant SSL directives are:</p>
+            <ul>
+                <li><a href="dir/ssl.html#sslCertificateFile">SSLCertificateFile</a></li>
+                <li><a href="dir/ssl.html#sslCertificateKeyFile">SSLCertificateKeyFile</a></li>
+                <li><a href="dir/ssl.html#sslCipherSuite">SSLCipherSuite</a></li>
+                <li><a href="dir/ssl.html#listenSecure">ListenSecure</a></li>
+            </ul>
+            <p>There are some additional directives that are necessary should you wish to have Appweb verify client
+            certificates. These directives are:</p>
+            <ul>
+                <li><a href="dir/ssl.html#sslVerifyClient">SSLVerifyClient</a></li>
+                <li><a href="dir/ssl.html#sslVerifyIssuer">SSLVerifyIssuer</a></li>
+                <li><a href="dir/ssl.html#sslCaCertificateFile">SSLCACertificateFile</a></li>
+                <li><a href="dir/ssl.html#sslCaCertificatePath">SSLCACertificatePath</a></li>
+            </ul><a id="sslConfigurationExample"></a>
+            <h2>SSL Configuration Example</h2>
+            <p>Consider the default Appweb SSL configuration in the appweb.conf configuration file:</p>
+            <pre class="ui code segment">
+SSLCertificateFile "self.crt"
+SSLCertificateKeyFile "self.key"
+ListenSecure 443
+</pre>
+            <p>This set of directives enables SSL on port 443 for all network interfaces and uses the default supplied
+                self-signed certificate to identify the server.</p>
+            <p>The <a href="dir/ssl.html#listenSecure">ListenSecure</a> directive instructs Appweb to process requests
+                from all interfaces on port 443 using current SSL configuration.</p>
+            <p>The <a href="dir/ssl.html#sslCertificateFile">SSLCertificateFile</a> directive specifies the server
+            certificate to use and the <a href="dir/ssl.html#sslCertificateKeyFile">SSLCertificateKeyFile</a> directive
+            specifies the server private key for signing.</p>
+            <p><b>SECURITY WARNING</b>: You must obtain or generate a SSL certificate before using this
+            example in a production environment.</p>
+            <p>The server key file is a PEM encoded private key. You may supply either an encrypted private key or a
+            decrypted private key. If you use an encrypted private key, the server will prompt you for a pass-phrase to
+            decrypt the key when the server boots.</p><a id="generatingKeys"></a>
+
+            <a name="sslProviders"></a>
+            <h2>SSL Providers</h2>
+            <p>Appweb employs an open architecture SSL Provider interface so that customers can select or create an SSL
+            provider for their needs.</p>
+            <p>Appweb provides multiple SSL implementations:</p>
+            <ul>
+                <li>MbedTLS -- designed for embedded use. This is the default SSL stack and is pre-integrated with Appweb. It is configured and enabled by default.</li>
+                <li>OpenSSL -- designed for enterprise use. See <a href="http://www.openssl.org">http://www.openssl.org</a>.</li>
+            </ul>
+
+            <p>The binary installation will use the MbedTLS provider by default.</p>
+            <p>To build with OpenSSL, please consult the projects/README.md file included with the source code.</p>
+
+    </div>
+    <div class="terms ui basic center aligned segment">
+        <p>&copy; Embedthis Software. All rights reserved.</p>
+    </div>
+
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/jquery/jquery.slim.min.js"></script>
+    <script src="../lib/semantic-ui/semantic.min.js"></script>
+    <script src="../scripts/sidebar.min.js"></script>
+     
+
+    
+
+
+
+

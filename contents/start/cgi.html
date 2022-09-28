@@ -1,0 +1,39 @@
+{
+    title:  'Building with CGI',
+    crumbs: [
+        { "Getting Started": '../start/' },
+    ],
+}
+            <h1>Building Appweb with CGI Support</h1>
+
+            <p>Appweb includes support for <a href="https://en.wikipedia.org/wiki/Common_Gateway_Interface">CGI</a> but it is not enabled by default to minimize the security surface. If you wish to use CGI, you need to enable CGI and rebuild Appweb.</p>
+
+            <p>To build Appweb with CGI support via <a href="https://www.embedthis.com/makeme">MakeMe</a>, then use the following:</p>
+<pre class="ui code segment">
+./configure --with cgi
+me</pre>
+
+<p>If you are building with <em>make</em>, use:</p>
+<pre class="ui code segment">
+make ME_COM_CGI=1</pre>
+
+
+            <h3>CGI Configuration</h3>
+            <p>The following default configuration is enabled in appweb.conf once Appweb is built with CGI support.
+<pre class="ui code segment">
+AddHandler cgiHandler exe cgi cgi-nph out bat cmd pl py php
+ScriptAlias /cgi-bin/ "${DOCUMENTS}/../cgi-bin"
+Action application/x-perl /usr/bin/perl
+Action application/x-python /usr/bin/python
+Action application/x-lua /usr/bin/lua
+Action application/x-ruby /usr/bin/ruby
+LimitProcesses 10
+CgiPrefix CGI_
+CgiEscape on
+</pre>
+            <p>This configuration will run scripts and executables in the ../cgi-bin directory which should be outside the web documents directory. It is setup to handle Perl, Python, Lua and Ruby scripts. On Windows, it will run .bat and .cmd scripts. This configuration limits CGI to at most 10 simultaneous requests. CGI environment variables will be escaped for security and will have a "CGI_" prefix.</p>
+
+            <p>Consult the <a href="https://www.embedthis.com/appweb/doc/users/dir/server.html#cgiEscape">CGI Directives</a> for more information.</p>
+
+            <h3>FastCGI</h3>
+            <p>Appweb supports FastCGI as an alternative way to run CGI programs on Unix style systems.</p>

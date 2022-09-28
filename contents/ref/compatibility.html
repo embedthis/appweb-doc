@@ -1,0 +1,29 @@
+{
+    title:  "Compatibility",
+    crumbs: [
+        { 'Reference': '../ref/'} ,
+    ],
+}
+
+            <a id="api"></a>
+            <h1>Compatibility</h1>
+            <p>Appweb APIs may evolve, and are thus subject to change between minor releases. The Appweb documentation provides a <a href="stability.html">Stability Classification</a> for each API group that reflects their stability with respect to forward changes.</p>
+
+            <a id="r5"></a>
+            <h2>Migrating from Earlier Releases</h2>
+            <p>Appweb 4 to 7 are highly compatible. Code written for Appweb 4 to 6 should migrate easily to Appweb 7.
+            Appweb 4 introduced new build tools, and a garbage collector for memory allocation, so if you are migrating from Appweb 2 or 3, you will have to perform more significant changes to your application, handlers or filters. </p>
+
+            <h2>Migrating to Appweb 8</h2>
+            <p>Appweb 8 introduced support for HTTP/2 which necessitates some API changes. These changes are mostly syntax and naming.
+                The logic of ESP, PHP and CGI applications should not require changes.</p>
+
+            <p>See <a href="../developers/migrating.html">Upgrading Earlier Releases</a> for more information.</p> 
+
+            <h2>Standards</h2>
+            <p>Appweb supports the following standards:</p>
+            <ul>
+                <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">HTTP/1.1</a></li>
+                <li><a href="http://www.w3.org/CGI/">CGI 1.1</a></li>
+                <li><a href="http://www.ietf.org/rfc/rfc1867.txt">Form-based File Upload in HTML</a></li>
+            </ul>

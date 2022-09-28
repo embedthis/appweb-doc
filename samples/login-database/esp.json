@@ -1,0 +1,31 @@
+{
+    "name": "login-database",
+    "description": "login-database",
+    "version": "1.0.0",
+    "esp": {
+        app: {
+            source: [ "app.c" ]
+        }
+    },
+    "http": {
+        "auth": {
+            "store": "app",
+            "type": "app",
+            "__login": "https:///public/login.esp"
+        },
+        "database": "mdb://login.mdb",
+        "routes": [
+            {
+                "pattern": "/user/{action}",
+                "source": "user.c",
+                "target": "user/${action}",
+            }, {
+                "pattern": "/public",
+                "auth": "none",
+            }
+        ],
+        "timeouts": {
+            "session": "1min"
+        }
+    }
+}

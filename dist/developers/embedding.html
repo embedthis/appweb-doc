@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedding</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="description" content="Appweb Documentation">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+    <link href="https://embedthis.com/appweb/doc/developers/embedding.html" rel="canonical">
+    <link href="../images/favicon.ico" rel="shortcut icon">
+    <link href="../lib/semantic-ui/semantic.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/api.min.css" rel="stylesheet" type="text/css">
+    
+
+</head>
+<body class="show-sidebar">
+    <div class="sidebar">
+        <div class="ui large left vertical inverted labeled menu">
+            <div class="item">
+                <a href="../" class="logo">Appweb Docs</a>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../">Home</a>
+                    <a class="item" href="../users/features.html">Appweb Features</a>
+                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="../licensing/">Licensing</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../start/">Getting Started</a>
+                    <a class="item" href="../start/quick.html">Quick Start</a>
+                    <a class="item" href="../start/installing.html">Installing Appweb</a>
+                    <a class="item" href="../start/starting.html">Starting and Stopping</a>
+                    <a class="item" href="../start/service.html">Running as a Service</a>
+                    <a class="item" href="../start/releaseNotes.html">Release Notes</a>
+                    <a class="item" href="../start/source.html">Building from Source</a>
+                    <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
+                    <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
+                    <a class="item" href="../start/php.html">Building with PHP</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/">User's Guide</a>
+                    <a class="item" href="../users/configuration.html">Configuring Appweb</a>
+                    <a class="item" href="../users/directives.html">Configuration Directives</a>
+                    <a class="item" href="../users/frameworks.html">Web Frameworks</a>
+                    <a class="item" href="../users/modules.html">Using Loadable Modules</a>
+                    <a class="item" href="../users/ports.html">Ports and Binding</a>
+                    <a class="item" href="../users/routing.html">Routing Requests</a>
+                    <a class="item" href="../users/stages.html">Request Pipeline</a>
+                    <a class="item" href="../users/lang.html">Multi-Language Content</a>
+                    <a class="item" href="../users/authentication.html">User Authentication</a>
+                    <a class="item" href="../users/logFiles.html">Logging</a>
+                    <a class="item" href="../users/caching.html">Caching</a>
+                    <a class="item" href="../users/vhosts.html">Virtual Hosts</a>
+                    <a class="item" href="../users/ssl.html">Secure Sockets (SSL)</a>
+                    <a class="item" href="../users/client.html">Http Client</a>
+                    <a class="item" href="../users/security.html">Security Considerations</a>
+                    <a class="item" href="../users/monitor.html">Monitoring and Defending</a>
+                    <a class="item" href="../users/uploading.html">File Upload</a>
+                    <a class="item" href="../users/webSockets.html">WebSockets</a>
+                    <a class="item" href="../users/man.html">Man Pages</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/">Developer's Guide</a>
+                    <a class="item" href="../developers/embedding.html">Embedding Appweb</a>
+                    <a class="item" href="../developers/modules.html">Creating Appweb Modules</a>
+                    <a class="item" href="../developers/handlers.html">Creating Appweb Handlers</a>
+                    <a class="item" href="../developers/action.html">Using the Action Handler</a>
+                    <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
+                    <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../ref/">Reference Guide</a>
+                    <a class="item" href="../ref/compatibility.html">Compatibility</a>
+                    <a class="item" href="../ref/native.html">Native APIs</a>
+                    <a class="item" href="../ref/architecture.html">Appweb Architecture</a>
+                    <a class="item" href="../ref/memory.html">Appweb Memory Allocation</a>
+                    <a class="item" href="../ref/multithread.html">Multithreaded Programming</a>
+                    <a class="item" href="../standards/http.html">HTTP References</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../users/samples.html">Samples</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="header item" href="../developers/project.html">Project Resources</a>
+                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://github.com/embedthis/appweb">Appweb Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
+                    <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="menu">
+                    <span class="header item">Links</span>
+                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="http://twitter.com/embedthat">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="ui inverted masthead">
+        <div class="ui fixed inverted menu">
+            <div class="ui sidebar-launch button">
+                <i class="icon list layout"></i>
+            </div>
+            <div class="right menu">
+                <a class="item" href="https://embedthis.com/">Embedthis</a>
+                    <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
+                    <span class="desktop-only">
+                        <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://embedthis.com/blog/">Blog</a>
+                        <a class="item" href="https://twitter.com/embedthat">Twitter</a>
+                    </span>
+
+            </div>
+        </div>
+        
+        <div class="ui breadcrumb">
+            <a class="section" href="../">Home</a>
+            
+            <div class="divider">/</div>
+            <a class="section" href="../developers/">
+                Developer's Guide
+            </a>
+            
+            
+            <div class="divider">/</div>
+            <a class="active section" href="embedding.html">Embedding</a>
+            
+        </div>
+        
+        <iframe class="version desktop-only" src="../version.html"></iframe>
+
+    </div>
+    <div class="content">
+
+            <h1 class="title">Embedding Appweb</h1>
+            <p>When extending and embedding Appweb in your application or system, you have three options:</p>
+            <ol>
+                <li>Use the existing Appweb main program and extend Appweb via a loadable module.</li>
+                <li>Use the existing Appweb main program and extend Appweb via the ESP web framework.</li>
+                <li>Link the Appweb HTTP library with your application main program.</li>
+            </ol>
+
+            <a id="loadable"></a>
+            <h2>Extending via a Loadable Module</h2>
+            <p>You can extend the Appweb server program by creating an Appweb loadable module. You do this by creating
+            a shared library that contains your application and some Appweb module interface code. This module is then
+            specified in the Appweb configuration file so that the Appweb program will load it. It requires about 10
+            lines of code to create an Appweb module.</p>
+
+            <h2>Extending via ESP</h2>
+            <p>The Embedded Server Pages (ESP) web framework allows the direct embedding of "C" language code in
+            HTML web pages. This is the easiest way to invoke "C" APIs in your program. ESP also supports the loading
+            of Model/View/Controller (MVC-based) applications. ESP will compile and load controller source code. Controllers
+            provide an easy and efficient way to invoke "C" code when requests are made to certain URIs.</p>
+
+            <h2>Embed the Appweb Library</h2>
+            <p>You can link the Appweb library with your application to enable it to listen for HTTP requests and thus
+            become a HTTP server itself. Embedding the Appweb library is easy and can be done with as little as one
+            line of code.</p>
+            
+            <a id="appwebProgram"></a>
+            <h2>The Appweb Server Program</h2>
+            <p>The Appweb product includes a fully-featured HTTP server program that uses the Appweb HTTP library. This
+            server (called <b>appweb</b>) is run by default when you install the Appweb binary distribution or run
+            "make install" after building from source.</p>
+            <p>The Appweb server program is ideal for embedded systems as it offers the following features:</p>
+            <ul>
+                <li>High performance</li>
+                <li>Extendable via loadable modules</li>
+                <li>Deterministic memory footprint and CPU loads</li>
+                <li>Configurable sandbox limits that control memory usage</li>
+                <li>Monitored and managed by the Appweb manager process</li>
+            </ul>
+            
+            <a id="module"></a>
+            <h2>Creating a Module</h2>
+            <p>You can extend the Appweb program by creating a loadable module for your application code.</p>
+            <p>To initialize your module and register with Appweb, you must create an initialization function that is
+            called when Appweb loads your module. This must be named according to the form:</p>
+            <code>
+http<b>Name</b>Init(MaHttp *http, MprModule *module)
+</code>
+            <p>Where <b>Name</b> is the name of your module.</p>
+            <code>
+int httpSimpleInit(Http *http, MprModule *module)
+{
+    /* Put custom code here */
+    return 0;
+}
+</code>
+            <p>See <a href="modules.html">Creating Appweb Modules</a> for more details.</p>
+
+            <a id="library"></a>
+            <h2>Embed the Appweb Library</h2>
+            <p>You can link the Appweb HTTP library with your main program to enable it to function as a HTTP
+            server itself. This is ideal if your application is large and/or has a complex I/O, eventing or threading
+            paradigm.</p>
+            <h3>Linking with the Appweb Library</h3>
+            <p>To include the Appweb library in your program you need to do the following things:</p>
+            <ol>
+                <li>Add <b>#include "appweb/appweb.h"</b> to the relevant source files.</li>
+                <li>Add the Appweb library to your Makefiles or Windows project files. This will mean adding
+                    libappweb.dll on Windows or libappweb.so on Unix.</li>
+                <li>Use one of the embedding APIs to create the HTTP server.</li>
+            </ol>
+            <h3>One Line Embedding</h3>
+            <p>The following code demonstrates the one-line Appweb embedding API. This will create and configure a web
+            server based on the "server.conf" configuration file.</p>
+            <code>
+#include "appweb/appweb.h"
+int main(int argc, char** argv)
+{
+    return maRunWebServer("server.conf");
+}
+</code>
+            <p>To build this sample and link with the Appweb library:</p>
+            <code>
+cc -o server server.c -lappweb
+</code>
+            <h3>Full Control API</h3>
+            <p>The Appweb library also provides a lower level embedding interface where you can precisely control how
+            the web server is created and configured. This API also exposes the inner event and threading
+            mechanisms.</p>
+            <p>This example creates a web server using the "server.conf" configuration file and will service events
+            until terminated. </p>
+            <code>
+#include "appweb/appweb.h"
+int main(int argc, char **argv)
+{
+    Mpr     *mpr;
+
+    /*
+        Initialize and start the portable runtime services.
+     */
+    if ((mpr = mprCreate(argc, argv, MPR_USER_EVENTS_THREAD)) == 0) {
+        mprError("Cannot create the web server runtime");
+        return -1;
+    }
+    if (mprStart() &lt; 0) {
+        mprError("Cannot start the web server runtime");
+        return -1;
+    }
+    if (httpCreate(HTTP_CLIENT_SIDE | HTTP_SERVER_SIDE) == 0) {
+        mprError("Cannot create the Http server");
+        return -1;
+    }
+    if (maLoadModules() &lt; 0) {
+        mprError("Cannot load modules");
+        return -1;
+    }
+    if (maParseConfig("server.conf") &lt; 0) {
+        mprError("Cannot parse the config file %s", "server.conf");
+        return -1;
+    }
+    if (httpStartEndpoints() &lt; 0) {
+        mprError("Cannot start the web server");
+        return -1;
+    }
+    mprServiceEvents(-1, 0);
+    mprDestroy();
+    return 0;
+}
+</code>
+            <p>The Appweb <a href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">Typical 
+            Server</a> sample demonstrates this technique more fully.</p>
+            <h3>More Details</h3>
+            <p>For more details about the embedding API, please consult the <a href="../ref/api/appweb.html">Appweb
+            API</a> and the <a href="../ref/native.html">Native APIs</a>.</p>
+
+    </div>
+    <div class="terms ui basic center aligned segment">
+        <p>&copy; Embedthis Software. All rights reserved.</p>
+    </div>
+
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/jquery/jquery.slim.min.js"></script>
+    <script src="../lib/semantic-ui/semantic.min.js"></script>
+    <script src="../scripts/sidebar.min.js"></script>
+     
+
+    
+
+
+
+

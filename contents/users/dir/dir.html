@@ -1,0 +1,110 @@
+{
+    title:  'Directories',
+    crumbs: [
+        { "User's Guide": '../../users/' },
+        { 'Configuration': '../configuration.html' },
+    ],
+}
+            <h1>Directory Directives</h1>
+            <a id="directoryIndex"></a>
+            <h2>DirectoryIndex</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define the default index file to serve for directory requests</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>DirectoryIndex document</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default Server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>DirectoryIndex index.html</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The DirectoryIndex directive specifies a document that may be served when a HTTP
+                            request is made for a directory. Multiple directory index files may be specified and they
+                            will be tested in order. The first index that exists will be served.</p>
+                            <p>The DirectoryIndex argument must be a simple filename without any directory portion.</p>
+                            <p>If a client requests a directory, but without a trailing "/" in the URI, the 
+                            client will be redirected to the URI with a trailing "/". When the client then uses that URI,
+                            the directory index file will be used for the response.</p>
+                            <p>For example: if a DirectoryIndex of "index.html" is specified and a user requests
+                            http://www.acme.com/products/. Then the document /products/index.html will be returned to
+                            the user.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="indexOptions"></a>
+            <h2>IndexOptions</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define directory indexing options</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>IndexOptions [[+|-] options] ...</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>IndexOptions FancyIndexing</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The available options are:</p>
+                            <ul>
+                                <li><b>FancyIndexing</b> &mdash; Enable fancy indexing</li>
+                                <li><b>FoldersFirst</b> &mdash; List folders first</li>
+                                <li><b>HtmlTable</b> &mdash; Display listings in a HTML table</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a id="indexOrder"></a>
+            <h2>IndexOrder</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Set the default ordering of the directory listing</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>IndexOrder [Ascending|Descending] [Name|Date|Size|Description]</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, Virtual host, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>IndexOrder Ascending Name</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>This directive controls the order of listings. By default, listings are displayed in
+                            filename ascending order. This directive only applies if IndexOptions is set to display
+                            listings in fancy format.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
