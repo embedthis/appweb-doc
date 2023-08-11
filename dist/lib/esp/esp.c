@@ -1956,10 +1956,8 @@ static void compileItems(HttpRoute *route)
     MprList     *files;
     MprDirEntry *dp;
     cchar       *dir, *path;
-    int         found, index, next;
+    int         index, next;
 
-    found = 0;
-    // trace("info", "Compile items for route %s", route->pattern);
     if ((dir = httpGetDir(route, "CONTROLLERS")) != 0 && !smatch(dir, ".")) {
         app->files = mprGetPathFiles(dir, MPR_PATH_DESCEND);
         for (next = 0; (dp = mprGetNextItem(app->files, &next)) != 0 && !app->error; ) {
@@ -1967,7 +1965,6 @@ static void compileItems(HttpRoute *route)
             if (selectResource(path, "c")) {
                 compileFile(route, path, ESP_CONTROlLER);
             }
-            found++;
         }
     }
 #if DEPRECATED || 1
@@ -1981,7 +1978,6 @@ static void compileItems(HttpRoute *route)
             if (selectResource(path, "esp")) {
                 compileFile(route, path, ESP_VIEW);
             }
-            found++;
         }
     }
 #endif
@@ -1994,7 +1990,6 @@ static void compileItems(HttpRoute *route)
             for (ITERATE_ITEMS(files, path, next)) {
                 if (mprPathExists(path, R_OK) && selectResource(path, "c")) {
                     compileFile(route, path, ESP_SRC);
-                    found++;
                 }
             }
         }
@@ -2002,7 +1997,6 @@ static void compileItems(HttpRoute *route)
         if ((dir = mprJoinPath(httpGetDir(route, "SRC"), "app.c")) != 0 && !smatch(dir, ".")) {
             if (mprPathExists(dir, R_OK) && selectResource(dir, "c")) {
                 compileFile(route, dir, ESP_SRC);
-                found++;
             }
         }
     }
@@ -2014,7 +2008,6 @@ static void compileItems(HttpRoute *route)
             if (selectView(route, path)) {
                 compileFile(route, path, ESP_PAGE);
             }
-            found++;
         }
     } else {
         /*
@@ -2023,7 +2016,6 @@ static void compileItems(HttpRoute *route)
         path = mprJoinPath(route->home, route->sourceName);
         if (mprPathExists(path, R_OK)) {
             compileFile(route, path, ESP_CONTROlLER);
-            found++;
         }
     }
 }

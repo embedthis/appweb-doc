@@ -21,7 +21,7 @@
                 <li>Minimal in its demand on system resources &mdash; via configurable resource limits.</li>
             </ul>
             <p>Appweb is the #1 <i>embedded</i> web server and has been successfully deployed in <a href=
-            "https://embedthis.com/appweb/#users">millions of devices</a> and embedded applications.</p>
+            "https://www.embedthis.com/appweb/#users">millions of devices</a> and embedded applications.</p>
 
             <a id="comms"></a>
             <h2>Communications Services</h2>
@@ -43,8 +43,8 @@
                 <li><a href="uses.html">Appweb Target Uses</a></li>
                 <li><a href="internals.html">Appweb Internals</a></li>
                 <li><a href="../ref/architecture.html">Appweb Architecture</a></li>
-                <li><a href="https://embedthis.com/appweb/">Appweb Web Site</a></li>
-                <li><a href="https://embedthis.com/appweb/download.html">Appweb Download</a></li>
-                <li><a href="https://embedthis.com">Embedthis Web Site for Commercial Licenses and Support</a></li>
+                <li><a href="https://www.embedthis.com/appweb/">Appweb Web Site</a></li>
+                <li><a href="https://www.embedthis.com/appweb/download.html">Appweb Download</a></li>
+                <li><a href="https://www.embedthis.com">Embedthis Web Site for Commercial Licenses and Support</a></li>
                 <li><a href="../users/">Appweb User's Guide</a></li>
             </ul>

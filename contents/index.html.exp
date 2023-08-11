@@ -6,7 +6,7 @@
             <img src="images/appweb-icon-128.png" class="ui left floated image" alt="appweb">
             <p>Appweb is a blazing fast and compact embedded web server for the efficient and secure hosting of embedded web
             applications. Appweb dramatically cuts the time and cost of developing web applications by including the
-            <a href="https://embedthis.com/esp/">ESP web framework</a> and an extensive set of features.</p>
+            <a href="https://www.embedthis.com/esp/">ESP web framework</a> and an extensive set of features.</p>
         </div>
 
         <h2>Highly Optimized</h2>
@@ -53,7 +53,7 @@
             <li><a href="users/uses.html">Appweb Target Uses</a></li>
             <li><a href="users/internals.html">Appweb Internals</a></li>
             <li><a href="ref/architecture.html">Appweb Architecture</a></li>
-            <li><a href="https://embedthis.com/appweb/">Appweb Web Site</a></li>
-            <li><a href="https://embedthis.com/appweb/download.html">Appweb Download</a></li>
-            <li><a href="https://embedthis.com">Embedthis Web Site</a></li>
+            <li><a href="https://www.embedthis.com/appweb/">Appweb Web Site</a></li>
+            <li><a href="https://www.embedthis.com/appweb/download.html">Appweb Download</a></li>
+            <li><a href="https://www.embedthis.com">Embedthis Web Site</a></li>
         </ul>

@@ -325,6 +325,67 @@
                 </tbody>
             </table>
 
+            <a id="sslEngine"></a>
+            <h2>SSLEngine</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Define an OpenSSL Engine to use for the current context.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLEngine</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>OpenSSL only. Default Server, Virtual Host</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLEngine tpm2tss</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLEngine directive configures OpenSSL to use the nominated Openssl
+                                engine for the configured route.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a id="sslPreload"></a>
+            <h2>SSLPreload</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Preload the SSL configuration.</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>SSLPreload</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>OpenSSL only. Default Server, Virtual Host</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>SSLPreload</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The SSLPreload directive is an OpenSSL directive that will pre-create 
+                                the required SSL configuration in anticipation of future SSL requests.
+                                This will minimize delays for the first SSL request received.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <a id="sslVerifyClient"></a>
             <h2>SSLVerifyClient</h2>
             <table class="directive" title="directive">

@@ -1,5 +1,5 @@
 {
-    title:  'Pipeline Stages',
+    title:  'Creating Appweb Pipeline Stages',
     crumbs: [
         { "User's Guide": '../users/' },
     ],

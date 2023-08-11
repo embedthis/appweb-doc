@@ -1,5 +1,5 @@
 {
-    title:  'Migrating',
+    title:  'Migrating to the current Appweb version',
     crumbs: [
         { "Developer's Guide": '../developers/' },
     ],
@@ -28,7 +28,7 @@
                 <li>ESP is now a stand-alone product and can be run separately</li>
                 <li>ESP applications are now configured via <em>esp.json</em> configuration files</li>
                 <li>Appweb and ESP are now more modular and heavily use the Pak tool to install and manage
-                    extension components from the <a href="https://embedthis.com/catalog/">Online Pak Catalog</a>.
+                    extension components from the <a href="https://www.embedthis.com/catalog/">Online Pak Catalog</a>.
             </ul>
             <p>Appweb 4.6+ and Appweb 5 use the MakeMe build system. New configure options and cross compiling capabilities have been added. See more details below in  <a href="#makeme">MakeMe Changes</a>.</p>
 

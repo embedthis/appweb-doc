@@ -1,5 +1,5 @@
 {
-    title:  "Licensing",
+    title:  "Appweb Licensing Background",
     crumbs: [ ],
 }
 
@@ -22,7 +22,7 @@
                 <li>Priority software support services</li>
             </ul>
 
-            <p>Please read <a href="https://embedthis.com/licensing/index.html">Appweb Commercial License</a> for more details. If you require a commercial license or commercial support for Appweb, please contact us at:
+            <p>Please read <a href="https://www.embedthis.com/licensing/index.html">Appweb Commercial License</a> for more details. If you require a commercial license or commercial support for Appweb, please contact us at:
             <a href="mailto:licensing@embedthis.com">licensing@embedthis.com</a>.</p>
 
             <h2>Embedthis Evaluation License</h2>

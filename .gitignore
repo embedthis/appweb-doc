@@ -1,1 +1,11 @@
 paks/
+*.log
+*.dylib
+*.o
+/cache/
+./dist/
+.DS_Store
+.expansive-lastgen
+build/
+dist/
+.tags*

@@ -45,7 +45,7 @@ ScriptAlias /cgi-bin/ $ROUTE_HOME/cgi-bin/
             <p>When a URI is requested by a browser that includes the "<em>/cgi-bin/</em>" prefix, the
             script name immediately after "/cgi-bin/" will be run. For example:</p>
 <pre class="ui code segment">
-https://embedthis.com/cgi-bin/testCgi
+https://www.embedthis.com/cgi-bin/testCgi
 </pre>
             <h3>Invoking by URI Extension</h3>
             <p>To configure Appweb to run CGI programs based on the URI extension use the <a href=

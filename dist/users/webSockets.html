@@ -2,20 +2,21 @@
 <html lang="en">
 <head>
     <title>Web Sockets</title>
-    
+    <!-- Copyright Embedthis Software. All Rights Reserved. -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    <meta name="description" content="Appweb Documentation">
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Appweb Documentation" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700'
+        rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
-    <link href="https://embedthis.com/appweb/doc/users/webSockets.html" rel="canonical">
-    <link href="../images/favicon.ico" rel="shortcut icon">
-    <link href="../lib/semantic-ui/semantic.min.css" rel="stylesheet" type="text/css">
-    <link href="../css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="../css/api.min.css" rel="stylesheet" type="text/css">
-    
+    <link href="https://www.embedthis.com/appweb/doc/users/webSockets.html" rel="canonical" />
+    <link href="../images/favicon.ico" rel="shortcut icon" />
+    <link href="../css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="../css/api.min.css" rel="stylesheet" type="text/css" />
+<link href="../lib/semantic-ui/semantic.min.css" rel="stylesheet" type="text/css" />
+
 
 </head>
 <body class="show-sidebar">
@@ -28,7 +29,7 @@
                 <div class="menu">
                     <a class="header item" href="../">Home</a>
                     <a class="item" href="../users/features.html">Appweb Features</a>
-                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="https://www.embedthis.com/appweb/download.html">Download</a>
                     <a class="item" href="../licensing/">Licensing</a>
                 </div>
             </div>
@@ -98,9 +99,10 @@
             <div class="item">
                 <div class="menu">
                     <a class="header item" href="../developers/project.html">Project Resources</a>
-                    <a class="item" href="https://github.com/embedthis/appweb-doc/blob/main/CHANGELOG.md" target="_blank">Release Change Log</a>
-                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
-                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-doc/blob/main/CHANGELOG.md"
+                        target="_blank">Release Change Log</a>
+                    <a class="item" href="https://www.embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://www.embedthis.com/appweb/">Appweb Web Site</a>
                     <a class="item" href="https://github.com/embedthis/appweb-doc">Appweb Repository</a>
                     <a class="item" href="https://github.com/embedthis/appweb-doc/issues/2">Appweb Security Alerts</a>
                     <a class="item" href="https://github.com/embedthis/appweb-doc/issues">Project Issue Database</a>
@@ -140,8 +142,8 @@
             <div class="item">
                 <div class="menu">
                     <span class="header item">Links</span>
-                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
-                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="https://www.embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://www.embedthis.com/blog/">Embedthis Blog</a>
                     <a class="item" href="http://twitter.com/embedthat">Twitter</a>
                 </div>
             </div>
@@ -157,12 +159,12 @@
                 <i class="icon list layout"></i>
             </div>
             <div class="right menu">
-                <a class="item" href="https://embedthis.com/">Embedthis</a>
-                    <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
+                <a class="item" href="https://www.embedthis.com/">Embedthis</a>
+                    <a class="item" href="https://www.embedthis.com/appweb/">Appweb Site</a>
                     <span class="desktop-only">
-                        <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
+                        <a class="item" href="https://www.embedthis.com/blog/categories/Appweb">Appweb News</a>
                         <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
-                        <a class="item" href="https://embedthis.com/blog/">Blog</a>
+                        <a class="item" href="https://www.embedthis.com/blog/">Blog</a>
                         <a class="item" href="https://twitter.com/embedthat">Twitter</a>
                     </span>
 
@@ -190,7 +192,8 @@
 
             <h1>WebSockets</h1>
             <p><a href="http://en.wikipedia.org/wiki/WebSocket">WebSockets</a> is a technology providing
-            interactive communication between a server and client. It is an IETF standard defined by <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+            interactive communication between a server and client. It is an IETF standard defined by <a
+                href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
             <p>Normal HTTP connections follow a request/response paradigm and do not easily support asynchronous
             communications or unsolicited data pushed from the server to the client. WebSockets solves this
             by supporting bidirectional, full-duplex communications over persistent connections. A WebSocket
@@ -317,44 +320,45 @@ X-Request-Timeout: 600
             <h2>WebSockets Directives</h2>
             <p>The following directives are supported for controlling WebSocket communications within a route.</p>
             <table title="directives" class="ui table segment">
-                <thead><tr><th>Directive<th>Purpose</tr>
+                <thead><tr><th>Directive</th><th>Purpose</th></tr>
                 <tbody>
-                    <tr><td>IgnoreEncodingErrors<td>Ignore UTF-8 text message encoding errors.</tr>
-                    <tr><td>InactivityTimeout<td>Maximum idle time before closing a connection.</tr>
-                    <tr><td>RequestTimeout<td>Maximum duration before closing a connection.</tr>
-                    <tr><td>LimitWebSockets<td>Maximum number of simultaneous WebSocket sessions.</tr>
-                    <tr><td>LimitWebSocketsFrame<td>Maximum WebSockets message frame size for sent messages.</tr>
-                    <tr><td>LimitWebSocketsMessage<td>Maximum WebSockets message size </tr>
-                    <tr><td>LimitWebSocketsPacket<td>Maximum WebSockets message size passed to the
-                            callback in one transaction.</tr>
-                    <tr><td>WebSocketsProtocol<td>Application level protocol supported by this route.</tr>
-                    <tr><td>WebSocketsPing<td>Frequency to generate a ping message.</tr>
+                    <tr><td>IgnoreEncodingErrors</td><td>Ignore UTF-8 text message encoding errors.</td></tr>
+                    <tr><td>InactivityTimeout</td><td>Maximum idle time before closing a connection.</td></tr>
+                    <tr><td>RequestTimeout</td><td>Maximum duration before closing a connection.</td></tr>
+                    <tr><td>LimitWebSockets</td><td>Maximum number of simultaneous WebSocket sessions.</td></tr>
+                    <tr><td>LimitWebSocketsFrame</td><td>Maximum WebSockets message frame size for sent messages.</td></tr>
+                    <tr><td>LimitWebSocketsMessage</td><td>Maximum WebSockets message size </td></tr>
+                    <tr><td>LimitWebSocketsPacket</td><td>Maximum WebSockets message size passed to the
+                            callback in one transaction.</td></tr>
+                    <tr><td>WebSocketsProtocol</td><td>Application level protocol supported by this route.</td></tr>
+                    <tr><td>WebSocketsPing</td><td>Frequency to generate a ping message.</td></tr>
                 </tbody>
             </table>
             <h2>WebSockets APIs</h2>
             <p>Appweb provides a simple but powerful API for interaction with WebSockets.</p>
             <table title="API" class="ui table segment">
-                <thead><tr><th>Directive<th>Purpose</thead>
+                <thead><tr><th>Directive</th><th>Purpose</th></tr></thead>
                 <tbody>
-                    <tr><td><a href="../ref/api/http.html#group___http_queue_1ga289893521c40788edc06280530167a85">httpGetPacket</a><td>Get the next message</tr>
-                    <tr><td><a href="../ref/api/http.html#http_8h_1a6c1a4a4b4d9cfc2ce626bb5fd005e6ac">httpGetWebSocketCloseReason</a><td>Get the close reason supplied
-                        by the peer</tr>
-                    <tr><td><a href="../ref/api/http.html#http_8h_1ad908e15f337a359e0f90258621d1329b">httpGetWebSocketProtocol</a><td> Get the selected web
-                        socket protocol selected by the server</tr>
-                    <tr><td><a href="../ref/api/http.html#http_8h_1a038d5c42a1ef5bce910dc617987a222c">httpSend</a><td>Send a UTF-8 text message to
-                        the web socket peer</tr>
-                    <tr><td><a href="../ref/api/http.html#http_8h_1ae7ef3ebbb7bbbbd701bdf84ab10cb6c1">httpSendBlock</a><td>Send a message of a given type to
-                        the web socket peer</tr>
-                    <tr><td><a href="../ref/api/http.html#http_8h_1adb22d418a67109b699890888ca66053a">httpSendClose</a><td>Send a close message to the web
-                        socket peer</tr>
-                    <tr><td><a href="../ref/api/http.html#group___http_conn_1ga6c39eab8e8b50e632f7e5620fce05318">httpSetConnNotifier</a><td>Define a connection callback notifier function</tr>
-                    <tr><td><a href="../ref/api/http.html#group___http_web_socket_1ga31d43df04a526af4103c41d0deecedc1">httpSetWebSocketPreserveFrames</a><td>Preserve
-                            frame boundaries and do not split or aggregate frames. </tr>
-                    <tr><td><a href="../ref/api/http.html#http_8h_1a96f8cb3db541d8a1340caf0d2afbbb1f">httpSetWebSocketProtocols</a><td>Set the list of
-                        application-level protocols supported by the client. This is a client-only API. </tr>
-                    <tr><td><a href="../ref/api/http.html#http_8h_1acb7184072bfb15ebf2c95f9ef6d0ba8c">httpWebSocketOrderlyClosed</a><td>Test if a close was orderly</tr>
+                    <tr><td><a href="../ref/api/http.html#group___http_queue_1ga289893521c40788edc06280530167a85">httpGetPacket</a></td><td>Get the next message</td></tr>
+                    <tr><td><a href="../ref/api/http.html#http_8h_1a6c1a4a4b4d9cfc2ce626bb5fd005e6ac">httpGetWebSocketCloseReason</a></td><td>Get the close reason supplied
+                        by the peer</td></tr>
+                    <tr><td><a href="../ref/api/http.html#http_8h_1ad908e15f337a359e0f90258621d1329b">httpGetWebSocketProtocol</a></td><td> Get the selected web
+                        socket protocol selected by the server</td></tr>
+                    <tr><td><a href="../ref/api/http.html#http_8h_1a038d5c42a1ef5bce910dc617987a222c">httpSend</a></td><td>Send a UTF-8 text message to
+                        the web socket peer</td></tr>
+                    <tr><td><a href="../ref/api/http.html#http_8h_1ae7ef3ebbb7bbbbd701bdf84ab10cb6c1">httpSendBlock</a></td><td>Send a message of a given type to
+                        the web socket peer</td></tr>
+                    <tr><td><a href="../ref/api/http.html#http_8h_1adb22d418a67109b699890888ca66053a">httpSendClose</a></td><td>Send a close message to the web
+                        socket peer</td></tr>
+                    <tr><td><a href="../ref/api/http.html#group___http_conn_1ga6c39eab8e8b50e632f7e5620fce05318">httpSetConnNotifier</a></td><td>Define a connection callback notifier function</td></tr>
+                    <tr><td><a
+                                href="../ref/api/http.html#group___http_web_socket_1ga31d43df04a526af4103c41d0deecedc1 ">httpSetWebSocketPreserveFrames</a></td><td>Preserve
+                            frame boundaries and do not split or aggregate frames. </td></tr>
+                    <tr><td><a href="../ref/api/http.html#http_8h_1a96f8cb3db541d8a1340caf0d2afbbb1f">httpSetWebSocketProtocols</a></td><td>Set the list of
+                        application-level protocols supported by the client. This is a client-only API. </td></tr>
+                    <tr><td><a href="../ref/api/http.html#http_8h_1acb7184072bfb15ebf2c95f9ef6d0ba8c">httpWebSocketOrderlyClosed</a></td><td>Test if a close was orderly</td></tr>
                     <tr><td><a href="../ref/api/esp.html#group___esp_req_1ga0ea346bbee09c401e90f0b908e7476ba">
-                            espSetNotifier</a><td>Define a connection callback notifier function for ESP applications.</tr>
+                            espSetNotifier</a></td><td>Define a connection callback notifier function for ESP applications.</td></tr>
                 </tbody>
             </table>
             <h2>Using WebSockets API with ESP</h2>
@@ -419,9 +423,11 @@ ESP_EXPORT int esp_controller_websock(HttpRoute *route, MprModule *module) {
             <p>The message contents is stored in the packet-&gt;content buffer. This is an instance of the
             <a href="../ref/api/mpr.html#group___mpr_buf">MprBuf</a> buffer object. A pointer to
             the start of the message can be retrieved via:</p>
-            <pre class="ui code segment"><a href="../ref/api/mpr.html#group___mpr_buf_1gac982291efef3d49cce4bc2ecec6566e5">mprGetBufStart(packet-&gt;content)</a></pre>
+            <pre class="ui code segment"><a href="../ref/api/mpr.html#group___mpr_buf_1gac982291efef3d49cce4bc2ecec6566e5"
+                >mprGetBufStart(packet-&gt;content)</a></pre>
             <p>The length of the message can be determined via:</p>
-            <pre class="ui code segment"><a href="../ref/api/mpr.html#group___mpr_buf_1gaa543b610b67691faf917b4b79229fc34">mprGetBufLength(packet-&gt;content)</a></pre>
+            <pre class="ui code segment"><a href="../ref/api/mpr.html#group___mpr_buf_1gaa543b610b67691faf917b4b79229fc34"
+                >mprGetBufLength(packet-&gt;content)</a></pre>
             <p>Note TEXT messages are null terminated and you can use the start reference as a c-string reference.</p>
             <h3>Sending Messages</h3>
             <p>Appweb provides two APIs for sending messages:</p>
@@ -437,7 +443,8 @@ ESP_EXPORT int esp_controller_websock(HttpRoute *route, MprModule *module) {
             <pre class="ui code segment">httpSend(stream, "The temperature today is: %d", temp);</pre>
             <h4>httpSendBlock</h4>
             <p>The WebSockFilter also provides a lower-level and more powerful API:
-                <a href="../ref/api/http.html#group___http_web_socket_1ga01475cb98667018a573c4347c847217f">httpSendBlock</a> for sending messages.</p>
+                <a href="../ref/api/http.html#group___http_web_socket_1ga01475cb98667018a573c4347c847217f"
+                    >httpSendBlock</a> for sending messages.</p>
             <pre class="ui code segment">ssize httpSendBlock(HttpStream *stream, int type, cchar *msg, ssize len, int flags)</pre>
             <p>This API can send messages and can control how messages are framed, buffered or whether the API should wait
             for completion.</p>
@@ -476,7 +483,8 @@ httpSendBlock(stream, WS_MSG_BINARY, buf, sizeof(buf), HTTP_BLOCK);</pre>
             message. This is the highest performance mode and consumes minimal memory. However it is more complex when the
             all returns having written less than requested. There is a sample that demonstrates this at:</p>
 
-            <pre class="ui code segment"><a href="https://github.com/embedthis/appweb-doc/tree/master/samples/websockets-output">https://github.com/embedthis/appweb-doc/tree/master/samples/websockets-output</a></pre>
+            <pre class="ui code segment"><a href="https://github.com/embedthis/appweb-doc/tree/master/samples/websockets-output"
+                    >https://github.com/embedthis/appweb-doc/tree/master/samples/websockets-output</a></pre>
             <h4>Message Framing</h4>
             <p>The WebSockFilter may split the message into frames such that no frame is larger than the limits specified by
             the LimitWebSocketsFrame directive. However, if the HTTP_MORE flag is specified to indicate there is more data to
@@ -519,7 +527,8 @@ httpSendBlock(stream, WS_MSG_BINARY, buf, sizeof(buf), HTTP_BLOCK);</pre>
                     <td>The WebSockets online test site</td>
                 </tr>
                 <tr>
-                    <td><a href="http://blog.kaazing.com/2012/05/09/inspecting-websocket-traffic-with-chrome-developer-tools/">Chrome
+                    <td><a
+                            href="http://blog.kaazing.com/2012/05/09/inspecting-websocket-traffic-with-chrome-developer-tools/">Chrome
                     WebSocket Tools</a></td>
                     <td>Chrome browser developer tools guide</td>
                 </tr>
@@ -532,7 +541,8 @@ httpSendBlock(stream, WS_MSG_BINARY, buf, sizeof(buf), HTTP_BLOCK);</pre>
                     <td>Real-time data exchange in HTML5 and WebSockets</td>
                 </tr>
                 <tr>
-                    <td><a href="http://www.lenholgate.com/blog/2011/07/websockets-is-a-stream-not-a-message-based-protocol.html">WebSockets Streams</a></td>
+                    <td><a
+                            href="http://www.lenholgate.com/blog/2011/07/websockets-is-a-stream-not-a-message-based-protocol.html">WebSockets Streams</a></td>
                     <td>WebSockets is a stream not a message based protocol....</td>
                 </tr>
                 </tbody>
@@ -543,14 +553,17 @@ httpSendBlock(stream, WS_MSG_BINARY, buf, sizeof(buf), HTTP_BLOCK);</pre>
         <p>&copy; Embedthis Software. All rights reserved.</p>
     </div>
 
-    <script src="../lib/jquery/jquery.min.js"></script>
-    <script src="../lib/jquery/jquery.slim.min.js"></script>
-    <script src="../lib/semantic-ui/semantic.min.js"></script>
     <script src="../scripts/sidebar.min.js"></script>
-     
+<script src="../scripts/reload.min.js"></script>
+ 
 
     
 
+    <script async>
+    window.onload = function () {
+        navigator.sendBeacon('https://api.admin.embedthis.com/api/metric/visit?site=appweb-doc', null)
+    }
+</script>
 
-
-
+</body>
+</html>

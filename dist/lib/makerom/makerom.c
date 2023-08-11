@@ -61,9 +61,12 @@ int main(int argc, char **argv)
             }
 
         } else {
-            printUsage();
-            return MPR_ERR;
+            err++;
         }
+    }
+    if (err) {
+        printUsage();
+        return MPR_ERR;
     }
     if (fileList) {
         if ((fp = fopen(fileList, "r")) == 0) {

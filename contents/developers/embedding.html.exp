@@ -1,5 +1,5 @@
 {
-    title:  'Embedding',
+    title:  'Embedding appweb in applications',
     crumbs: [ 
         { "Developer's Guide": '../developers/' }, 
     ],

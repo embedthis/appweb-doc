@@ -6656,7 +6656,7 @@ static char *fixMultiStrings(cchar *str)
     cchar   *cp;
     char    *buf, *bp;
     ssize   len;
-    int     count, bquote, quoted;
+    int     count, quoted;
 
     for (count = 0, cp = str; *cp; cp++) {
         if (*cp == '\n' || *cp == '"') {
@@ -6667,7 +6667,7 @@ static char *fixMultiStrings(cchar *str)
     if ((buf = mprAlloc(len + (count * 3) + 1)) == 0) {
         return 0;
     }
-    bquote = quoted = 0;
+    quoted = 0;
     for (cp = str, bp = buf; *cp; cp++) {
         if (*cp == '`') {
             *bp++ = '"';
@@ -6678,7 +6678,7 @@ static char *fixMultiStrings(cchar *str)
             } else if (*cp == '"') {
                 *bp++ = '\\';
             } else if (*cp == '\\' && cp[1] != '\\') {
-                bquote++;
+                /* Ignore */ ;
             }
             *bp++ = *cp;
         } else {

@@ -7,7 +7,7 @@
                 <div class="menu">
                     <a class="header item" href="@~/">Home</a>
                     <a class="item" href="@~/users/features.html">Appweb Features</a>
-                    <a class="item" href="https://embedthis.com/appweb/download.html">Download</a>
+                    <a class="item" href="https://www.embedthis.com/appweb/download.html">Download</a>
                     <a class="item" href="@~/licensing/">Licensing</a>
                 </div>
             </div>
@@ -79,8 +79,8 @@
                     <a class="header item" href="@~/developers/project.html">Project Resources</a>
                     <a class="item" href="https://github.com/embedthis/appweb-doc/blob/main/CHANGELOG.md"
                         target="_blank">Release Change Log</a>
-                    <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
-                    <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
+                    <a class="item" href="https://www.embedthis.com/blog/categories/Appweb">Appweb News</a>
+                    <a class="item" href="https://www.embedthis.com/appweb/">Appweb Web Site</a>
                     <a class="item" href="https://github.com/embedthis/appweb-doc">Appweb Repository</a>
                     <a class="item" href="https://github.com/embedthis/appweb-doc/issues/2">Appweb Security Alerts</a>
                     <a class="item" href="https://github.com/embedthis/appweb-doc/issues">Project Issue Database</a>
@@ -120,8 +120,8 @@
             <div class="item">
                 <div class="menu">
                     <span class="header item">Links</span>
-                    <a class="item" href="https://embedthis.com/">Embedthis Web Site</a>
-                    <a class="item" href="https://embedthis.com/blog/">Embedthis Blog</a>
+                    <a class="item" href="https://www.embedthis.com/">Embedthis Web Site</a>
+                    <a class="item" href="https://www.embedthis.com/blog/">Embedthis Blog</a>
                     <a class="item" href="http://twitter.com/embedthat">Twitter</a>
                 </div>
             </div>

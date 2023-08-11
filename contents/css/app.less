@@ -68,7 +68,7 @@ body.version {
     .breadcrumb {
         position: absolute;
         top: 46px;
-        margin: 6px 0 0 35px;
+        margin: 4px 0 0 35px !important;
         .section {
             padding-bottom: .5rem;
         }
@@ -80,11 +80,14 @@ body.version {
             color: @white;
         }
         a {
-            color: fade(@white, 70%);
+            color: black !important;
+        }
+        a.active.section {
+            color: @white !important;
         }
         a:hover,
         a:hover.active.section {
-            color: @white;
+            color: @white !important;
         }
     }
     iframe.version {

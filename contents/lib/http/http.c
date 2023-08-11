@@ -107,7 +107,7 @@ typedef struct App {
     MprList     *threadData;        /* Per thread data */
     int         upload;             /* Upload using multipart mime */
     char        *username;          /* User name for authentication of requests */
-    int         verifyPeer;         /* Validate server certs */
+    char        *verifyPeer;        /* Validate server certs */
     int         verifyIssuer;       /* Validate the issuer. Permits self-signed certs if false. */
     int         verbose;            /* Trace progress */
     int         window;             /* HTTP/2 input window size (min 65535) */
@@ -617,7 +617,7 @@ static int parseArgs(int argc, char **argv)
             }
 
         } else if (smatch(argp, "--verify")) {
-            app->verifyPeer = 1;
+            app->verifyPeer = "require";
             app->needSsl = 1;
 
         } else if (smatch(argp, "--verbose") || smatch(argp, "-v")) {
@@ -1484,6 +1484,7 @@ static void manageRequest(Request *req, int flags)
         mprMark(req->net);
         mprMark(req->outFile);
         mprMark(req->path);
+        mprMark(req->redirect);
         mprMark(req->stream);
         mprMark(req->threadData);
         mprMark(req->uri);

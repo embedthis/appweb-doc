@@ -641,12 +641,12 @@ PUBLIC HttpAddress *httpMonitorAddress(struct HttpNet *net, int counterIndex);
 /**
     Trace formatter callback
     @param trace Trace object
-    @param stream Stream object
     @param event Event to trace
     @param type Type of event to trace
-    @param values Formatted comma separated key=value pairs
+    @param flags Formatter flags
     @param data Data buffer
-    @param len Length of data. May be zero.
+    @param fmt Trace string to format
+    @param args Format args
     @stability Evolving
     @ingroup HttpTrace
  */
@@ -1924,7 +1924,7 @@ typedef struct HttpRange {
     Callback procedure to fill a packet with data
     @param q Queue owning the packet
     @param packet The packet to fill
-    @param off Offset in the packet to fill with data
+    @param pos Offset in the packet to fill with data
     @param size Size of packet from the offset to fill.
     @return The number of bytes copied into the packet.
     @ingroup HttpPacket
@@ -3196,7 +3196,7 @@ PUBLIC cchar *httpHuffDecode(uchar *src, int len);
 /********************************* Network *************************************/
 /**
     I/O callback for network connections
-    @param stream HttpNet object created via #httpCreateStream
+    @param net HttpNet object created via #httpCreateNet
     @param event Event object describing the I/O event
     @ingroup HttpNet
     @stability Evolving
@@ -3547,7 +3547,6 @@ PUBLIC bool httpQueuesNeedService(HttpNet *net);
     Set the async mode value for the network
     @param net HttpNet object created via #httpCreateNet
     @param async Set to 1 to enable async mode
-    @return True if the network is in async mode
     @ingroup HttpNet
     @stability Evolving
  */
@@ -5050,7 +5049,6 @@ typedef struct HttpCache {
         Select HTTP_CACHE_SERVER to define the server-side caching mode.
         \n\n
         Select HTTP_CACHE_UNIQUE to uniquely cache requests with different request parameters.
-    @return A count of the bytes actually written
     @ingroup HttpCache
     @stability Evolving
  */
@@ -5570,7 +5568,6 @@ PUBLIC int httpAddRouteHandler(HttpRoute *route, cchar *name, cchar *extensions)
     @param route Route to modify
     @param path Path name to the index document. If the path is a relative path, it may be joined to the route
         directory to create an absolute path.
-    @return A reference to the route data. Otherwise return null if the route data for the given key was not found.
     @ingroup HttpRoute
     @stability Stable
  */
@@ -7564,8 +7561,6 @@ typedef struct HttpTx {
     @param key Http response header key
     @param fmt Printf style formatted string to use as the header key value
     @param ... Arguments for fmt
-    @return "Zero" if successful, otherwise a negative MPR error code. Returns MPR_ERR_ALREADY_EXISTS if the header already
-        exists.
     @ingroup HttpTx
     @stability Stable
  */
@@ -7577,8 +7572,6 @@ PUBLIC void httpAddHeader(HttpStream *stream, cchar *key, cchar *fmt, ...) PRINT
     @param stream HttpStream stream object created via #httpCreateStream
     @param key Http response header key
     @param value Value to set for the header
-    @return Zero if successful, otherwise a negative MPR error code. Returns MPR_ERR_ALREADY_EXISTS if the header already
-        exists.
     @ingroup HttpTx
     @stability Stable
  */
@@ -7745,7 +7738,6 @@ PUBLIC void httpFollowRedirects(HttpStream *stream, bool follow);
         sending to the user. NOTE: Do not send user input back to the client using this method. Otherwise you open
         large security holes.
     @param ... Arguments for fmt
-    @return A count of the number of bytes in the transmission body.
     @ingroup HttpTx
     @stability Stable
  */
@@ -8164,7 +8156,6 @@ PUBLIC HttpNet *httpAccept(HttpEndpoint *endpoint, MprEvent *event);
         virutal hosts.
     @param endpoint Endpoint to which the host will be added.
     @param host HttpHost object to add.
-    @return "Zero" if the host can be added.
     @ingroup HttpEndpoint
     @stability Internal
  */
@@ -8324,7 +8315,6 @@ PUBLIC int httpStartEndpoints(void);
 /**
     Stop listening for client connections on all endpoints
     @description Closes all endpoints and stops listening for connections. Does not impact running requests.
-    @returns "Zero" if successful, otherwise a negative MPR error code.
     @ingroup HttpEndpoint
  */
 PUBLIC void httpStopEndpoints(void);
@@ -8784,7 +8774,6 @@ PUBLIC void httpSetWebSocketData(HttpStream *stream, void *data);
         Note: enabling this option may prevent full validation of UTF8 text messages if UTF8 codepoints span frame boundaries.
     @param stream HttpStream stream object created via #httpCreateStream
     @param on Set to true to preserve frames
-    @return True if the WebSocket was orderly closed.
     @ingroup HttpWebSocket
     @stability Evolving
 */

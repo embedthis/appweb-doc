@@ -8,7 +8,7 @@
 #include "osdep.h"
 
 #ifndef ESP_VERSION
-    #define ESP_VERSION "9.0.2"
+    #define ESP_VERSION "9.0.3"
 #endif
 
 /*
@@ -1874,8 +1874,6 @@ typedef struct EspReq {
     @param key Http response header key
     @param fmt Printf style formatted string to use as the header key value
     @param ... Arguments for fmt
-    @return Zero if successful, otherwise a negative MPR error code. Returns MPR_ERR_ALREADY_EXISTS if the header already
-        exists.
     @ingroup EspReq
     @stability Stable
  */
@@ -1887,8 +1885,6 @@ PUBLIC void espAddHeader(HttpStream *stream, cchar *key, cchar *fmt, ...);
     @param stream HttpStream stream object
     @param key Http response header key
     @param value Value to set for the header
-    @return Zero if successful, otherwise a negative MPR error code. Returns MPR_ERR_ALREADY_EXISTS if the header already
-        exists.
     @ingroup EspReq
     @stability Stable
  */
@@ -2066,9 +2062,8 @@ PUBLIC cchar *espGetCookie(HttpStream *stream, cchar *name);
 PUBLIC cchar *espGetCookies(HttpStream *stream);
 
 /**
-    Get the private data reference for the current request set via #setData
+    Get the private data reference for the current request set via setData
     @param stream HttpStream object
-    @return Reference to private data
     @ingroup EspReq
     @stability prototype
  */
@@ -2102,7 +2097,7 @@ PUBLIC EspRoute *espGetEspRoute(HttpStream *stream);
 PUBLIC cchar *espGetDocuments(HttpStream *stream);
 
 /**
-    Get a feedback message defined via #feedback
+    Get a feedback message defined via feedback
     @param stream HttpStream object
     @param type type of feedback message to retrieve. This may be set to any word, but the following feedback types
         are typically supported as per RFC 5424: "debug", "info", "notice", "warn", "error", "critical".
@@ -2114,7 +2109,7 @@ PUBLIC cchar *espGetFeedback(HttpStream *stream, cchar *type);
 
 /**
     Get the current database grid reference.
-    @description The current grid is defined via #setGrid
+    @description The current grid is defined via setGrid
     @return EdiGrid instance
     @ingroup EspReq
     @stability Deprecated
@@ -2736,7 +2731,6 @@ PUBLIC void espSetContentType(HttpStream *stream, cchar *mimeType);
 /**
     Set this authenticated session as the current session.
     @description Set esp.login.single to true to enable current session tracking.
-    @return true if the
     @stability Evolving
     @ingroup EspReq
  */
@@ -3304,7 +3298,7 @@ PUBLIC void *getData(void);
 PUBLIC MprDispatcher *getDispatcher(void);
 
 /**
-    Get a feedback message defined via #feedback
+    Get a feedback message defined via feedback()
     @param type type of feedback message to retrieve. This may be set to any word, but the following feedback types
         are typically supported as per RFC 5424: "debug", "info", "notice", "warn", "error", "critical".
     @return Reference to private data

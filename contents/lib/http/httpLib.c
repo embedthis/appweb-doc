@@ -5383,7 +5383,13 @@ static void parseSslTicket(HttpRoute *route, cchar *key, MprJson *prop)
 
 static void parseSslVerifyClient(HttpRoute *route, cchar *key, MprJson *prop)
 {
-    mprVerifySslPeer(route->ssl, (prop->type & MPR_JSON_TRUE) ? 1 : 0);
+    if (prop->type & MPR_JSON_TRUE) {
+        mprVerifySslPeer(route->ssl, "require");
+    } else if (prop->type & MPR_JSON_FALSE) {
+        mprVerifySslPeer(route->ssl, 0);
+    } else {
+        mprVerifySslPeer(route->ssl, prop->value);
+    }
 }
 
 
@@ -13935,7 +13941,7 @@ PUBLIC int64 httpMonitorEvent(HttpStream *stream, int counterIndex, int64 adj)
 
 static void manageNet(HttpNet *net, int flags);
 static void netTimeout(HttpNet *net, MprEvent *mprEvent);
-static void secureNet(HttpNet *net, MprSsl *ssl, cchar *peerName);
+static int secureNet(HttpNet *net, MprSsl *ssl, cchar *peerName);
 
 #if ME_HTTP_HTTP2
 static HttpHeaderTable *createHeaderTable(int maxSize);
@@ -14160,7 +14166,9 @@ PUBLIC int httpConnectNet(HttpNet *net, cchar *ip, int port, MprSsl *ssl)
     net->port = port;
 
     if (ssl) {
-        secureNet(net, ssl, ip);
+        if (secureNet(net, ssl, ip) < 0) {
+            return MPR_ERR_CANT_INITIALIZE;
+        }
     }
     httpLog(net->trace, "tx.net.peer", "context", "peer:%s:%d", net->ip, net->port);
     if (net->callback) {
@@ -14170,7 +14178,7 @@ PUBLIC int httpConnectNet(HttpNet *net, cchar *ip, int port, MprSsl *ssl)
 }
 
 
-static void secureNet(HttpNet *net, MprSsl *ssl, cchar *peerName)
+static int secureNet(HttpNet *net, MprSsl *ssl, cchar *peerName)
 {
 #if ME_COM_SSL
     MprSocket   *sock;
@@ -14178,6 +14186,7 @@ static void secureNet(HttpNet *net, MprSsl *ssl, cchar *peerName)
     sock = net->sock;
     if (mprUpgradeSocket(sock, ssl, peerName) < 0) {
         httpNetError(net, "Cannot perform SSL upgrade. %s", sock->errorMsg);
+        return MPR_ERR_CANT_INITIALIZE;
 
     } else if (sock->peerCert) {
         httpLog(net->trace, "tx.net.ssl", "context",
@@ -14186,6 +14195,7 @@ static void secureNet(HttpNet *net, MprSsl *ssl, cchar *peerName)
             sock->cipher, sock->peerName, sock->peerCert, sock->peerCertIssuer);
     }
 #endif
+    return 0;
 }
 
 
@@ -18937,7 +18947,7 @@ PUBLIC void httpRouteRequest(HttpStream *stream)
     }
     if (route == 0 || tx->handler == 0) {
         rx->route = stream->host->defaultRoute;
-        httpError(stream, HTTP_CODE_BAD_METHOD, "Cannot find suitable route for request method");
+        httpError(stream, HTTP_CODE_NOT_FOUND, "Cannot find suitable route to satisfy the request");
         return;
     }
     rx->route = route;

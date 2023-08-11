@@ -18,7 +18,6 @@ doc: sync
 sync:
 	pak sync
 
-
 LOCAL_MAKEFILE := $(strip $(wildcard ./.local.mk))
 
 ifneq ($(LOCAL_MAKEFILE),)

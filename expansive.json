@@ -1,6 +1,7 @@
 {
     "meta": {
-        "site": "https://embedthis.com/appweb/doc"
+        "site": "https://www.embedthis.com/appweb/doc",
+        "metrics": "appweb-doc"
     },
     "control": {
         "listen": ":7070"

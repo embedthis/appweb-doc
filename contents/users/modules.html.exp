@@ -1,5 +1,5 @@
 {
-    title:  'Modules',
+    title:  'Creating Appweb Modules',
     crumbs: [
         { "User's Guide": '../users/' },
     ],

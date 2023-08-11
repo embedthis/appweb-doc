@@ -18,7 +18,7 @@
             <p>With each Appweb release, a complete source code snapshot is provided. You can download a source package from the Appweb web site or you can retrieve it from the Appweb GitHub repository. If you download from the repository, please use the <em>master</em> branch for the most recent stable snapshot. For less stable daily builds, use the <em>dev</em> branch.</p>
 
             <a class="ui primary right labeled icon button"
-                href="https://embedthis.com/appweb/download.html">
+                href="https://www.embedthis.com/appweb/download.html">
                 <i class="right long arrow icon"></i>Download Source
             </a>
             <a class="ui secondary right labeled icon button"
@@ -29,7 +29,7 @@
         <!--
             <h2>Installing Packages</h2>
             <p>Appweb can be extended via third-party packages that can be installed using the
-            <a href="https://embedthis.com/pak/">Pak</a> package manager. Including:</p>
+            <a href="https://www.embedthis.com/pak/">Pak</a> package manager. Including:</p>
             <ul>
                 <li>OpenSSL SSL Stack</li>
             </ul>
@@ -39,8 +39,8 @@ pak install https://github.com/embedthis/appweb-php.git
 pak install npm:jquery
 pak install npm:angular
 </pre>
-            <p>See the <a href="https://embedthis.com/pak/">Pak Web Site</a> to read about Pak and to
-            <a href="https://embedthis.com/pak/download.html">Download Pak</a>.</p>
+            <p>See the <a href="https://www.embedthis.com/pak/">Pak Web Site</a> to read about Pak and to
+            <a href="https://www.embedthis.com/pak/download.html">Download Pak</a>.</p>
         -->
 
             <h2>Building Appweb from Source</h2>
@@ -53,16 +53,16 @@ pak install npm:angular
             <p>Building via <em>make</em> is the simplest way to build. Use <em>make</em> if you want a default build or if you need to integrate Appweb with an existing make-based build system.</p>
 
             <!--
-            <p>Build with <a href="https://embedthis.com/makeme/">MakeMe</a> if you want to customize or configure the software for your system, or if you need to cross-compile for another operating system or architecture.
+            <p>Build with <a href="https://www.embedthis.com/makeme/">MakeMe</a> if you want to customize or configure the software for your system, or if you need to cross-compile for another operating system or architecture.
             -->
             <p>Use the Visual Studio or Xcode if you are most comfortable with these tools and want a default build.</p>
 
             <!--
-            <p>We use the <a href="https://embedthis.com/makeme/">MakeMe</a> tool internally to generate the Appweb Makefiles, MakeMe and IDE projects. This cool tool generates clean, efficient makefiles and projects. The MakeMe project documents how to use these generated Makefiles and projects as they are the same for all projects that use MakeMe. For full details, read on, courtesy of MakeMe:</p>
+            <p>We use the <a href="https://www.embedthis.com/makeme/">MakeMe</a> tool internally to generate the Appweb Makefiles, MakeMe and IDE projects. This cool tool generates clean, efficient makefiles and projects. The MakeMe project documents how to use these generated Makefiles and projects as they are the same for all projects that use MakeMe. For full details, read on, courtesy of MakeMe:</p>
             -->
 
             <p><a class="ui green large right labeled icon button"
-                href="https://embedthis.com/makeme/doc/source/make.html">
+                href="https://www.embedthis.com/makeme/doc/source/make.html">
                 <i class="right long arrow icon"></i>Building from Source
             </a></p>
 

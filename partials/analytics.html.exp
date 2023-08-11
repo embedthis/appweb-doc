@@ -1,0 +1,5 @@
+<script async>
+    window.onload = function () {
+        navigator.sendBeacon('https://api.admin.embedthis.com/api/metric/visit?site=<@= meta.metrics @>', null)
+    }
+</script>

@@ -37,6 +37,10 @@ static int parseFileInner(MaState *state, cchar *path);
 static int parseInit(void);
 static int setTarget(MaState *state, cchar *name, cchar *details);
 
+#if ME_COM_SSL
+static void checkSsl(MaState *state);
+#endif
+
 /******************************************************************************/
 /*
     Load modules builtin modules by default. Subsequent calls to the LoadModule directive will have no effect.
@@ -1590,13 +1594,8 @@ static int listenSecureDirective(MaState *state, cchar *key, cchar *value)
     if (smatch(multiple, "multiple")) {
         endpoint->multiple = 1;
     }
-    if (state->route->ssl == 0) {
-        if (state->route->parent && state->route->parent->ssl) {
-            state->route->ssl = mprCloneSsl(state->route->parent->ssl);
-        } else {
-            state->route->ssl = mprCreateSsl(1);
-        }
-    }
+    checkSsl(state);
+
     host = state->host;
     httpAddHostToEndpoint(endpoint, host);
     if (!host->secureEndpoint) {
@@ -2442,17 +2441,21 @@ static int sslCertificateFileDirective(MaState *state, cchar *key, cchar *value)
 
 static int sslCertificateKeyFileDirective(MaState *state, cchar *key, cchar *value)
 {
-    char *path;
+    cchar *path;
 
-    if (!maTokenize(state, value, "%P", &path)) {
-        return MPR_ERR_BAD_SYNTAX;
+    if (sstarts(value, "pkcs11:")) {
+        path = value;
+    } else {
+        if (!maTokenize(state, value, "%P", &path)) {
+            return MPR_ERR_BAD_SYNTAX;
+        }
+        path = mprJoinPath(state->configDir, httpExpandRouteVars(state->route, path));
+        if (!mprPathExists(path, R_OK)) {
+            mprLog("error ssl", 0, "Cannot locate %s", path);
+            return MPR_ERR_CANT_FIND;
+        }
     }
     checkSsl(state);
-    path = mprJoinPath(state->configDir, httpExpandRouteVars(state->route, path));
-    if (!mprPathExists(path, R_OK)) {
-        mprLog("error ssl", 0, "Cannot locate %s", path);
-        return MPR_ERR_CANT_FIND;
-    }
     mprSetSslKeyFile(state->route->ssl, path);
     return 0;
 }
@@ -2584,6 +2587,12 @@ static int sslPreload(MaState *state, cchar *key, cchar *value)
     return 0;
 }
 
+
+static int sslEngine(MaState *state, cchar *key, cchar *value)
+{
+    mprSetSslDevice(state->route->ssl, value);
+	return 0;
+}
 #endif /* ME_COM_SSL */
 
 /*
@@ -3499,6 +3508,7 @@ static int parseInit(void)
     maAddDirective("SSLVerifyClient", sslVerifyClientDirective);
     maAddDirective("SSLVerifyIssuer", sslVerifyIssuerDirective);
     maAddDirective("SSLVerifyDepth", sslVerifyDepthDirective);
+    maAddDirective("SSLEngine", sslEngine);
 #endif
 
     maAddDirective("Stealth", stealthDirective);

@@ -15,5 +15,6 @@
     <@ partial('terms') @>
     <@ partial('scripts') @>
     <@ partial('reload') @>
+    <@ partial('analytics') @>
 </body>
 </html>
