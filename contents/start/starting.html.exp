@@ -41,7 +41,7 @@ appweb [options]
                     </tr>
                     <tr>
                         <td>--exe path</td>
-                        <td>Set the path to Appweb executable for VxWorks.</td>
+                        <td>Set the path to Appweb executable.</td>
                     </tr>
                     <tr>
                         <td>--home directory</td>

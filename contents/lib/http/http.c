@@ -664,6 +664,16 @@ static int parseArgs(int argc, char **argv)
                 app->bodyData = mprCreateBuf(-1, -1);
                 mprPutStringToBuf(app->bodyData, argv[++nextArg]);
             }
+        } else if (smatch(argp, "--pu")) {
+            /* Post url encoded */
+            if (nextArg >= argc) {
+                return showUsage();
+            } else {
+                mprAddItem(app->headers, mprCreateKeyPair("Content-Type", "application/x-www-form-urlencoded", 0));
+                app->method = "POST";
+                app->bodyData = mprCreateBuf(-1, -1);
+                mprPutStringToBuf(app->bodyData, argv[++nextArg]);
+            }
 
         } else if (smatch(argp, "--zero")) {
             app->zeroOnErrors++;

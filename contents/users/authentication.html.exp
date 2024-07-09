@@ -41,7 +41,7 @@ AuthStore system
             <a name="verifying"></a>
             <h2>Verifying Passwords</h2>
             <p>If using the "app" store, you will need to register a callback that will be used to verify user credentials.
-            Use the <a href="../../ref/api/http.html#group___http_auth_1ga1967934a19f482da6ded9496dc149086">httpSetAuthStoreVerifyByName</a> API to register your verification callback for all routes using the store. Alternatively, use the <a href="https://www.embedthis.com/appweb/doc/ref/api/http.html#group___http_auth_1ga09beabd2ece2ccf6b7627a4ee73c5b86">httpSetAuthVerify</a> API to define the callback for just one route using the store. </p>
+            Use the <a href="../ref/api/http.html#group___http_auth_1ga1967934a19f482da6ded9496dc149086">httpSetAuthStoreVerifyByName</a> API to register your verification callback for all routes using the store. Alternatively, use the <a href="https://www.embedthis.com/appweb/doc/ref/api/http.html#group___http_auth_1ga09beabd2ece2ccf6b7627a4ee73c5b86">httpSetAuthVerify</a> API to define the callback for just one route using the store. </p>
 
             <a name="authpass"></a>
             <h2>Creating Passwords</h2>

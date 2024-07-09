@@ -390,7 +390,7 @@ typedef int (*HttpListenCallback)(struct HttpEndpoint *endpoint);
     Redirect callback. Invoked before processing redirects
     @return New target Uri and *code to contain the status
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 typedef cchar *(*HttpRedirectCallback)(struct HttpStream *stream, int *code, cchar *uri);
 
@@ -398,7 +398,7 @@ typedef cchar *(*HttpRedirectCallback)(struct HttpStream *stream, int *code, cch
     Network event callback
     @param net HttpNetwork object
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
   */
 typedef void (*HttpNetCallback)(struct HttpNet *net, int event);
 
@@ -406,7 +406,7 @@ typedef void (*HttpNetCallback)(struct HttpNet *net, int event);
     Request completion callback
     @param stream HttpStream object
     @ingroup HttpRx
-    @stability Evolving
+    @stability Stable
   */
 typedef void (*HttpRequestCallback)(struct HttpStream *stream);
 
@@ -424,7 +424,7 @@ typedef void (*HttpTimeoutCallback)(struct HttpStream *stream);
     @param proc Fork callback procedure
     @param arg Argument to supply when the callback is invoked.
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetForkCallback(MprForkCallback proc, void *arg);
 
@@ -494,14 +494,14 @@ typedef struct HttpAddress {
     Defense remedy callback
     @param args Hash of configuration args for the callback
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
   */
 typedef void (*HttpRemedyProc)(MprHash *args);
 
 /**
     Monitor defense configuration
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 typedef struct HttpDefense {
     cchar           *name;                      /**< Defense name */
@@ -521,7 +521,7 @@ typedef struct HttpDefense {
     @param adj Value to adjust the counter by. May be positive or negative.
     @return Monitor value after applying the adjustment.
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int64 httpMonitorEvent(struct HttpStream *stream, int counter, int64 adj);
 
@@ -534,7 +534,7 @@ PUBLIC int64 httpMonitorEvent(struct HttpStream *stream, int counter, int64 adj)
     @param adj Value to adjust the counter by. May be positive or negative.
     @return Monitor value after applying the adjustment.
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int64 httpMonitorNetEvent(struct HttpNet *net, int counter, int64 adj);
 
@@ -549,7 +549,7 @@ PUBLIC int64 httpMonitorNetEvent(struct HttpNet *net, int counter, int64 adj);
     @param defenses List of defenses to invoke if the counter exceeds the limit value over the designated period.
     @return Zero if successful, otherwise a negative MPR error code.
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpAddMonitor(cchar *counter, cchar *expr, uint64 limit, MprTicks period, cchar *defenses);
 
@@ -561,7 +561,7 @@ PUBLIC int httpAddMonitor(cchar *counter, cchar *expr, uint64 limit, MprTicks pe
     @param args Arguments to pass to the remedy. These may include ${tokens}.
     @return Zero if successful, otherwise a negative MPR error code.
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpAddDefense(cchar *name, cchar *remedy, cchar *args);
 
@@ -573,7 +573,7 @@ PUBLIC int httpAddDefense(cchar *name, cchar *remedy, cchar *args);
     @param jargs Arguments to pass to the remedy as a JSON object. These may include ${tokens}.
     @return Zero if successful, otherwise a negative MPR error code.
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpAddDefenseFromJson(cchar *name, cchar *remedy, MprJson *jargs);
 
@@ -582,7 +582,7 @@ PUBLIC int httpAddDefenseFromJson(cchar *name, cchar *remedy, MprJson *jargs);
     @param name Name of the counter
     @return The counter index in HttpAddress.counters[] to use
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpAddCounter(cchar *name);
 
@@ -592,7 +592,7 @@ PUBLIC int httpAddCounter(cchar *name);
     @param remedy Remedy callback function
     @return Zero if successful, otherwise a negative MPR error code.
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpAddRemedy(cchar *name, HttpRemedyProc remedy);
 
@@ -604,14 +604,14 @@ PUBLIC int httpAddRemedy(cchar *name, HttpRemedyProc remedy);
     @param msg If non-null, then return a HTTP response with this message. If both status and msg are zero and null respectively,
         then do not send a response to the client, rather immediately close the network connection.
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpBanClient(cchar *ip, MprTicks period, int status, cchar *msg);
 
 /**
     Print the monitor counters to the error log
     @ingroup HttpMonitor
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC void httpDumpCounters(void);
 
@@ -647,7 +647,7 @@ PUBLIC HttpAddress *httpMonitorAddress(struct HttpNet *net, int counterIndex);
     @param data Data buffer
     @param fmt Trace string to format
     @param args Format args
-    @stability Evolving
+    @stability Stable
     @ingroup HttpTrace
  */
 typedef void (*HttpTraceFormatter)(struct HttpTrace *trace, cchar *event, cchar *type, int flags, cchar *data, ssize len, cchar *fmt, va_list args);
@@ -657,14 +657,14 @@ typedef void (*HttpTraceFormatter)(struct HttpTrace *trace, cchar *event, cchar 
     @param trace Trace object
     @param data Data buffer to write.
     @param len Length of data. May be zero.
-    @stability Evolving
+    @stability Stable
     @ingroup HttpTrace
  */
 typedef void (*HttpTraceLogger)(struct HttpTrace *trace, cchar *data, ssize len);
 
 /**
     Trace management structure
-    @stability Evolving
+    @stability Stable
     @defgroup HttpTrace HttpTrace
   */
 typedef struct HttpTrace {
@@ -687,17 +687,6 @@ typedef struct HttpTrace {
 } HttpTrace;
 
 /**
-    Backup the request trace log if required
-    @description If the log file is greater than the maximum configured, or MPR_ANEW was set via httpSetTraceLog,
-    then archive the log.
-    @param trace HttpTrace object
-    @return Zero if successful, otherwise a negative MPR error code.
-    @ingroup HttpTrace
-    @stability Evolving
- */
-PUBLIC int httpBackupTraceLogFile(HttpTrace *trace);
-
-/**
     Common Log trace formatter
     @param trace HttpTrace object
     @param event Event to trace
@@ -708,7 +697,7 @@ PUBLIC int httpBackupTraceLogFile(HttpTrace *trace);
     @param fmt Printf style formatted string
     @param args Varargs arguments for fmt
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpCommonFormatter(HttpTrace *trace, cchar *event, cchar *type, int flags, cchar *buf, ssize len, cchar *fmt, va_list args);
 
@@ -717,7 +706,7 @@ PUBLIC void httpCommonFormatter(HttpTrace *trace, cchar *event, cchar *type, int
     @description If parent is defined, inherit default settings from the parent
     @param parent Parent trace object from which to inherit settings
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC HttpTrace *httpCreateTrace(HttpTrace *parent);
@@ -733,7 +722,7 @@ PUBLIC HttpTrace *httpCreateTrace(HttpTrace *parent);
     @param fmt Printf style formatted string
     @param args Varargs arguments for fmt
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpDetailFormatter(HttpTrace *trace, cchar *event, cchar *type, int flags, cchar *buf, ssize len, cchar *fmt, va_list args);
 
@@ -749,7 +738,7 @@ PUBLIC void httpDetailFormatter(HttpTrace *trace, cchar *event, cchar *type, int
     @param fmt Printf style formatted string
     @param args Varargs arguments for fmt
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpFormatTrace(HttpTrace *trace, cchar *event, cchar *type, int flags, cchar *buf, ssize len, cchar *fmt, va_list args);
 
@@ -758,7 +747,7 @@ PUBLIC void httpFormatTrace(HttpTrace *trace, cchar *event, cchar *type, int fla
     @return The tracing level 0-5
     @ingroup HttpTrace
     @param trace Trace object
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpGetTraceLevel(HttpTrace *trace);
 
@@ -784,7 +773,7 @@ PUBLIC int httpGetTraceLevel(HttpTrace *trace);
     @param ... Arguments for fmt
     @return True if the event was traced
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool httpLog(HttpTrace *trace, cchar *event, cchar *type, cchar *fmt, ...);
 #else
@@ -806,7 +795,7 @@ PUBLIC void httpLogProc(HttpTrace *trace, cchar *event, cchar *type, int flags, 
     @param buf Data buffer to trace
     @param len Size of buffer
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpLogRxPacket(struct HttpNet *net, cchar *buf, ssize len);
 
@@ -816,7 +805,7 @@ PUBLIC void httpLogRxPacket(struct HttpNet *net, cchar *buf, ssize len);
     @param net HttpNet object
     @param len Length in bytes actually written
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpLogTxPacket(struct HttpNet *net, ssize len);
 
@@ -825,7 +814,7 @@ PUBLIC void httpLogTxPacket(struct HttpNet *net, ssize len);
     @description This traces the request metrics
     @param stream HttpStream object
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpLogCompleteRequest(struct HttpStream *stream);
 
@@ -840,14 +829,14 @@ PUBLIC void httpLogCompleteRequest(struct HttpStream *stream);
     @param fmt Printf style formatted string
     @param args Varargs arguments for fmt
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpPrettyFormatter(HttpTrace *trace, cchar *event, cchar *type, int flags, cchar *buf, ssize len, cchar *fmt, va_list args);
 /*
     Trace LogFile logger
     @description Open the trace log file defined in the HttpTrace object
     @param trace Trace object
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC int httpOpenTraceLogFile(HttpTrace *trace);
@@ -859,7 +848,7 @@ PUBLIC int httpOpenTraceLogFile(HttpTrace *trace);
     @param callback Formatter callback
     @return Prior trace formatter
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpTraceFormatter httpSetTraceFormatter(HttpTrace *trace, HttpTraceFormatter callback);
 
@@ -869,9 +858,8 @@ PUBLIC HttpTraceFormatter httpSetTraceFormatter(HttpTrace *trace, HttpTraceForma
     @param trace Trace object
     @param format The format string defaults to: "%h %l %u %t \"%r\" %>s %b %n".
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
-
 PUBLIC void httpSetTraceFormat(HttpTrace *trace, cchar *format);
 
 /**
@@ -882,7 +870,7 @@ PUBLIC void httpSetTraceFormat(HttpTrace *trace, cchar *format);
     @param level New tracing level. Must be 0-5 inclusive.
     @param trace Trace object
     @ingroup HttpTrace
-    @stability Evolving.
+    @stability Stable
  */
 PUBLIC void httpSetTraceLevel(HttpTrace *trace, int level);
 
@@ -892,7 +880,7 @@ PUBLIC void httpSetTraceLevel(HttpTrace *trace, int level);
     @param type Event type to modify
     @param level Desired trace level (0-5)
     @ingroup HttpTrace
-    @stability Evolving.
+    @stability Stable
     @internal
  */
 PUBLIC void httpSetTraceEventLevel(HttpTrace *trace, cchar *type, int level);
@@ -903,7 +891,7 @@ PUBLIC void httpSetTraceEventLevel(HttpTrace *trace, cchar *type, int level);
     @param trace Tracing object
     @param size Maximum content size to trace
     @ingroup HttpTrace
-    @stability Evolving.
+    @stability Stable
  */
 PUBLIC void httpSetTraceContentSize(HttpTrace *trace, ssize size);
 
@@ -913,7 +901,7 @@ PUBLIC void httpSetTraceContentSize(HttpTrace *trace, ssize size);
     @param trace Trace object to configure
     @param callback Trace logger callback
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetTraceLogger(HttpTrace *trace, HttpTraceLogger callback);
 
@@ -927,7 +915,7 @@ PUBLIC void httpSetTraceLogger(HttpTrace *trace, HttpTraceLogger callback);
     @param flags Set to MPR_LOG_ANEW to archive the log when the application reboots.
     @return Zero if successful, otherwise a negative MPR error code.
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpSetTraceLogFile(HttpTrace *trace, cchar *path, ssize size, int backup, cchar *format, int flags);
 
@@ -936,7 +924,7 @@ PUBLIC int httpSetTraceLogFile(HttpTrace *trace, cchar *path, ssize size, int ba
     @param trace Tracing object
     @param name Formatter name. Set to "common" for the Common Log format or "detail" for the Appweb detailed trace format.
     @ingroup HttpTrace
-    @stability Evolving.
+    @stability Stable
     @internal
  */
 PUBLIC void httpSetTraceFormatterName(HttpTrace *trace, cchar *name);
@@ -946,7 +934,7 @@ PUBLIC void httpSetTraceFormatterName(HttpTrace *trace, cchar *name);
     @param trace Tracing object
     @param type Event type to consider
     @ingroup HttpTrace
-    @stability Evolving.
+    @stability Stable
     @returns True if trace should be emitted
  */
 PUBLIC bool httpShouldTrace(HttpTrace *trace, cchar *type);
@@ -968,7 +956,7 @@ PUBLIC bool httpShouldTrace(HttpTrace *trace, cchar *type);
     If the traceSpec is null, not tracing is enabled.
     @return Zero if successful, otherwise a negative Mpr error code. See the Appweb log for diagnostics.
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC int httpStartTracing(cchar *traceSpec);
 
@@ -978,7 +966,7 @@ PUBLIC int httpStartTracing(cchar *traceSpec);
     @param buf Trace message to write
     @param len Length of message
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpWriteTrace(HttpTrace *trace, cchar *buf, ssize len);
 
@@ -988,7 +976,7 @@ PUBLIC void httpWriteTrace(HttpTrace *trace, cchar *buf, ssize len);
     @param buf Message to write
     @param len Length of message
     @ingroup HttpTrace
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpWriteTraceLogFile(HttpTrace *trace, cchar *buf, ssize len);
 
@@ -1124,10 +1112,6 @@ typedef struct Http {
     HttpRedirectCallback redirectCallback;  /**< Redirect callback */
     HttpRequestCallback  requestCallback;   /**< Request completion callback */
     HttpNetCallback      netCallback;       /**< Default network event callback */
-
-#if DEPRECATED
-    struct HttpStage *ejsHandler;           /**< Ejscript Web Framework handler */
-#endif
 } Http;
 
 #if DOXYGEN
@@ -1196,7 +1180,7 @@ PUBLIC int httpApplyUserGroup(void);
     @param timeout Timeout in milliseconds to wait. Set to -1 to use the default server inactivity timeout. Set to zero
         to wait forever.
     @ingroup Http
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC bool httpConfigure(HttpConfigureProc proc, void *arg, MprTicks timeout);
 
@@ -1223,7 +1207,7 @@ PUBLIC void httpDestroy(void);
     Enable or disable HTTP/2 for the server at runtime.
     @param enable Boolean. Set to 1 to enable and zero to disable.
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpEnableHttp2(int enable);
 
@@ -1332,7 +1316,7 @@ PUBLIC void httpSetDefaultClientPort(int port);
     Define a callback to invoke after env vars have been defined
     @param envCallback Callback to invoke
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetEnvCallback(HttpEnvCallback envCallback);
 
@@ -1390,7 +1374,7 @@ PUBLIC void httpSetProxy(cchar *host, int port);
     Define a callback to invoke on redirect requests
     @param redirectCallback Callback to invoke
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetRedirectCallback(HttpRedirectCallback redirectCallback);
 
@@ -1545,7 +1529,7 @@ PUBLIC void httpInitLimits(HttpLimits *limits, bool serverSide);
     @description Clone the limits and allocate a new limits object
     @return The allocated limits object
     @ingroup HttpLimits
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpLimits *httpCloneLimits(HttpLimits *base);
 
@@ -1799,7 +1783,6 @@ PUBLIC HttpUri *httpResolveUri(struct HttpStream *stream, HttpUri *base, HttpUri
         </ul>
     @return A normalized Uri string.
     @ingroup HttpUri
-    @stability Evolving
     @remarks Examples:
     <pre>
     httpLink(stream, "http://example.com/index.html");
@@ -1819,6 +1802,7 @@ PUBLIC HttpUri *httpResolveUri(struct HttpStream *stream, HttpUri *base, HttpUri
     httpLink(stream, "{ route: '~/STAR/edit', action: 'checkout', id: '99' }");
     httpLink(stream, "{ template: '~/static/images/${theme}/background.jpg', theme: 'blue' }");
     </pre>
+    @stability Stable
  */
 PUBLIC char *httpLink(struct HttpStream *stream, cchar *target);
 
@@ -1828,7 +1812,7 @@ PUBLIC char *httpLink(struct HttpStream *stream, cchar *target);
     @param target The URI target. See #httpLink for details of the target parameter.
     @return A normalized Uri string.
     @ingroup HttpUri
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC char *httpLinkAbs(struct HttpStream *stream, cchar *target);
 
@@ -1841,7 +1825,7 @@ PUBLIC char *httpLinkAbs(struct HttpStream *stream, cchar *target);
     @param options Hash of option values for embedded tokens. This hash is blended with the route variables.
     @return A normalized Uri string.
     @ingroup HttpUri
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC char *httpLinkEx(struct HttpStream *stream, cchar *target, MprHash *options);
 
@@ -1852,7 +1836,7 @@ PUBLIC char *httpLinkEx(struct HttpStream *stream, cchar *target, MprHash *optio
     @param options Hash of option values for embedded tokens. This hash is blended with the route variables.
     @return A normalized Uri string.
     @ingroup HttpUri
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpUri *httpLinkUri(struct HttpStream *stream, cchar *target, MprHash *options);
 
@@ -1874,7 +1858,7 @@ PUBLIC char *httpUriToString(HttpUri *uri, int flags);
     The URI must begin with a "/" both before and after decoding and normalization.
     @param uri URI to validate.
     @return A validated, normalized URI path
-    @stability Evolving
+    @stability Stable
     @ingroup HttpUri
  */
 PUBLIC char *httpValidateUriPath(cchar *uri);
@@ -2451,7 +2435,7 @@ PUBLIC HttpPacket *httpResizePacket(struct HttpQueue *q, HttpPacket *packet, ssi
     @param force Force a queue to be scheduled regardless. Set to true to force.
     @return True if the queue was resumed.
     @ingroup HttpQueue
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool httpResumeQueue(HttpQueue *q, bool force);
 
@@ -2493,7 +2477,7 @@ PUBLIC void httpSuspendQueue(HttpQueue *q);
     @param inq Input q
     @param outq Output q
     @ingroup HttpQueue
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpTransferPackets(HttpQueue *inq, HttpQueue *outq);
 
@@ -2505,7 +2489,7 @@ PUBLIC void httpTransferPackets(HttpQueue *inq, HttpQueue *outq);
     @param inq Input q
     @param outq Output q
     @ingroup HttpQueue
-    @stability Evolving
+    @stability Stable
  */
 
 PUBLIC void httpReplayPackets(HttpQueue *inq, HttpQueue *outq);
@@ -2633,7 +2617,7 @@ PUBLIC ssize httpWrite(HttpQueue *q, cchar *fmt, ...) PRINTF_ATTRIBUTE(2,3);
         This call may yield via mprYield if flags are set to HTTP_BLOCK.
     @return The size value if successful or a negative MPR error code.
     @ingroup HttpQueue
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize httpWriteBlock(HttpQueue *q, cchar *buf, ssize size, int flags);
 
@@ -2732,7 +2716,7 @@ typedef struct HttpStage {
         @return HTTP_ROUTE_OK if the request is acceptable. Return HTTP_ROUTE_REROUTE if the request has been rewritten.
             Return HTTP_ROUTE_REJECT it the request is not acceptable.
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
       */
     int (*match)(struct HttpStream *stream, struct HttpRoute *route, int dir);
 
@@ -2742,7 +2726,7 @@ typedef struct HttpStage {
         @param stream HttpStream stream object
         @return Zero for success. Otherwise a negative MPR error code.
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     int (*rewrite)(struct HttpStream *stream);
 
@@ -2754,7 +2738,7 @@ typedef struct HttpStage {
         @param q Queue instance object
         @return Zero for success. Otherwise a negative MPR error code.
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     int (*open)(HttpQueue *q);
 
@@ -2764,7 +2748,7 @@ typedef struct HttpStage {
         Handlers may block or yield in this callback.
         @param q Queue instance object
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     void (*close)(HttpQueue *q);
 
@@ -2779,7 +2763,7 @@ typedef struct HttpStage {
         @param q Queue instance object
         @param packet Packet of data
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     void (*outgoing)(HttpQueue *q, HttpPacket *packet);
 
@@ -2790,7 +2774,7 @@ typedef struct HttpStage {
         packets to ensure they do not overfow downstream queues. Stages should not block or yield in this callback.
         @param q Queue instance object
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     void (*outgoingService)(HttpQueue *q);
 
@@ -2805,7 +2789,7 @@ typedef struct HttpStage {
         @param q Queue instance object
         @param packet Packet of data
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     void (*incoming)(HttpQueue *q, HttpPacket *packet);
 
@@ -2816,7 +2800,7 @@ typedef struct HttpStage {
         packets to ensure they do not overfow upstream queues.  Handlers may not block or yield in this callback.
         @param q Queue instance object
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     void (*incomingService)(HttpQueue *q);
 
@@ -2834,7 +2818,7 @@ typedef struct HttpStage {
         will not be called if the request already has an error. Handlers may block or yield in this callback.
         @param q Queue instance object
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     void (*start)(HttpQueue *q);
 
@@ -2846,7 +2830,7 @@ typedef struct HttpStage {
         Handlers may block or yield in this callback.
         @param q Queue instance object
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     void (*ready)(HttpQueue *q);
 
@@ -2859,7 +2843,7 @@ typedef struct HttpStage {
         Handlers may block or yield in this callback.
         @param q Queue instance object
         @ingroup HttpStage
-        @stability Evolving
+        @stability Stable
      */
     void (*writable)(HttpQueue *q);
 
@@ -2938,7 +2922,7 @@ PUBLIC struct HttpStage *httpLookupStage(cchar *name);
         downstream. It handles flow control automatically.
     @param q Queue object
     @ingroup HttpStage
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpDefaultService(HttpQueue *q);
 
@@ -2946,7 +2930,7 @@ PUBLIC void httpDefaultService(HttpQueue *q);
     Stage service routine that discards packets
     @param q Queue object
     @ingroup HttpStage
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpDiscardService(HttpQueue *q);
 
@@ -2959,7 +2943,7 @@ PUBLIC void httpDiscardService(HttpQueue *q);
     @param q Queue object
     @param packet Packet object
     @ingroup HttpStage
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpDefaultIncoming(HttpQueue *q, HttpPacket *packet);
 
@@ -2970,7 +2954,7 @@ PUBLIC void httpDefaultIncoming(HttpQueue *q, HttpPacket *packet);
     @param q Queue object
     @param packet Packet to send.
     @ingroup HttpStage
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpDefaultOutgoing(HttpQueue *q, HttpPacket *packet);
 
@@ -3199,7 +3183,7 @@ PUBLIC cchar *httpHuffDecode(uchar *src, int len);
     @param net HttpNet object created via #httpCreateNet
     @param event Event object describing the I/O event
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
   */
 typedef void (*HttpIOCallback)(struct HttpNet *net, MprEvent *event);
 
@@ -3305,7 +3289,7 @@ typedef struct HttpNet {
     bool            worker: 1;              /**< Use worker */
     bool            writeBlocked: 1;        /**< Transmission writing is blocked */
 
-#if DEPRECATED || 1
+#if DEPRECATED
     /*
         This will be removed in Appweb 10
      */
@@ -3322,38 +3306,7 @@ typedef struct HttpNet {
     //MprOff              ioFileSize;       /**< Size of file */
     MprFile             *ioFile;            /**< File to send */
 
-#if DEPRECATED
-    void            *ejs;                   /**< Embedding VM */
-    void            *pool;                  /**< Pool of VMs */
-#endif
-
 } HttpNet;
-
-#if DEPRECATED
-/**
-    Borrow a network connection
-    @description Borrow the network from Http. This effectively gains an exclusive loan of the network so that it
-    cannot be destroyed while the loan is active. After the loan is complete, you must call return the network
-    by calling #httpReturnNet. Otherwise the network will not be freed and memory will leak.
-    \n\n
-    The httpBorrowNet routine is used to stabilize a network while interacting with some outside service.
-    Without this routine, the network could be destroyed while waiting. Many things can happen while waiting.
-    For example: the client could disconnect or the network connection could timeout. These events will still be
-    serviced while the network is borrowed, but the network object will not be destroyed.
-    \n\n
-    While borrowed, you must not access the network object using foreign / non-MPR threads. If you need to do this,
-    use #mprCreateEvent to schedule an event to run on the networks's event dispatcher.
-    This is essential to serialize access to the network object.
-    \n\n
-    Before returning from the event callback, you must call #httpReturnNet to end the exclusive loan.
-    This restores normal processing of the connection and enables any required I/O events.
-    \n\n
-    @param net HttpNet object created via #httpCreateNet
-    @ingroup HttpNet
-    @stability Deprecated
- */
-PUBLIC void httpBorrowNet(HttpNet *net);
-#endif
 
 /**
     Connect the network to a remote peer.
@@ -3363,7 +3316,7 @@ PUBLIC void httpBorrowNet(HttpNet *net);
     @param ssl MprSsl object that defines the SSL context
     @return Zero if successful, otherwise a negative MPR error code.
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC int httpConnectNet(HttpNet *net, cchar *ip, int port, MprSsl *ssl);
 
@@ -3377,7 +3330,7 @@ PUBLIC int httpConnectNet(HttpNet *net, cchar *ip, int port, MprSsl *ssl);
     @param flags Set to HTTP_NET_ASYNC if you wish to use async I/O. Otherwise set to zero.
     @returns A new network object
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC HttpNet *httpCreateNet(MprDispatcher *dispatcher, struct HttpEndpoint *endpoint, int protocol, int flags);
 
@@ -3403,7 +3356,7 @@ PUBLIC void httpDestroyNet(HttpNet *net);
         running in async mode and encounter a blocking condition.
     @param net HttpNet Network object created via #httpCreateNet
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpEnableNetEvents(HttpNet *net);
 
@@ -3412,7 +3365,7 @@ PUBLIC void httpEnableNetEvents(HttpNet *net);
     @param net HttpNet Network object created via #httpCreateNet
     @return HTTP/1.0, HTTP/1.1 or HTTP/2.
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *httpGetProtocol(HttpNet *net);
 
@@ -3421,7 +3374,7 @@ PUBLIC cchar *httpGetProtocol(HttpNet *net);
     @param net HttpNet object created via #httpCreateNet
     @return True if the Network is in async mode
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool httpGetAsync(HttpNet *net);
 
@@ -3455,7 +3408,7 @@ PUBLIC bool httpReadIO(HttpNet *net);
     @param net HttpNet Network object created via #httpCreateNet
     @return true if the network is client-side
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
   */
 #define httpIsClient(net) (net && !net->endpoint)
 
@@ -3464,7 +3417,7 @@ PUBLIC bool httpReadIO(HttpNet *net);
     @param net HttpNet Network object created via #httpCreateNet
     @return true if the network is server-side
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
   */
 #define httpIsServer(net) (net && net->endpoint)
 
@@ -3477,7 +3430,7 @@ PUBLIC bool httpReadIO(HttpNet *net);
     @param fmt Printf style formatted string
     @param ... Arguments for fmt
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpNetError(HttpNet *net, cchar *fmt, ...);
 
@@ -3492,26 +3445,6 @@ PUBLIC void httpNetError(HttpNet *net, cchar *fmt, ...);
   */
 PUBLIC void httpNetTimeout(HttpNet *net);
 
-#if DEPRECATED
-/**
-    Return a borrowed a network connection
-    @description Returns a borrowed network object back to the Http engine. This ends the exclusive loan of the
-        network so that the current request can be completed. It also enables I/O events based on the
-        current state of the network.
-    \n\n
-    While the network is borrowed, you must not access the network using foreign / non-MPR threads.
-    Use #mprCreateEvent to schedule an event to run on the network's event dispatcher. This is
-    essential to serialize access to the network object.
-    \n\n
-    You should only call this routine (once) after calling #httpBorrowNet.
-    \n\n
-    @param net HttpNet object created via #httpCreateNet
-    @ingroup HttpNet
-    @stability Deprecated
- */
-PUBLIC void httpReturnNet(HttpNet *net);
-#endif
-
 /**
     Service pipeline queues to flow data.
     @description This routine should not be called by handlers, filters or user applications. It should only be called
@@ -3519,7 +3452,7 @@ PUBLIC void httpReturnNet(HttpNet *net);
     @param net HttpNet object created via #httpCreateNet
     @param flags Set to HTTP_BLOCK to yield for GC if due
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpServiceNetQueues(HttpNet *net, int flags);
 
@@ -3530,7 +3463,7 @@ PUBLIC void httpServiceNetQueues(HttpNet *net, int flags);
     @param net HttpNet object created via #httpCreateNet
     @param fn Callback function to invoke
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC void httpSetIOCallback(struct HttpNet *net, HttpIOCallback fn);
 
@@ -3539,7 +3472,7 @@ PUBLIC void httpSetIOCallback(struct HttpNet *net, HttpIOCallback fn);
     @param net HttpNet object created via #httpCreateNet
     @return True if there are queues that require servicing
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC bool httpQueuesNeedService(HttpNet *net);
 
@@ -3548,7 +3481,7 @@ PUBLIC bool httpQueuesNeedService(HttpNet *net);
     @param net HttpNet object created via #httpCreateNet
     @param async Set to 1 to enable async mode
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetAsync(HttpNet *net, bool async);
 
@@ -3560,7 +3493,7 @@ PUBLIC void httpSetAsync(HttpNet *net, bool async);
         future network objects.
     @param callback The callback is invoked with the signature: void callback(HttpNet *net).
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetNetCallback(HttpNet *net, HttpNetCallback callback);
 
@@ -3569,7 +3502,7 @@ PUBLIC void httpSetNetCallback(HttpNet *net, HttpNetCallback callback);
     @param net HttpNet object created via #httpCreateNet
     @param context New context object. Must be a managed memory reference.
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetNetContext(HttpNet *net, void *context);
 
@@ -3577,7 +3510,7 @@ PUBLIC void httpSetNetContext(HttpNet *net, void *context);
     Set the EOF flag in the network to indicate a peer disconnect
     @param net HttpNet Network object created via #httpCreateNet
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetNetEof(HttpNet *net);
 
@@ -3585,7 +3518,7 @@ PUBLIC void httpSetNetEof(HttpNet *net);
     Set the error flag in the network to indicate a peer disconnect
     @param net HttpNet Network object created via #httpCreateNet
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetNetError(HttpNet *net);
 
@@ -3595,7 +3528,7 @@ PUBLIC void httpSetNetError(HttpNet *net);
     @param net HttpNet Network object created via #httpCreateNet
     @param protocol  Integer representing the protocol variant. Valid values are: 0 for HTTP/1.0, 1 for HTTP/1.1 and 2 for HTTP/2.
     @ingroup HttpNet
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetNetProtocol(HttpNet *net, int protocol);
 
@@ -3685,7 +3618,7 @@ PUBLIC void httpSetupWaitHandler(HttpNet *net, int eventMask);
 /**
     Event callback function for httpCreateEvent
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 typedef void (*HttpEventProc)(struct HttpStream *stream, void *data);
 
@@ -3695,7 +3628,7 @@ typedef void (*HttpEventProc)(struct HttpStream *stream, void *data);
     opportunity to pre-populate the response headers.
     @param arg Argument provided to httpSetHeadersCallback when the callback was established.
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 typedef int (*HttpHeadersCallback)(void *arg);
 
@@ -3707,7 +3640,7 @@ typedef int (*HttpHeadersCallback)(void *arg);
     @param fn Callback function to invoke
     @param arg Argument to provide when invoking the headers callback
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetHeadersCallback(struct HttpStream *stream, HttpHeadersCallback fn, void *arg);
 
@@ -3828,10 +3761,6 @@ typedef struct HttpStream {
     HttpIOCallback  ioCallback;             /**< I/O event callback */
     HttpHeadersCallback headersCallback;    /**< Callback to fill headers */
     void            *headersCallbackArg;    /**< Arg to fillHeaders */
-
-#if DEPRECATED
-    void            *ejs;                   /**< Embedding VM */
-#endif
 } HttpStream;
 
 /**
@@ -3839,7 +3768,7 @@ typedef struct HttpStream {
     @param stream HttpStream stream object created via #httpCreateStream
     @param q Queue to receive the packet
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddInputEndPacket(HttpStream *stream, HttpQueue *q);
 
@@ -3850,7 +3779,7 @@ PUBLIC void httpAddInputEndPacket(HttpStream *stream, HttpQueue *q);
         the connection or HTTP_CLOSE to close the connection at the completion of the request.
     @param fmt Printf style formatted string
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpBadRequestError(HttpStream *stream, int status, cchar *fmt, ...) PRINTF_ATTRIBUTE(3,4);
 
@@ -3985,7 +3914,7 @@ PUBLIC void httpError(HttpStream *stream, int status, cchar *fmt, ...) PRINTF_AT
         MPR thread.  While foreign threads using this API may return a stream reference, the stream may be destroyed
         before the reference can be used.
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpStream *httpFindStream(uint64 seqno, HttpEventProc proc, void *data);
 
@@ -3996,7 +3925,7 @@ PUBLIC HttpStream *httpFindStream(uint64 seqno, HttpEventProc proc, void *data);
         connection or HTTP_CLOSE to close the connection at the completion of the request.
     @param fmt Printf style formatted string
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpLimitError(HttpStream *stream, int status, cchar *fmt, ...) PRINTF_ATTRIBUTE(3,4);
 
@@ -4023,7 +3952,7 @@ PUBLIC void *httpGetStreamContext(HttpStream *stream);
     @param stream HttpStream object created via #httpCreateStream
     @return Mask of MPR_READABLE and MPR_WRITABLE events.
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpGetStreamEventMask(HttpStream *stream);
 
@@ -4314,7 +4243,7 @@ PUBLIC void httpSetCredentials(HttpStream *stream, cchar *user, cchar *password,
     @param stream HttpStream stream object created via #httpCreateStream
     @param path Optional filename to serve. If null, use HttpTx.filename.
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetFileHandler(HttpStream *stream, cchar *path);
 
@@ -4381,7 +4310,7 @@ PUBLIC void httpStartHandler(HttpStream *stream);
     @param stream HttpStream stream object created via #httpCreateStream
     @return True if the handshake is valid
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool httpVerifyWebSocketsHandshake(HttpStream *stream);
 
@@ -4407,7 +4336,7 @@ typedef bool (*HttpVerifyUser)(HttpStream *stream, cchar *username, cchar *passw
 /**
     Password backend store. Support stores are: system, file
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
     @see HttpAskLogin HttpParseAuth httpSetAuthStoreVerify HttpVerifyUser
     httpCreateAuthStore httpGetAuthStore httpSetAuthStore httpSetAuthStoreSessions httpSetAuthStoreVerifyByName
  */
@@ -4434,7 +4363,7 @@ PUBLIC HttpAuthStore *httpCreateAuthStore(cchar *name, HttpVerifyUser verifyUser
     @param name Unique authorization store name
     @return Auth store if successful, otherwise NULL.
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpAuthStore *httpGetAuthStore(cchar *name);
 
@@ -4446,7 +4375,7 @@ PUBLIC HttpAuthStore *httpGetAuthStore(cchar *name);
     @param store AuthStore object created via #httpCreateAuthStore.
     @param noSession Set to true to suppress creation of sessions or cookies.
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetAuthStoreSessions(HttpAuthStore *store, bool noSession);
 
@@ -4457,7 +4386,7 @@ PUBLIC void httpSetAuthStoreSessions(HttpAuthStore *store, bool noSession);
     @param store AuthStore object allocated by #httpCreateAuthStore.
     @param verifyUser Verification callback
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
     @see httpSetAuthVerify httpSetAuthStoreVerifyByName httpGetAuthStore
   */
 PUBLIC void httpSetAuthStoreVerify(HttpAuthStore *store, HttpVerifyUser verifyUser);
@@ -4469,7 +4398,7 @@ PUBLIC void httpSetAuthStoreVerify(HttpAuthStore *store, HttpVerifyUser verifyUs
     @param storeName String name of the store
     @param verifyUser Verification callback
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
     @see httpSetAuthVerify httpSetAuthStoreVerify httpGetAuthStore
   */
 PUBLIC void httpSetAuthStoreVerifyByName(cchar *storeName, HttpVerifyUser verifyUser);
@@ -4490,7 +4419,7 @@ PUBLIC void httpSetAuthStoreVerifyByName(cchar *storeName, HttpVerifyUser verify
     This should call httpError if such a response cannot be generated.
     @param stream HttpStream stream object
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 typedef void (*HttpAskLogin)(HttpStream *stream);
 
@@ -4501,7 +4430,7 @@ typedef void (*HttpAskLogin)(HttpStream *stream);
     @param stream HttpStream stream object
     @return The password if successful, otherwise NULL.
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 typedef int (*HttpParseAuth)(HttpStream *stream, cchar **username, cchar **password);
 
@@ -4510,7 +4439,7 @@ typedef int (*HttpParseAuth)(HttpStream *stream, cchar **username, cchar **passw
     @param stream HttpStream stream object
     @return True if the authorization headers can be set.
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 typedef bool (*HttpSetAuth)(HttpStream *stream, cchar *username, cchar *password);
 
@@ -4598,7 +4527,7 @@ PUBLIC int httpCreateAuthType(cchar *name, HttpAskLogin askLogin, HttpParseAuth 
     @param auth Auth object created via #httpCreateAuth.
     @param noSession Set to true to suppress creation of sessions or cookies.
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetAuthSession(HttpAuth *auth, bool noSession);
 
@@ -4660,7 +4589,7 @@ PUBLIC HttpUser *httpAddUser(HttpAuth *auth, cchar *user, cchar *password, cchar
     @param name Role name
     @return Role object
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC HttpRole *httpLookupRole(HttpAuth *auth, cchar *name);
 
@@ -4672,7 +4601,7 @@ PUBLIC HttpRole *httpLookupRole(HttpAuth *auth, cchar *name);
     @param name Username
     @return User object
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC HttpUser *httpLookupUser(HttpAuth *auth, cchar *name);
 
@@ -4769,7 +4698,7 @@ PUBLIC bool httpLogin(HttpStream *stream, cchar *username, cchar *password);
     Logout the user.
     @param stream HttpStream stream object
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpLogout(HttpStream *stream);
 
@@ -4819,7 +4748,7 @@ PUBLIC void httpSetAuthDeny(HttpAuth *auth, cchar *ip);
         redirect the user to the referring URI before the loginPage. If the referrer cannot be determined, the base
         URI is utilized.
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetAuthFormDetails(struct HttpRoute *route, cchar *loginPage, cchar *loginService, cchar *logoutService,
     cchar *loggedInPage, cchar *loggedOutPage);
@@ -4829,7 +4758,7 @@ PUBLIC void httpSetAuthFormDetails(struct HttpRoute *route, cchar *loginPage, cc
     @param auth Authorization object allocated by #httpCreateAuth.
     @param uri URI for the login page. Can use "https:///page" to specify the SSL protocol with the current domain.
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetAuthLogin(HttpAuth *auth, cchar *uri);
 
@@ -4917,7 +4846,7 @@ PUBLIC void httpSetAuthUsername(HttpAuth *auth, cchar *username);
     @param auth Auth object allocated by #httpCreateAuth.
     @param verifyUser Verification callback
     @ingroup HttpAuth
-    @stability Evolving
+    @stability Stable
     @see httpSetAuthStoreVerify
   */
 PUBLIC void httpSetAuthVerify(HttpAuth *auth, HttpVerifyUser verifyUser);
@@ -5050,7 +4979,7 @@ typedef struct HttpCache {
         \n\n
         Select HTTP_CACHE_UNIQUE to uniquely cache requests with different request parameters.
     @ingroup HttpCache
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddCache(struct HttpRoute *route, cchar *methods, cchar *uris, cchar *extensions, cchar *types,
         MprTicks clientLifespan, MprTicks serverLifespan, int flags);
@@ -5065,7 +4994,7 @@ PUBLIC void httpAddCache(struct HttpRoute *route, cchar *methods, cchar *uris, c
     data followed by an additional new line.
     @param lifespan Lifespan in milliseconds for the cached content
     @ingroup HttpCache
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC ssize httpUpdateCache(HttpStream *stream, cchar *uri, cchar *data, MprTicks lifespan);
 
@@ -5075,7 +5004,7 @@ PUBLIC ssize httpUpdateCache(HttpStream *stream, cchar *uri, cchar *data, MprTic
         configured in manual mode via the HTTP_CACHE_MANUAL flag to #httpAddCache.
     @param stream HttpStream stream object
     @ingroup HttpCache
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC ssize httpWriteCached(HttpStream *stream);
 
@@ -5108,7 +5037,7 @@ PUBLIC void httpDefineAction(cchar *uri, HttpAction fun);
     @param stream Current request stream
     @return True if input should be streamed. False if it should be buffered.
     @ingroup HttpHost
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC bool httpGetStreaming(struct HttpStream *stream);
@@ -5121,7 +5050,7 @@ PUBLIC bool httpGetStreaming(struct HttpStream *stream);
     @param uri URI prefix to match.
     @param streaming Set to true to enable streaming for this mime type.
     @ingroup HttpHost
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC void httpSetStreaming(struct HttpHost *host, cchar *mime, cchar *uri, bool streaming);
@@ -5243,7 +5172,8 @@ typedef struct HttpRoute {
     MprList         *outputStages;          /**< Output stages */
     MprHash         *errorDocuments;        /**< Set of error documents to use on errors */
     void            *context;               /**< Hosting context (Appweb == EjsPool) */
-    void            *eroute;                /**< Extended route information for handler (only) */
+    void            *extended;              /**< Extended route information for handlers (only) */
+    void            *eroute;                /**< Extended route information for esp */
     int             renameUploads;          /**< Rename uploaded files */
 
     HttpLimits      *limits;                /**< Host resource limits */
@@ -5275,15 +5205,6 @@ typedef struct HttpRoute {
     char            *webSocketsProtocol;    /**< WebSockets sub-protocol */
     MprTicks        webSocketsPingPeriod;   /**< Time between pings (msec) */
 
-#if DEPRECATED
-    /*
-        Used by Ejscript
-     */
-    char            *script;                /**< Startup script for handlers serving this route */
-    char            *scriptPath;            /**< Startup script path for handlers serving this route */
-    int             workers;                /**< Number of workers to use for this route */
-#endif
-
 } HttpRoute;
 
 
@@ -5314,7 +5235,7 @@ typedef struct HttpRouteOp {
     @param key Configuration file property key
     @param child Key value as a JSON object
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
   */
 typedef void (*HttpParseCallback)(struct HttpRoute *route, cchar *key, MprJson *child);
 
@@ -5324,7 +5245,7 @@ typedef void (*HttpParseCallback)(struct HttpRoute *route, cchar *key, MprJson *
     @param route Current route
     @fmt Printf style format string
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpParseError(HttpRoute *route, cchar *fmt, ...);
 
@@ -5333,7 +5254,7 @@ PUBLIC void httpParseError(HttpRoute *route, cchar *fmt, ...);
     @param route Current route
     @fmt Printf style format string
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpParseWarn(HttpRoute *route, cchar *fmt, ...);
 
@@ -5348,7 +5269,7 @@ typedef int (HttpRouteProc)(HttpStream *stream, HttpRoute *route, HttpRouteOp *i
     @param route Parent route for new routes
     @param name Name of route set to add
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
   */
 typedef void (*HttpRouteSetProc)(HttpRoute *route, cchar *name);
 
@@ -5359,7 +5280,7 @@ typedef void (*HttpRouteSetProc)(HttpRoute *route, cchar *name);
     @return Returns prior callback function. This should be invoked from the new callback to implemented multiple
         callbacks per key.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC HttpParseCallback httpAddConfig(cchar *key, HttpParseCallback callback);
 
@@ -5368,7 +5289,7 @@ PUBLIC HttpParseCallback httpAddConfig(cchar *key, HttpParseCallback callback);
     @param name Name of the route set
     @param fn Callback function
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC HttpRouteSetProc httpDefineRouteSet(cchar *name, HttpRouteSetProc fn);
 
@@ -5382,7 +5303,7 @@ PUBLIC HttpRouteSetProc httpDefineRouteSet(cchar *name, HttpRouteSetProc fn);
     @param route Parent route from which to inherit configuration.
     @param set Route set name to select.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddRouteSet(HttpRoute *route, cchar *set);
 
@@ -5403,7 +5324,7 @@ PUBLIC void httpAddRouteSet(HttpRoute *route, cchar *set);
     @param parent Parent route from which to inherit configuration.
     @param resource Resource name. This should be a lower case, single word, alphabetic resource name.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddResource(HttpRoute *parent, cchar *resource);
 
@@ -5420,7 +5341,7 @@ PUBLIC void httpAddResource(HttpRoute *parent, cchar *resource);
     @param parent Parent route from which to inherit configuration.
     @param resource Resource name. This should be a lower case, single word, alphabetic resource name.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddPermResource(HttpRoute *parent, cchar *resource);
 
@@ -5443,7 +5364,7 @@ PUBLIC void httpAddPermResource(HttpRoute *parent, cchar *resource);
     @param parent Parent route from which to inherit configuration.
     @param resource Resource name. This should be a lower case, single word, alphabetic resource name.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddResourceGroup(HttpRoute *parent, cchar *resource);
 
@@ -5466,7 +5387,7 @@ PUBLIC void httpAddResourceGroup(HttpRoute *parent, cchar *resource);
     @param parent Parent route from which to inherit configuration.
     @param resource Resource name. This should be a lower case, single word, alphabetic resource name.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddPostGroup(HttpRoute *parent, cchar *resource);
 
@@ -5489,7 +5410,7 @@ PUBLIC void httpAddPostGroup(HttpRoute *parent, cchar *resource);
     @param parent Parent route from which to inherit configuration.
     @param resource Resource name. This should be a lower case, single word, alphabetic resource name.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddSpaGroup(HttpRoute *parent, cchar *resource);
 
@@ -5516,7 +5437,7 @@ PUBLIC void httpAddSpaGroup(HttpRoute *parent, cchar *resource);
     @param flags Set to HTTP_ROUTE_NOT to negate the condition test
     @return "Zero" if successful, otherwise a negative MPR error code.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpAddRouteCondition(HttpRoute *route, cchar *name, cchar *details, int flags);
 
@@ -5528,7 +5449,7 @@ PUBLIC int httpAddRouteCondition(HttpRoute *route, cchar *name, cchar *details, 
     @param status The HTTP status code to use with the error document.
     @param uri URL describing the error document
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddRouteErrorDocument(HttpRoute *route, int status, cchar *uri);
 
@@ -5813,7 +5734,7 @@ PUBLIC HttpRoute *httpDefineRoute(HttpRoute *parent, cchar *methods, cchar *patt
     @param resource Resource basename to use when constructing a source file name.
     @return Created route.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpRoute *httpAddRestfulRoute(HttpRoute *parent, cchar *methods, cchar *pattern, cchar * target, cchar *resource);
 
@@ -5823,7 +5744,7 @@ PUBLIC HttpRoute *httpAddRestfulRoute(HttpRoute *parent, cchar *methods, cchar *
     @param name Condition name
     @param proc Condition function to process the condition during route matching.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpDefineRouteCondition(cchar *name, HttpRouteProc *proc);
 
@@ -5872,7 +5793,7 @@ PUBLIC void httpFinalizeRoute(HttpRoute *route);
     @param name Lower case name of the directory. This should not include the '_DIR' suffix.
     @return Directory path
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *httpGetDir(HttpRoute *route, cchar *name);
 
@@ -5933,7 +5854,7 @@ PUBLIC cchar *httpGetRouteMethods(HttpRoute *route);
     @param stream Current stream object
     @return A relative URL path to the top of the route. This URL does not contain a trailing "/"
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *httpGetRouteTop(HttpStream *stream);
 
@@ -5962,14 +5883,14 @@ PUBLIC HttpLimits *httpGraduateLimits(HttpRoute *route, HttpLimits *limits);
     parent routes that are used just for inheritance for child routes.
     @param route Route to hide
     @param on Set to true to hide the route
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpHideRoute(HttpRoute *route, bool on);
 
 /**
     Initialize and prepare to load configuration files.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpInitConfig(HttpRoute *route);
 
@@ -5981,7 +5902,7 @@ PUBLIC void httpInitConfig(HttpRoute *route);
         to the routes home directory.
     @return 'Zero' if successful, otherwise a negative MPR error code.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpLoadConfig(HttpRoute *route, cchar *path);
 
@@ -6053,7 +5974,7 @@ PUBLIC void httpMapFile(HttpStream *stream);
     @param key Json property key
     @param prop Json property value
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpParseAll(HttpRoute *route, cchar *key, MprJson *prop);
 
@@ -6091,7 +6012,7 @@ PUBLIC void httpResetRoutePipeline(HttpRoute *route);
     @param name Name of the directory to define
     @param value Directory path value.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetDir(HttpRoute *route, cchar *name, cchar *value);
 
@@ -6121,7 +6042,7 @@ PUBLIC void httpSetRouteAutoDelete(HttpRoute *route, bool on);
     @param route Route to modify
     @param on Set to true to enable auto-finalize. Auto-finalize is enabled by default for frameworks that use it.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetRouteAutoFinalize(HttpRoute *route, bool on);
 
@@ -6147,15 +6068,6 @@ PUBLIC int httpSetRouteCanonicalName(HttpRoute *route, cchar *name);
     @stability Stable
  */
 PUBLIC void httpSetRouteCharSet(HttpRoute *route, cchar *charSet);
-
-/**
-    Define whether updating a request may compile from source
-    @param route Route to modify
-    @param on Set to true to enable
-    @ingroup HttpRoute
-    @stability Evolving
- */
-PUBLIC void httpSetRouteCompile(HttpRoute *route, bool on);
 
 /**
     Set the connector to use for a route
@@ -6306,7 +6218,7 @@ PUBLIC void httpSetRouteCookie(HttpRoute *route, cchar *cookie);
     @param route Route to modify
     @param enable Set to true to enable
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetRouteCookiePersist(HttpRoute *route, int enable);
 
@@ -6315,7 +6227,7 @@ PUBLIC void httpSetRouteCookiePersist(HttpRoute *route, int enable);
     @param route Route to modify
     @param value Set to "lax", "strict" or NULL/empty.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetRouteCookieSame(HttpRoute *route, cchar *value);
 
@@ -6362,24 +6274,9 @@ PUBLIC void httpSetRoutePreserveFrames(HttpRoute *route, bool on);
     @param route Route to modify
     @param enable Set to true to enable renaming to the client specified filename. Renaming is disabled by default.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetRouteRenameUploads(HttpRoute *route, bool enable);
-
-#if DEPRECATED
-/**
-    Set the script to service the route.
-    @description This is used by handlers to add a per-route script for processing.
-        Either a literal script or a path to a script filename can be provided.
-    @param route Route to modify
-    @param script Literal script to execute.
-    @param scriptPath Pathname to the script file to execute
-    @ingroup HttpRoute
-    @stability Deprecated
-    @internal
- */
-PUBLIC void httpSetRouteScript(HttpRoute *route, cchar *script, cchar *scriptPath);
-#endif
 
 /**
     Make session cookies that are visible to javascript.
@@ -6388,7 +6285,7 @@ PUBLIC void httpSetRouteScript(HttpRoute *route, cchar *script, cchar *scriptPat
     @param route Route to modify
     @param visible Set to true to create session cookies that are visible to Javascript.
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC void httpSetRouteSessionVisibility(HttpRoute *route, bool visible);
 
@@ -6524,34 +6421,13 @@ PUBLIC void httpSetRouteTemplate(HttpRoute *route, cchar *tplate);
 PUBLIC void httpSetRouteVar(HttpRoute *route, cchar *token, cchar *value);
 
 /**
-    Define whether updating a cached request is required
-    @param route Route to modify
-    @param on Set to true to enable
-    @ingroup HttpRoute
-    @stability Evolving
- */
-PUBLIC void httpSetRouteUpdate(HttpRoute *route, bool on);
-
-/**
     Set the default upload directory for file uploads
     @param route Route to modify
     @param dir Directory path
     @ingroup HttpRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetRouteUploadDir(HttpRoute *route, cchar *dir);
-
-#if DEPRECATED
-/**
-    Define the maximum number of workers for a route
-    @param route Route to modify
-    @param workers Maximum number of workers for this route
-    @ingroup HttpRoute
-    @stability Deprecated
-    @internal
- */
-PUBLIC void httpSetRouteWorkers(HttpRoute *route, int workers);
-#endif
 
 /**
     Control whether an XSRF token will be emitted during a user login sequence.
@@ -6737,17 +6613,6 @@ PUBLIC bool httpLookupSessionID(cchar *id);
 PUBLIC int httpRemoveSessionVar(HttpStream *stream, cchar *name);
 
 /**
-    Set a linked managed memory reference for a session.
-    @description When the session expires, the linked memory will be eligible for garbage collection.
-    This routine is useful to attach objects or memory to a session and have them be released together.
-    @param stream Http stream object
-    @param link Managed memory reference. May be NULL.
-    @ingroup MprCache
-    @stability Evolving
- */
-PUBLIC int httpSetCacheLink(HttpStream *stream, void *link);
-
-/**
     Set a notification callback to be invoked for session notification events.
     WARNING: the callback may happen on any thread. Use careful locking to synchronize access to data. Take care
             not to block the thread issuing the callback.
@@ -6756,7 +6621,7 @@ PUBLIC int httpSetCacheLink(HttpStream *stream, void *link);
         \n\n
         (*MprCacheProc)(MprCache *cache, cchar *key, cchar *data, int event);
     @ingroup HttpSession
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC void httpSetSessionNotify(MprCacheProc notifyProc);
 
@@ -6787,7 +6652,7 @@ PUBLIC int httpSetSessionVar(HttpStream *stream, cchar *name, cchar *value);
     Write the session state to persistent data storage
     @description This is called internally by the ESP handler at the completion of any processing.
     @param stream Http stream object
-    @stability Evolving
+    @stability Stable
     @ingroup HttpSession
     @internal
  */
@@ -7303,7 +7168,7 @@ PUBLIC ssize httpRead(HttpStream *stream, char *buffer, ssize size);
         and HTTP_NON_BLOCK for async connections.
     @return The number of bytes read. Returns zero for not data. EOF can be detected by testing #httpIsEof.
     @ingroup HttpRx
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize httpReadBlock(HttpStream *stream, char *buffer, ssize size, MprTicks timeout, int flags);
 
@@ -7313,7 +7178,7 @@ PUBLIC ssize httpReadBlock(HttpStream *stream, char *buffer, ssize size, MprTick
         must not be streaming (rx->streaming).
     @param stream HttpStream stream object created via #httpCreateStream
     @return A string containing the body input.
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *httpGetBodyInput(HttpStream *stream);
 
@@ -7387,7 +7252,7 @@ PUBLIC void httpSetMethod(HttpStream *stream, cchar *method);
     @description This callback is invoked when the request is completed.
     @param callback The callback is invoked with the signature: void callback(HttpStream *stream).
     @ingroup HttpRx
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetRequestCallback(HttpRequestCallback callback);
 
@@ -7429,29 +7294,6 @@ PUBLIC int httpTestParam(HttpStream *stream, cchar *var);
     @stability Stable
  */
 PUBLIC void httpTrimExtraPath(HttpStream *stream);
-
-/**
-    Process http content
-    @description This will change the http state to HTTP_STATE_READY if all the body content has been received.
-    @param stream HttpStream Stream object
-    @ingroup HttpRx
-    @stability Evolving
- */
-PUBLIC int httpProcessContent(HttpStream *stream);
-
-/**
-    Process Http headers
-    @description the httpProcessHeaders function drives the HTTP request and response state machine. Once a request is received from the peer and the HTTP headers have been parsed into HttpStream and HttpTx, the httpProcessHeaders() function should be called to drive parse the headers fields.
-    \n\n
-    The HTTP state machine should be in the HTTP_STATE_FIRST state. This routine will advance the state to HTTP_STATE_PARSED.
-    \n\n
-    httpProcessHeaders is invoked by the HTTP/1 and HTTP/2 filters after they have decoded input packets and whenever the network socket becomes newly writable and can absorb more output data.
-    @param q HttpQueue queue object
-    @ingroup HttpRx
-    @stability Evolving
- */
-PUBLIC bool httpProcessHeaders(HttpQueue *q);
-
 
 /* Internal */
 PUBLIC void httpCloseRx(struct HttpStream *stream);
@@ -7678,7 +7520,7 @@ PUBLIC void httpFinalizeHttp2Stream(HttpStream *stream);
     The difference between #httpFinalize and #httpFinalizeOutput is that #httpFinalize implies that all request processing is complete including both input and output. Whereas #httpFinalizeOutput implies that the output is generated. Note that while the output may be fully generated, it may not be fully transmitted by the pipeline and connector. When the output is fully transmitted, the connector will call #httpFinalizeConnector.
     @param stream HttpStream Queue object.
     @ingroup HttpTx
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpFinalizeOutput(HttpStream *stream);
 
@@ -7797,7 +7639,7 @@ PUBLIC ssize httpFormatResponseBody(HttpStream *stream, cchar *title, cchar *fmt
     @param key Name of the header to retrieve.
     @return Value associated with the header key or null if the key did not exist in the response.
     @ingroup HttpTx
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *httpGetTxHeader(HttpStream *stream, cchar *key);
 
@@ -8308,7 +8150,7 @@ PUBLIC int httpStartEndpoint(HttpEndpoint *endpoint);
     @description Opens all endpoints and starts listening for connections.
     @returns "Zero" if successful, otherwise a negative MPR error code.
     @ingroup HttpEndpoint
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpStartEndpoints(void);
 
@@ -8400,7 +8242,7 @@ PUBLIC HttpHost *httpCreateHost(void);
     A default route is created for the host
     @return The new HttpHost object.
     @ingroup HttpHost
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpHost *httpCreateDefaultHost(void);
 
@@ -8637,7 +8479,7 @@ typedef struct HttpWebSocket {
     @param stream HttpStream stream object created via #httpCreateStream
     @return The UTF8 reason string supplied by the peer when closing the WebSocket.
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *httpGetWebSocketCloseReason(HttpStream *stream);
 
@@ -8647,7 +8489,7 @@ PUBLIC cchar *httpGetWebSocketCloseReason(HttpStream *stream);
     @param stream HttpStream stream object created via #httpCreateStream
     @return The private data reference
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void *httpGetWebSocketData(HttpStream *stream);
 
@@ -8658,7 +8500,7 @@ PUBLIC void *httpGetWebSocketData(HttpStream *stream);
     @param stream HttpStream stream object created via #httpCreateStream
     @return The size of the message.
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize httpGetWebSocketMessageLength(HttpStream *stream);
 
@@ -8667,7 +8509,7 @@ PUBLIC ssize httpGetWebSocketMessageLength(HttpStream *stream);
     @param stream HttpStream stream object created via #httpCreateStream
     @return The WebSocket protocol string
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC char *httpGetWebSocketProtocol(HttpStream *stream);
 
@@ -8675,7 +8517,7 @@ PUBLIC char *httpGetWebSocketProtocol(HttpStream *stream);
     Get the WebSocket state
     @return The WebSocket state. Will be WS_STATE_CONNECTING, WS_STATE_OPEN, WS_STATE_CLOSING or WS_STATE_CLOSED.
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize httpGetWebSocketState(HttpStream *stream);
 
@@ -8688,7 +8530,7 @@ PUBLIC ssize httpGetWebSocketState(HttpStream *stream);
     @param ... Arguments for the format
     @return Number of bytes written
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize httpSend(HttpStream *stream, cchar *fmt, ...) PRINTF_ATTRIBUTE(2,3);
 
@@ -8737,7 +8579,7 @@ PUBLIC ssize httpSend(HttpStream *stream, cchar *fmt, ...) PRINTF_ATTRIBUTE(2,3)
     @return Number of data message bytes written. Should equal len if successful, otherwise returns a negative
         MPR error code.
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize httpSendBlock(HttpStream *stream, int type, cchar *msg, ssize len, int flags);
 
@@ -8751,7 +8593,7 @@ PUBLIC ssize httpSendBlock(HttpStream *stream, int type, cchar *msg, ssize len, 
     @return Number of data message bytes written. Should equal len if successful, otherwise returns a negative
         MPR error code.
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize httpSendClose(HttpStream *stream, int status, cchar *reason);
 
@@ -8761,7 +8603,7 @@ PUBLIC ssize httpSendClose(HttpStream *stream, int status, cchar *reason);
     @param stream HttpStream stream object created via #httpCreateStream
     @param data Managed data reference.
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetWebSocketData(HttpStream *stream, void *data);
 
@@ -8775,7 +8617,7 @@ PUBLIC void httpSetWebSocketData(HttpStream *stream, void *data);
     @param stream HttpStream stream object created via #httpCreateStream
     @param on Set to true to preserve frames
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC void httpSetWebSocketPreserveFrames(HttpStream *stream, bool on);
 
@@ -8784,7 +8626,7 @@ PUBLIC void httpSetWebSocketPreserveFrames(HttpStream *stream, bool on);
     @param stream HttpStream stream object created via #httpCreateStream
     @param protocols Comma separated list of application-level protocols
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetWebSocketProtocols(HttpStream *stream, cchar *protocols);
 
@@ -8795,7 +8637,7 @@ PUBLIC void httpSetWebSocketProtocols(HttpStream *stream, cchar *protocols);
         before sending any data to the server.
     @param stream HttpStream stream object created via #httpCreateStream
     @return Return Zero if the connection upgrade can be requested.
-    @stability Evolving
+    @stability Stable
     @ingroup HttpWebSocket
     @internal
  */
@@ -8806,7 +8648,7 @@ PUBLIC int httpUpgradeWebSocket(HttpStream *stream);
     @param stream HttpStream stream object created via #httpCreateStream
     @return True if the WebSocket was orderly closed.
     @ingroup HttpWebSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool httpWebSocketOrderlyClosed(HttpStream *stream);
 
@@ -8835,7 +8677,7 @@ typedef struct HttpDir {
 /**
     Get the HttpDir object for a route
     @ingroup HttpDir
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC HttpDir *httpGetDirObj(HttpRoute *route);
@@ -8856,7 +8698,7 @@ PUBLIC HttpDir *httpGetDirObj(HttpRoute *route);
     @param data Data to pass to the callback. This is unmanaged data. The caller is responsible for retaining and freeing.
     @return "Zero" if the stream can be found and the event is scheduled, Otherwise returns MPR_ERR_CANT_FIND.
     @ingroup HttpStream
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int httpCreateEvent(uint64 streamSeqno, HttpEventProc callback, void *data);
 
@@ -8867,7 +8709,7 @@ PUBLIC int httpCreateEvent(uint64 streamSeqno, HttpEventProc callback, void *dat
     @param field Field key name
     @param value Value to use for the field
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpAddOption(MprHash *options, cchar *field, cchar *value);
 
@@ -8878,7 +8720,7 @@ PUBLIC void httpAddOption(MprHash *options, cchar *field, cchar *value);
     @param field Field key name
     @param value Value to use for the field
     @ingroup Http
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC void httpInsertOption(MprHash *options, cchar *field, cchar *value);
 
@@ -8889,7 +8731,7 @@ PUBLIC void httpInsertOption(MprHash *options, cchar *field, cchar *value);
     @param defaultValue Value to use if "field" is not found in options
     @return Option value.
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void *httpGetOption(MprHash *options, cchar *field, cchar *defaultValue);
 
@@ -8901,7 +8743,7 @@ PUBLIC void *httpGetOption(MprHash *options, cchar *field, cchar *defaultValue);
     @param field Property to return.
     @return An MprHash instance for the given field. This will contain option sub-properties.
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprHash *httpGetOptionHash(MprHash *options, cchar *field);
 
@@ -8911,7 +8753,7 @@ PUBLIC MprHash *httpGetOptionHash(MprHash *options, cchar *field);
         This is a sub-set of the JSON syntax. Arrays are not supported.
     @return Options table
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprHash *httpGetOptions(cchar *options);
 
@@ -8923,7 +8765,7 @@ PUBLIC MprHash *httpGetOptions(cchar *options);
     @param useDefault If true and "field" is not found in options, return true
     @return Allocated value string.
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool httpOption(MprHash *options, cchar *field, cchar *value, int useDefault);
 
@@ -8933,7 +8775,7 @@ PUBLIC bool httpOption(MprHash *options, cchar *field, cchar *value, int useDefa
     @param options Options table returned from httpGetOptions
     @param field Property field to remove
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpRemoveOption(MprHash *options, cchar *field);
 
@@ -8944,7 +8786,7 @@ PUBLIC void httpRemoveOption(MprHash *options, cchar *field);
     @param field Property field to set
     @param value Property value to use
     @ingroup Http
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void httpSetOption(MprHash *options, cchar *field, cchar *value);
 

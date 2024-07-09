@@ -8,12 +8,8 @@
 
             <p>Appweb includes support for <a href="https://en.wikipedia.org/wiki/Common_Gateway_Interface">CGI</a> but it is not enabled by default to minimize the security surface. If you wish to use CGI, you need to enable CGI and rebuild Appweb.</p>
 
-            <p>To build Appweb with CGI support via <a href="https://www.embedthis.com/makeme">MakeMe</a>, then use the following:</p>
-<pre class="ui code segment">
-./configure --with cgi
-me</pre>
+            <p>To build Appweb with CGI support:</p>
 
-<p>If you are building with <em>make</em>, use:</p>
 <pre class="ui code segment">
 make ME_COM_CGI=1</pre>
 

@@ -3,6 +3,11 @@
 
     Individual sockets are not thread-safe. Must only be used by a single thread.
 
+    To build MbedTLS, use:
+        git checkout RELEASE-TAG
+        cmake -DCMAKE_BUILD_TYPE=Debug .
+        make VERBOSE=1
+
     Copyright (c) All Rights Reserved. See details at the end of the file.
  */
 
@@ -11,10 +16,19 @@
 #include    "mpr.h"
 
 #if ME_COM_MBEDTLS
- /*
-    Indent to bypass MakeMe dependencies
-  */
- #include    "mbedtls.h"
+    /*
+        Indent to bypass MakeMe dependencies
+     */
+    #include "mbedtls/mbedtls_config.h"
+    #include "mbedtls/ssl.h"
+    #include "mbedtls/ssl_cache.h"
+    #include "mbedtls/ssl_ticket.h"
+    #include "mbedtls/ctr_drbg.h"
+    #include "mbedtls/net_sockets.h"
+    #include "psa/crypto.h"
+    #include "mbedtls/debug.h"
+    #include "mbedtls/error.h"
+    #include "mbedtls/check_config.h"
 
 /************************************* Defines ********************************/
 /*
@@ -104,6 +118,7 @@ PUBLIC int mprSslInit(void *unused, MprModule *module)
     }
     mbedProvider->managed = mbedGlobal = global;
 
+    psa_crypto_init();
     mbedtls_threading_set_alt(initMbedLock, freeMbedLock, mbedLock, mbedUnlock);
     mbedtls_ssl_cache_init(&global->cache);
     mbedtls_ctr_drbg_init(&global->ctr);
@@ -145,6 +160,7 @@ static void manageMbedGlobal(MbedGlobal *global, int flags)
         mbedtls_ssl_cache_free(&global->cache);
         mbedtls_ssl_ticket_free(&global->tickets);
         mbedtls_entropy_free(&global->mbedEntropy);
+        mbedtls_psa_crypto_free();
     }
 }
 
@@ -252,7 +268,8 @@ static int configMbed(MprSsl *ssl, int flags, char **errorMsg)
             return MPR_ERR_CANT_INITIALIZE;
         }
     }
-    if ((rc = mbedtls_ssl_config_defaults(mconf, flags & MPR_SOCKET_SERVER ? MBEDTLS_SSL_IS_SERVER : MBEDTLS_SSL_IS_CLIENT,
+    if ((rc = mbedtls_ssl_config_defaults(mconf, 
+            flags & MPR_SOCKET_SERVER ? MBEDTLS_SSL_IS_SERVER : MBEDTLS_SSL_IS_CLIENT,
             MBEDTLS_SSL_TRANSPORT_STREAM, MBEDTLS_SSL_PRESET_DEFAULT)) < 0) {
         merror(rc, "Cannot set mbedtls defaults");
         return MPR_ERR_CANT_INITIALIZE;
@@ -349,6 +366,8 @@ static int upgradeMbed(MprSocket *sp, MprSsl *ssl, cchar *peerName)
 
     ctx = &mb->ctx;
     mbedtls_ssl_init(ctx);
+
+//  MOB -
     ctx->appData = sp;
     mbedtls_ssl_setup(ctx, &mb->cfg->conf);
     mbedtls_ssl_set_bio(ctx, &sp->fd, mbedtls_net_send, mbedtls_net_recv, 0);
@@ -379,11 +398,9 @@ static int handshakeMbed(MprSocket *sp)
     int         rc, vrc;
 
     mb = (MbedSocket*) sp->sslSocket;
-    assert(!(mb->ctx.state == MBEDTLS_SSL_HANDSHAKE_OVER));
-
-    rc = 0;
     sp->flags |= MPR_SOCKET_HANDSHAKING;
-    while (mb->ctx.state != MBEDTLS_SSL_HANDSHAKE_OVER && (rc = mbedtls_ssl_handshake(&mb->ctx)) != 0) {
+
+    while ((rc = mbedtls_ssl_handshake(&mb->ctx)) != 0) {
         if (rc == MBEDTLS_ERR_SSL_WANT_READ || rc == MBEDTLS_ERR_SSL_WANT_WRITE)  {
             if (!mprGetSocketBlockingMode(sp)) {
                 return 0;
@@ -401,6 +418,9 @@ static int handshakeMbed(MprSocket *sp)
     if (rc < 0) {
         if (rc == MBEDTLS_ERR_SSL_PRIVATE_KEY_REQUIRED && !(sp->ssl->keyFile || sp->ssl->certFile)) {
             sp->errorMsg = sclone("Peer requires a certificate");
+            sp->flags |= MPR_SOCKET_CERT_ERROR;
+        } else if (rc == MBEDTLS_ERR_SSL_CA_CHAIN_REQUIRED) {
+            sp->errorMsg = sclone("Server requires a client certificate");
             sp->flags |= MPR_SOCKET_CERT_ERROR;
         } else {
             char ebuf[256];
@@ -447,11 +467,7 @@ static int handshakeMbed(MprSocket *sp)
             vrc = 0;
 
         } else {
-            if (mb->ctx.client_auth && !sp->ssl->certFile) {
-                sp->errorMsg = sclone("Server requires a client certificate");
-                sp->flags |= MPR_SOCKET_CERT_ERROR;
-
-            } else if (rc == MBEDTLS_ERR_NET_CONN_RESET) {
+            if (rc == MBEDTLS_ERR_NET_CONN_RESET) {
                 sp->errorMsg = sclone("Peer disconnected");
                 sp->flags |= MPR_SOCKET_ERROR;
 
@@ -563,7 +579,7 @@ static ssize readMbed(MprSocket *sp, void *buf, ssize len)
     if (sp->fd == INVALID_SOCKET) {
         return MPR_ERR_CANT_READ;
     }
-    if (mb->ctx.state != MBEDTLS_SSL_HANDSHAKE_OVER) {
+    if (sp->flags & MPR_SOCKET_HANDSHAKING) {
         if ((rc = handshakeMbed(sp)) <= 0) {
             return rc;
         }
@@ -572,7 +588,11 @@ static ssize readMbed(MprSocket *sp, void *buf, ssize len)
         rc = mbedtls_ssl_read(&mb->ctx, buf, (int) len);
         mprDebug("debug mpr ssl mbedtls", mbedLogLevel, "readMbed read returned %d (0x%04x)", rc, rc);
         if (rc < 0) {
-            if (rc == MBEDTLS_ERR_SSL_WANT_READ || rc == MBEDTLS_ERR_SSL_WANT_WRITE)  {
+            if (rc == MBEDTLS_ERR_SSL_WANT_READ || 
+                rc == MBEDTLS_ERR_SSL_WANT_WRITE ||
+                rc == MBEDTLS_ERR_SSL_RECEIVED_NEW_SESSION_TICKET ||
+                rc == MBEDTLS_ERR_SSL_ASYNC_IN_PROGRESS ||
+                rc == MBEDTLS_ERR_SSL_CRYPTO_IN_PROGRESS)  {
                 rc = 0;
                 break;
 
@@ -611,7 +631,7 @@ static ssize writeMbed(MprSocket *sp, cvoid *buf, ssize len)
     if (len <= 0) {
         return MPR_ERR_BAD_ARGS;
     }
-    if (mb->ctx.state != MBEDTLS_SSL_HANDSHAKE_OVER) {
+    if (sp->flags & MPR_SOCKET_HANDSHAKING) {
         if ((rc = handshakeMbed(sp)) <= 0) {
             return rc;
         }
@@ -622,7 +642,11 @@ static ssize writeMbed(MprSocket *sp, cvoid *buf, ssize len)
         rc = mbedtls_ssl_write(&mb->ctx, (uchar*) buf, (int) len);
         mprDebug("debug mpr ssl mbedtls", mbedLogLevel, "mbedtls write: write returned %d (0x%04x), len %zd", rc, rc, len);
         if (rc <= 0) {
-            if (rc == MBEDTLS_ERR_SSL_WANT_READ || rc == MBEDTLS_ERR_SSL_WANT_WRITE) {
+            if (rc == MBEDTLS_ERR_SSL_WANT_READ ||
+                rc == MBEDTLS_ERR_SSL_WANT_WRITE ||
+                rc == MBEDTLS_ERR_SSL_RECEIVED_NEW_SESSION_TICKET ||
+                rc == MBEDTLS_ERR_SSL_ASYNC_IN_PROGRESS ||
+                rc == MBEDTLS_ERR_SSL_CRYPTO_IN_PROGRESS)  {
                 break;
             }
             if (rc == MBEDTLS_ERR_NET_CONN_RESET) {
@@ -641,10 +665,12 @@ static ssize writeMbed(MprSocket *sp, cvoid *buf, ssize len)
 
     mprHiddenSocketData(sp, mb->ctx.out_left, MPR_WRITABLE);
 
+/* MOB
     if (totalWritten == 0 && (rc == MBEDTLS_ERR_SSL_WANT_READ || rc == MBEDTLS_ERR_SSL_WANT_WRITE))  {
         mprSetError(EAGAIN);
         return MPR_ERR_CANT_WRITE;
     }
+*/
     return totalWritten;
 }
 
@@ -661,6 +687,7 @@ PUBLIC int sniCallback(void *unused, mbedtls_ssl_context *ctx, cuchar *host, siz
     cchar       *hostname;
     int         verify;
 
+//  MOB 
     sp = ctx->appData;
     hostname = snclone((char*) host, len);
 
@@ -1002,7 +1029,7 @@ static int parseKey(mbedtls_pk_context *key, cchar *path, char **errorMsg)
     if (scontains((char*) buf, "-----BEGIN ")) {
         len++;
     }
-    if (mbedtls_pk_parse_key(key, buf, len, NULL, 0) != 0) {
+    if (mbedtls_pk_parse_key(key, buf, len, NULL, 0, mbedtls_ctr_drbg_random, NULL) != 0) {
         memset(buf, 0, len);
         if (errorMsg) {
             *errorMsg = sfmt("Unable to parse key %s", path);

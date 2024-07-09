@@ -58,7 +58,7 @@ typedef struct EdiService {
     Create the EDI service
     @return EdiService object
     @ingroup EdiService
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC EdiService *ediCreateService(void);
@@ -67,7 +67,7 @@ PUBLIC EdiService *ediCreateService(void);
     Add a database provider.
     @description This should only be called by database providers.
     @ingroup EdiService
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void ediAddProvider(struct EdiProvider *provider);
 
@@ -78,14 +78,14 @@ PUBLIC void ediAddProvider(struct EdiProvider *provider);
     @param fieldName Field name to validate
     @param value Field value to
     @ingroup EdiService
-    @stability Evolving
+    @stability Stable
  */
 typedef cchar *(*EdiValidationProc)(struct EdiValidation *vp, struct EdiRec *rec, cchar *fieldName, cchar *value);
 
 /**
     Validation structure
     @ingroup EdiService
-    @stability Evolving
+    @stability Stable
  */
 typedef struct EdiValidation {
     cchar               *name;          /**< Validation name */
@@ -99,7 +99,7 @@ typedef struct EdiValidation {
     @param name Validation name
     @param vfn Validation callback to invoke when validating field data.
     @ingroup EdiService
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void ediDefineValidation(cchar *name, EdiValidationProc vfn);
 
@@ -109,7 +109,7 @@ PUBLIC void ediDefineValidation(cchar *name, EdiValidationProc vfn);
     @param field Field name for the error message
     @param fmt Message format string
     @ingroup EdiService
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void ediAddFieldError(struct EdiRec *rec, cchar *field, cchar *fmt, ...);
 
@@ -209,7 +209,7 @@ typedef int (*EdiMigration)(struct Edi *db);
         int back(Edi *edit);
         A successful return should be zero.
     @ingroup EdiService
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void ediDefineMigration(struct Edi *edi, EdiMigration forw, EdiMigration back);
 
@@ -278,7 +278,7 @@ typedef struct EdiProvider {
         EDI_KEY if the column is the key column and/or EDI_INDEX to create an index on the column.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediAddColumn(Edi *edi, cchar *tableName, cchar *columnName, int type, int flags);
 
@@ -290,7 +290,7 @@ PUBLIC int ediAddColumn(Edi *edi, cchar *tableName, cchar *columnName, int type,
     @param indexName Ignored. Set to null.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediAddIndex(Edi *edi, cchar *tableName, cchar *columnName, cchar *indexName);
 
@@ -301,7 +301,7 @@ PUBLIC int ediAddIndex(Edi *edi, cchar *tableName, cchar *columnName, cchar *ind
     able to map foreign key fields of the form NameId by converting the Name to a database table.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediAddTable(Edi *edi, cchar *tableName);
 
@@ -324,7 +324,7 @@ PUBLIC int ediAddTable(Edi *edi, cchar *tableName);
     @param data Argument data for the validator. For example: the "format" validator requires a regular expression.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediAddValidation(Edi *edi, cchar *name, cchar *tableName, cchar *columnName, cvoid *data);
 
@@ -339,7 +339,7 @@ PUBLIC int ediAddValidation(Edi *edi, cchar *name, cchar *tableName, cchar *colu
         EDI_KEY if the column is the key column and/or EDI_INDEX to create an index on the column.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediChangeColumn(Edi *edi, cchar *tableName, cchar *columnName, int type, int flags);
 
@@ -347,7 +347,7 @@ PUBLIC int ediChangeColumn(Edi *edi, cchar *tableName, cchar *columnName, int ty
     Close a database
     @param edi Database handle
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void ediClose(Edi *edi);
 
@@ -356,7 +356,7 @@ PUBLIC void ediClose(Edi *edi);
     @param grid to clone
     @return A complete copy of a grid
     @ingroup Edi
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC EdiGrid *ediCloneGrid(EdiGrid *grid);
 
@@ -372,7 +372,7 @@ PUBLIC EdiGrid *ediCloneGrid(EdiGrid *grid);
     @param tableName Database table name
     @return Record instance.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *ediCreateRec(Edi *edi, cchar *tableName);
 
@@ -383,7 +383,7 @@ PUBLIC EdiRec *ediCreateRec(Edi *edi, cchar *tableName);
     @param path Database path name.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediDelete(Edi *edi, cchar *path);
 
@@ -393,7 +393,7 @@ PUBLIC int ediDelete(Edi *edi, cchar *path);
     @param message Prefix message to output
     @param grid EDI grid
     @ingroup Edi
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void ediDumpGrid(cchar *message, EdiGrid *grid);
 
@@ -403,7 +403,7 @@ PUBLIC void ediDumpGrid(cchar *message, EdiGrid *grid);
     @param message Prefix message to output
     @param rec Record to log
     @ingroup Edi
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void ediDumpRec(cchar *message, EdiRec *rec);
 
@@ -413,7 +413,7 @@ PUBLIC void ediDumpRec(cchar *message, EdiRec *rec);
     @param tableName Database table name
     @return An MprList of column names in the given table.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprList *ediGetColumns(Edi *edi, cchar *tableName);
 
@@ -432,7 +432,7 @@ PUBLIC MprList *ediGetColumns(Edi *edi, cchar *tableName);
         Set to null if this data is not required.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediGetColumnSchema(Edi *edi, cchar *tableName, cchar *columnName, int *type, int *flags, int *cid);
 
@@ -440,7 +440,7 @@ PUBLIC int ediGetColumnSchema(Edi *edi, cchar *tableName, cchar *columnName, int
     Get the schema for a record and format as JSON
     @param rec
     @ingroup EdiRec
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC cchar *ediGetRecSchemaAsJson(EdiRec *rec);
 
@@ -452,7 +452,7 @@ PUBLIC cchar *ediGetRecSchemaAsJson(EdiRec *rec);
     @param offset Initial offset. Set to 1 to step over the ID field.
     @return The next field object. Returns NULL after the last field.
     @ingroup EdiRec
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC EdiField *ediGetNextField(EdiRec *rec, EdiField *fp, int offset);
 
@@ -463,7 +463,7 @@ PUBLIC EdiField *ediGetNextField(EdiRec *rec, EdiField *fp, int offset);
     @param rec Record pointer
     @return The next record object. Returns NULL after the last record.
     @ingroup EdiGrid
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC EdiRec *ediGetNextRec(EdiGrid *grid, EdiRec *rec);
 
@@ -477,7 +477,7 @@ PUBLIC EdiRec *ediGetNextRec(EdiGrid *grid, EdiRec *rec);
         Set to null if this data is not required.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediGetTableDimensions(Edi *edi, cchar *tableName, int *numRows, int *numCols);
 
@@ -486,7 +486,7 @@ PUBLIC int ediGetTableDimensions(Edi *edi, cchar *tableName, int *numRows, int *
     @param edi Database handle
     @param tableName Name of table to examine
     @ingroup Edi
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC cchar *ediGetTableSchemaAsJson(Edi *edi, cchar *tableName);
 
@@ -495,7 +495,7 @@ PUBLIC cchar *ediGetTableSchemaAsJson(Edi *edi, cchar *tableName);
     @param edi Database handle
     @return An MprList of table names in the database.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprList *ediGetTables(Edi *edi);
 
@@ -505,7 +505,7 @@ PUBLIC MprList *ediGetTables(Edi *edi);
     @param flags Reserved. Set to MPR_JSON_PRETTY for a prettier format.
     @return JSON string
     @ingroup Edi
-    @stability Prototype
+    @stability Stable
   */
 PUBLIC cchar *ediGridAsJson(EdiGrid *grid, int flags);
 
@@ -515,7 +515,7 @@ PUBLIC cchar *ediGridAsJson(EdiGrid *grid, int flags);
     @param ... Null terminated list of data grids. These are instances of EdiGrid.
     @return A joined grid.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *ediJoin(Edi *edi, ...);
 
@@ -525,7 +525,7 @@ PUBLIC EdiGrid *ediJoin(Edi *edi, ...);
     @param path Database path name
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediLoad(Edi *edi, cchar *path);
 
@@ -536,7 +536,7 @@ PUBLIC int ediLoad(Edi *edi, cchar *path);
     @param fieldName Database column field name
     @return The ordinal column index in the table if the column field is found. Otherwise returns a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediLookupField(Edi *edi, cchar *tableName, cchar *fieldName);
 
@@ -545,7 +545,7 @@ PUBLIC int ediLookupField(Edi *edi, cchar *tableName, cchar *fieldName);
     @param providerName Name of the EDI provider
     @return The EDI provider object. Returns null if the provider cannot be found.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC EdiProvider *ediLookupProvider(cchar *providerName);
@@ -563,7 +563,7 @@ PUBLIC EdiProvider *ediLookupProvider(cchar *providerName);
         @arg EDI_LITERAL -- Literal schema in ediOpen source parameter. This option is only supported by the "mdb" provider.
     @return If successful, returns an EDI database instance object. Otherwise returns zero.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC Edi *ediOpen(cchar *source, cchar *provider, int flags);
 
@@ -589,7 +589,7 @@ PUBLIC Edi *ediClone(Edi *edi);
     @param vargs Query parameters supplied in a NULL terminated va_list.
     @return If succesful, returns tabular data in the form of an EgiGrid structure. Returns NULL on errors.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *ediQuery(Edi *edi, cchar *cmd, int argc, cchar **argv, va_list vargs);
 
@@ -605,7 +605,7 @@ PUBLIC EdiGrid *ediQuery(Edi *edi, cchar *cmd, int argc, cchar **argv, va_list v
     @param defaultValue Default value to return if the field is null or empty.
     @return Field value or default value if field is null or empty. Returns null if no matching record is found.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *ediReadFieldValue(Edi *edi, cchar *fmt, cchar *tableName, cchar *key, cchar *fieldName, cchar *defaultValue);
 
@@ -618,7 +618,7 @@ PUBLIC cchar *ediReadFieldValue(Edi *edi, cchar *fmt, cchar *tableName, cchar *k
     @param fieldName Column name to read
     @return Field value or null if the no record is found. May return null or empty if the field is null or empty.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiField ediReadField(Edi *edi, cchar *tableName, cchar *key, cchar *fieldName);
 
@@ -633,7 +633,7 @@ PUBLIC EdiField ediReadField(Edi *edi, cchar *tableName, cchar *key, cchar *fiel
         All fields may be matched by using the pseudo column name "*". Where OP is "==", "!=", "<", ">", "<=", ">=" or "><".
     @return A grid containing all matching records. Returns NULL if no matching records.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *ediFindGrid(Edi *edi, cchar *tableName, cchar *query);
 
@@ -660,11 +660,11 @@ PUBLIC EdiRec *ediFindRec(Edi *edi, cchar *tableName, cchar *query);
     @param key Key value of the record to read
     @return Record instance of EdiRec.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *ediReadRec(Edi *edi, cchar *tableName, cchar *key);
 
-#if DEPRECATED || 1
+#if DEPRECATED
 /**
     Read a table.
     @description This reads all the records in a table and returns a grid containing the results.
@@ -715,7 +715,7 @@ PUBLIC EdiGrid *ediReadWhere(Edi *edi, cchar *tableName, cchar *fieldName, cchar
     @param flags Reserved. Set to zero.
     @return JSON string
     @ingroup Edi
-    @stability Prototype
+    @stability Stable
   */
 PUBLIC cchar *ediRecAsJson(EdiRec *rec, int flags);
 
@@ -726,7 +726,7 @@ PUBLIC cchar *ediRecAsJson(EdiRec *rec, int flags);
     @param columnName Database column name
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int edRemoveColumn(Edi *edi, cchar *tableName, cchar *columnName);
 
@@ -737,7 +737,7 @@ PUBLIC int edRemoveColumn(Edi *edi, cchar *tableName, cchar *columnName);
     @param indexName Ignored. Set to null. This call will remove the table index.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediRemoveIndex(Edi *edi, cchar *tableName, cchar *indexName);
 
@@ -751,7 +751,7 @@ PUBLIC int ediRemoveIndex(Edi *edi, cchar *tableName, cchar *indexName);
         All fields may be matched by using the pseudo column name "*". Where OP is "==", "!=", "<", ">", "<=", ">=" or "><".
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediRemoveRec(Edi *edi, cchar *tableName, cchar *query);
 #endif
@@ -763,7 +763,7 @@ PUBLIC int ediRemoveRec(Edi *edi, cchar *tableName, cchar *query);
     @param key Key column value to delete.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediRemoveRec(Edi *edi, cchar *tableName, cchar *key);
 
@@ -773,7 +773,7 @@ PUBLIC int ediRemoveRec(Edi *edi, cchar *tableName, cchar *key);
     @param tableName Database table name
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediRemoveTable(Edi *edi, cchar *tableName);
 
@@ -784,7 +784,7 @@ PUBLIC int ediRemoveTable(Edi *edi, cchar *tableName);
     @param newTableName New database table name
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediRenameTable(Edi *edi, cchar *tableName, cchar *newTableName);
 
@@ -796,7 +796,7 @@ PUBLIC int ediRenameTable(Edi *edi, cchar *tableName, cchar *newTableName);
     @param newColumnName New column name
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediRenameColumn(Edi *edi, cchar *tableName, cchar *columnName, cchar *newColumnName);
 
@@ -808,7 +808,7 @@ PUBLIC int ediRenameColumn(Edi *edi, cchar *tableName, cchar *columnName, cchar 
     @param edi Database handle
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediSave(Edi *edi);
 
@@ -821,7 +821,7 @@ PUBLIC int ediSave(Edi *edi);
     @param value Value to update
     @return The record instance if successful, otherwise NULL.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *ediSetField(EdiRec *rec, cchar *fieldName, cchar *value);
 
@@ -835,7 +835,7 @@ PUBLIC EdiRec *ediSetField(EdiRec *rec, cchar *fieldName, cchar *value);
     @param ... Variable arguments for the format string
     @return The record instance if successful, otherwise NULL.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *ediSetFieldFmt(EdiRec *rec, cchar *fieldName, cchar *fmt, ...);
 
@@ -850,7 +850,7 @@ PUBLIC EdiRec *ediSetFieldFmt(EdiRec *rec, cchar *fieldName, cchar *fmt, ...);
     @param data Json object of field to use for the update
     @return The record instance if successful, otherwise NULL.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *ediSetFields(EdiRec *rec, MprJson *data);
 
@@ -859,7 +859,7 @@ PUBLIC EdiRec *ediSetFields(EdiRec *rec, MprJson *data);
     @param edi Database handle
     @param on Set to true to make the database readonly, i.e. to disable all updates.
     @ingroup Edi
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void ediSetReadonly(Edi *edi, bool on);
 
@@ -874,7 +874,7 @@ PUBLIC void ediSetPrivate(Edi *edi, bool on);
 
 /**
     Write a value to a database table field
-    @description Update the value of a table field in the selected table row. Note: field validations are not run MOB.
+    @description Update the value of a table field in the selected table row. 
     @param edi Database handle
     @param tableName Database table name
     @param key Key value for the table row to update.
@@ -882,7 +882,7 @@ PUBLIC void ediSetPrivate(Edi *edi, bool on);
     @param value Value to write to the database field
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediUpdateField(Edi *edi, cchar *tableName, cchar *key, cchar *fieldName, cchar *value);
 
@@ -897,7 +897,7 @@ PUBLIC int ediUpdateField(Edi *edi, cchar *tableName, cchar *key, cchar *fieldNa
     @param ... Variable arguments for the format string
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediUpdateFieldFmt(Edi *edi, cchar *tableName, cchar *key, cchar *fieldName, cchar *fmt, ...);
 
@@ -909,7 +909,7 @@ PUBLIC int ediUpdateFieldFmt(Edi *edi, cchar *tableName, cchar *key, cchar *fiel
     @param rec Record to write to the database.
     @return Zero if successful. Otherwise a negative MPR error code.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediUpdateRec(Edi *edi, EdiRec *rec);
 
@@ -921,7 +921,7 @@ PUBLIC int ediUpdateRec(Edi *edi, EdiRec *rec);
     @param rec Record to validate
     @return True if all field valiations pass.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool ediValidateRec(EdiRec *rec);
 
@@ -934,7 +934,7 @@ PUBLIC bool ediValidateRec(EdiRec *rec);
     @param nrows Number of rows to reserve in the grid
     @return EdiGrid instance
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *ediCreateBareGrid(Edi *edi, cchar *tableName, int nrows);
 
@@ -948,7 +948,7 @@ PUBLIC EdiGrid *ediCreateBareGrid(Edi *edi, cchar *tableName, int nrows);
     @param nfields Number of fields to reserve in the record
     @return EdiGrid instance
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *ediCreateBareRec(Edi *edi, cchar *tableName, int nfields);
 
@@ -982,7 +982,7 @@ PUBLIC EdiRec *ediFilterRecFields(EdiRec *rec, cchar *fields, int include);
     @param fp Field whoes value will be formatted
     @return Formatted value string
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *ediFormatField(cchar *fmt, EdiField *fp);
 
@@ -992,7 +992,7 @@ PUBLIC cchar *ediFormatField(cchar *fmt, EdiField *fp);
     @param fieldName Field in the record to extract
     @return An EdiField structure containing the record field value and details.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiField *ediGetField(EdiRec *rec, cchar *fieldName);
 
@@ -1002,7 +1002,7 @@ PUBLIC EdiField *ediGetField(EdiRec *rec, cchar *fieldName);
     @param fieldName Field in the record to extract
     @return A field value as a string.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *ediGetFieldValue(EdiRec *rec, cchar *fieldName);
 
@@ -1013,7 +1013,7 @@ PUBLIC cchar *ediGetFieldValue(EdiRec *rec, cchar *fieldName);
     @return The field type. Returns one of: EDI_TYPE_BINARY, EDI_TYPE_BOOL, EDI_TYPE_DATE, EDI_TYPE_FLOAT,
         EDI_TYPE_INT, EDI_TYPE_STRING, EDI_TYPE_TEXT.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediGetFieldType(EdiRec *rec, cchar *fieldName);
 
@@ -1022,7 +1022,7 @@ PUBLIC int ediGetFieldType(EdiRec *rec, cchar *fieldName);
     @param grid Database grid
     @return An MprList of column names in the given grid.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprList *ediGetGridColumns(EdiGrid *grid);
 
@@ -1030,7 +1030,7 @@ PUBLIC MprList *ediGetGridColumns(EdiGrid *grid);
     Get the schema for a grid and format as JSON
     @param grid Grid to examine
     @ingroup EdiGrid
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC cchar *ediGetGridSchemaAsJson(EdiGrid *grid);
 
@@ -1039,7 +1039,7 @@ PUBLIC cchar *ediGetGridSchemaAsJson(EdiGrid *grid);
     @param rec Database record
     @return A hash of validation errors. If validation passed, then this call returns NULL.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprHash *ediGetRecErrors(EdiRec *rec);
 
@@ -1049,7 +1049,7 @@ PUBLIC MprHash *ediGetRecErrors(EdiRec *rec);
         EDI_TYPE_FLOAT, EDI_TYPE_INT, EDI_TYPE_STRING, EDI_TYPE_TEXT
     @return Type string. This will be set to one of: "binary", "bool", "date", "float", "int", "string" or "text".
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC char *ediGetTypeString(int type);
 
@@ -1060,7 +1060,7 @@ PUBLIC char *ediGetTypeString(int type);
     @param ... arguments
     @return MprJson instance
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprJson *ediMakeJson(cchar *fmt, ...);
 
@@ -1076,7 +1076,7 @@ grid = ediMakeGrid("[ \\ \n
     { id: '2', country: 'China' }, \ \n
     ]");
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *ediMakeGrid(cchar *content);
 
@@ -1087,7 +1087,7 @@ PUBLIC EdiGrid *ediMakeGrid(cchar *content);
     @param fields JSON object.
     @return An EdiRec instance
     @ingroup Edi
-    @stability Prototype
+    @stability Stable
     @see ediMakeRec ediMakeGrid
  */
 PUBLIC EdiRec *ediMakeRecFromJson(cchar *tableName, MprJson *fields);
@@ -1099,7 +1099,7 @@ PUBLIC EdiRec *ediMakeRecFromJson(cchar *tableName, MprJson *fields);
     @return An EdiRec instance
     @example: rec = ediMakeRec("{ id: 1, title: 'Message One', body: 'Line one' }");
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *ediMakeRec(cchar *content);
 
@@ -1108,7 +1108,7 @@ PUBLIC EdiRec *ediMakeRec(cchar *content);
     @param rec Record instance
     @param flags GC management flag
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC void ediManageEdiRec(EdiRec *rec, int flags);
@@ -1119,7 +1119,7 @@ PUBLIC void ediManageEdiRec(EdiRec *rec, int flags);
     @return Type code. Set to one of EDI_TYPE_BINARY, EDI_TYPE_BOOL, EDI_TYPE_DATE, EDI_TYPE_FLOAT, EDI_TYPE_INT,
         EDI_TYPE_STRING, EDI_TYPE_TEXT.
     @ingroup Edi
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int ediParseTypeString(cchar *type);
 
@@ -1129,7 +1129,7 @@ PUBLIC int ediParseTypeString(cchar *type);
     @param flags Control flags. Set to EDI_PIVOT_FIELD_NAMES to use field names as the first column of data.
     @result New pivoted grid
     @ingroup EdiGrid
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *ediPivotGrid(EdiGrid *grid, int flags);
 
@@ -1328,7 +1328,7 @@ struct EspAction;
 /**
     Procedure callback
     @ingroup Esp
-    @stability Evolving
+    @stability Stable
  */
 typedef void (*EspLegacyProc)(HttpStream *stream);
 typedef void (*EspProc)(HttpStream *stream, struct EspAction *action);
@@ -1415,7 +1415,7 @@ typedef int (*EspModuleEntry)(struct HttpRoute *route, MprModule *module);
     @param module Module object if loaded as an MPR module.
     @return Zero if successful, otherwise a negative MPR error code.
     @ingroup Esp
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int espOpen(MprModule *module);
 
@@ -1427,7 +1427,7 @@ PUBLIC int espOpen(MprModule *module);
     @param routeName Name of the route in the appweb.conf file for this ESP application or page
     @return Zero if successful, otherwise a negative MPR error code.
     @ingroup Esp
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC int espStaticInitialize(EspModuleEntry entry, cchar *appName, cchar *routeName);
 
@@ -1477,25 +1477,7 @@ typedef struct EspRoute {
     uint            update: 1;              /**< Enable dynamically updating the application */
 
     Edi             *edi;                   /**< Default database for this route */
-
-#if DEPRECATED && REMOVE
-    cchar           *combineScript;         /**< Combine mode script filename */
-    cchar           *combineSheet;          /**< Combine mode stylesheet filename */
-#endif
 } EspRoute;
-
-#if DEPRECATED && REMOVE
-/**
-    Add the specified pak to the pak.json packs list.
-    @param route HttpRoute defining the ESP application
-    @param name Desired pak name. For example: "vue-mvc"
-    @param version Pack version string.
-    @returns Zero if successful, otherwise a negative MPR error code.
-    @ingroup EspRoute
-    @stability Deprecated
- */
-PUBLIC void espAddPak(HttpRoute *route, cchar *name, cchar *version);
-#endif
 
 /**
     Add a route for the home page.
@@ -1506,7 +1488,7 @@ PUBLIC void espAddPak(HttpRoute *route, cchar *name, cchar *version);
     </table>
     @param route Parent route from which to inherit configuration.
     @ingroup EspRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void espAddHomeRoute(HttpRoute *route);
 
@@ -1532,7 +1514,7 @@ PUBLIC void espAddRouteSet(HttpRoute *route, cchar *set);
     @param path Pathname to the esp.json file.
     @returns Zero if successful, otherwise a negative MPR error code.
     @ingroup EspRoute
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC int espInit(HttpRoute *route, cchar *prefix, cchar *path);
 
@@ -1542,7 +1524,7 @@ PUBLIC int espInit(HttpRoute *route, cchar *prefix, cchar *path);
     @param route Parent route from which to inherit configuration.
     @returns Zero if successful, otherwise a negative MPR error code.
     @ingroup EspRoute
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC int espLoadConfig(HttpRoute *route);
 
@@ -1553,7 +1535,7 @@ PUBLIC int espLoadConfig(HttpRoute *route);
     @param create Set to true to create an EspRoute if a suitable one cannot be found.
     @returns The EspRoute object.
     @ingroup EspRoute
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC EspRoute *espRoute(HttpRoute *route, bool create);
 
@@ -1619,7 +1601,7 @@ PUBLIC EspRoute *espRoute(HttpRoute *route, bool create);
         in sorted www-urlencoded format. For example: /example.esp?hobby=sailing&name=john.
     @return A count of the bytes actually written
     @ingroup EspRoute
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC int espCache(HttpRoute *route, cchar *uri, int lifesecs, int flags);
@@ -1636,7 +1618,7 @@ PUBLIC int espCache(HttpRoute *route, cchar *uri, int lifesecs, int flags);
     @param errMsg Reference to receive an error message if the routine fails.
     @return "True" if the compilation is successful. Errors are logged and sent back to the client if ShowErrors is true.
     @ingroup EspRoute
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC bool espCompile(HttpRoute *route, MprDispatcher *dispatcher, cchar *source, cchar *module, cchar *cacheName,
@@ -1655,7 +1637,7 @@ PUBLIC bool espCompile(HttpRoute *route, MprDispatcher *dispatcher, cchar *sourc
     @param err Output parameter to hold any relevant error message.
     @return Compiled script. Return NULL on errors.
     @ingroup EspRoute
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC char *espBuildScript(HttpRoute *route, cchar *page, cchar *path, cchar *cacheName, cchar *layout,
@@ -1678,7 +1660,7 @@ PUBLIC int espBindProc(HttpRoute *route, cchar *pattern, void *actionProc);
     @param route HttpRoute object
     @param baseProc Function to call just prior to invoking a controller action.
     @ingroup EspRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void espController(HttpRoute *route, EspProc baseProc);
 
@@ -1743,7 +1725,7 @@ PUBLIC void espDefineView(HttpRoute *route, cchar *path, void *viewProc);
     @param module Output module pathname
     @return An expanded command line
     @ingroup EspRoute
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC char *espExpandCommand(HttpRoute *route, cchar *command, cchar *source, cchar *module);
@@ -1776,7 +1758,7 @@ PUBLIC bool espHasPak(HttpRoute *route, cchar *name);
     Load the compiler rules from esp-compile.json
     @param route HttpRoute object
     @ingroup EspRoute
-    @stability Prototype
+    @stability Stable
     @internal
  */
 PUBLIC int espLoadCompilerRules(HttpRoute *route);
@@ -1801,7 +1783,7 @@ PUBLIC int espSaveConfig(HttpRoute *route);
     @param value Value to set the property to.
     @returns Zero if successful, otherwise a negative MPR error code.
     @ingroup EspRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int espSetConfig(HttpRoute *route, cchar *key, cchar *value);
 
@@ -1811,7 +1793,7 @@ PUBLIC int espSetConfig(HttpRoute *route, cchar *key, cchar *value);
     @param data Data object to associate with the current request. This must be a managed reference.
     @return Reference to private data
     @ingroup Esp
-    @stability prototype
+    @stability Stable
  */
 PUBLIC void espSetData(HttpStream *stream, void *data);
 
@@ -1822,7 +1804,7 @@ PUBLIC void espSetData(HttpStream *stream, void *data);
     @param desired Desired value to compare with.
     @returns True if the configuration property has the desired value.
     @ingroup EspRoute
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool espTestConfig(HttpRoute *route, cchar *key, cchar *desired);
 
@@ -1968,7 +1950,7 @@ PUBLIC void espDestroySession(HttpStream *stream);
     @param message Message body
     @param files MprList of files to send with the message.
     @return Zero if the email is successfully sent.
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int espEmail(HttpStream *stream, cchar *to, cchar *from, cchar *subject, MprTime date, cchar *mime,
     cchar *message, MprList *files);
@@ -2065,7 +2047,7 @@ PUBLIC cchar *espGetCookies(HttpStream *stream);
     Get the private data reference for the current request set via setData
     @param stream HttpStream object
     @ingroup EspReq
-    @stability prototype
+    @stability Stable
  */
 PUBLIC void *espGetData(HttpStream *stream);
 
@@ -2083,7 +2065,7 @@ PUBLIC Edi *espGetDatabase(HttpStream *stream);
     Get the current extended route information.
     @return EspRoute instance
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EspRoute *espGetEspRoute(HttpStream *stream);
 
@@ -2103,7 +2085,7 @@ PUBLIC cchar *espGetDocuments(HttpStream *stream);
         are typically supported as per RFC 5424: "debug", "info", "notice", "warn", "error", "critical".
     @return Reference to the feedback message
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *espGetFeedback(HttpStream *stream, cchar *type);
 
@@ -2182,7 +2164,7 @@ PUBLIC cchar *espGetParam(HttpStream *stream, cchar *var, cchar *defaultValue);
     @param defaultValue Default value to return if the variable is not defined. Can be null.
     @return Integer containing the request parameter's value
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int espGetIntParam(HttpStream *stream, cchar *var, int defaultValue);
 
@@ -2195,7 +2177,7 @@ PUBLIC int espGetIntParam(HttpStream *stream, cchar *var, int defaultValue);
     @param var Name of the request parameter to retrieve
     @return JSON parameter object.
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprJson *espGetParamObj(HttpStream *stream, cchar *var);
 
@@ -2217,7 +2199,7 @@ PUBLIC MprJson *espGetParams(HttpStream *stream);
         query parameters. It does not include the application route prefix.
     @return The espGetStream()->rx->pathInfo
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *espGetPath(HttpStream *stream);
 
@@ -2268,7 +2250,7 @@ PUBLIC Edi *espGetRouteDatabase(HttpRoute *route);
     @param var Name of the request parameter to retrieve
     @return String containing the route variable value. Caller should not free.
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *espGetRouteVar(HttpStream *stream, cchar *var);
 
@@ -2281,7 +2263,7 @@ PUBLIC cchar *espGetRouteVar(HttpStream *stream, cchar *var);
     @param create Set to true to create a new session if one does not already exist.
     @return The session state identifier string.
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *espGetSessionID(HttpStream *stream, int create);
 
@@ -2349,7 +2331,7 @@ PUBLIC bool espHasRec(HttpStream *stream);
     Test if the request is being made on behalf of the current, single authenticated user.
     @description Set esp.login.single to true to enable current session tracking.
     @return true if the
-    @stability Evolving
+    @stability Stable
     @ingroup EspReq
  */
 PUBLIC bool espIsCurrentSession(HttpStream *stream);
@@ -2359,7 +2341,7 @@ PUBLIC bool espIsCurrentSession(HttpStream *stream);
     @param stream HttpStream stream object
     @return True if the username and password have been authenticated.
     @ingroup EspReq
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC bool espIsAuthenticated(HttpStream *stream);
 
@@ -2484,7 +2466,7 @@ PUBLIC ssize espRender(HttpStream *stream, cchar *fmt, ...);
     @param stream HttpStream stream object
     @return A count of the bytes actually written
     @ingroup EspReq
-    @stability PRototype
+    @stability Stable
  */
 PUBLIC ssize espRenderConfig(HttpStream *stream);
 
@@ -2566,7 +2548,7 @@ PUBLIC ssize espRenderFile(HttpStream *stream, cchar *path);
     @param tableName Database table name
     @return An EDI grid containing data for the table.
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC EdiGrid *espReadTable(HttpStream *stream, cchar *tableName);
 
@@ -2628,7 +2610,7 @@ PUBLIC ssize espRenderVar(HttpStream *stream, cchar *name);
     @param flags Reserved. Set to zero.
     @return true if a vew can be rendered.
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool espRenderView(HttpStream *stream, cchar *view, int flags);
 
@@ -2640,7 +2622,7 @@ PUBLIC bool espRenderView(HttpStream *stream, cchar *view, int flags);
     @param flags Reserved. Set to zero.
     @return Number of bytes rendered
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC ssize espSendGrid(HttpStream *stream, EdiGrid *grid, int flags);
 
@@ -2652,7 +2634,7 @@ PUBLIC ssize espSendGrid(HttpStream *stream, EdiGrid *grid, int flags);
     @param flags Reserved. Set to zero.
     @return Number of bytes rendered
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC ssize espSendRec(HttpStream *stream, EdiRec *rec, int flags);
 
@@ -2667,7 +2649,7 @@ PUBLIC ssize espSendRec(HttpStream *stream, EdiRec *rec, int flags);
     @param success True if the operation was a success.
     @return Number of bytes sent.
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC ssize espSendResult(HttpStream *stream, bool success);
 
@@ -2731,14 +2713,14 @@ PUBLIC void espSetContentType(HttpStream *stream, cchar *mimeType);
 /**
     Set this authenticated session as the current session.
     @description Set esp.login.single to true to enable current session tracking.
-    @stability Evolving
+    @stability Stable
     @ingroup EspReq
  */
 PUBLIC void espSetCurrentSession(HttpStream *stream);
 
 /**
     Clear the current authenticated session
-    @stability Evolving
+    @stability Stable
     @ingroup EspReq
  */
 PUBLIC void espClearCurrentSession(HttpStream *stream);
@@ -2983,7 +2965,7 @@ PUBLIC bool espUpdateRec(HttpStream *stream, EdiRec *rec);
     espUri(stream, "{ route: '~/STAR/edit', action: 'checkout', id: '99' }", 0); <br/>
     espUri(stream, "{ template: '~/client/images/${theme}/background.jpg', theme: 'blue' }", 0);
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *espUri(HttpStream *stream, cchar *target);
 
@@ -2991,7 +2973,7 @@ PUBLIC cchar *espUri(HttpStream *stream, cchar *target);
 /************************************** Actions *******************************/
 /**
     Action definition
-    @stability Prototype
+    @stability Stable
  */
 typedef struct EspAction {
     cchar       *target;            /**< Route target string */
@@ -2999,7 +2981,7 @@ typedef struct EspAction {
     EspProc     callback;           /**< Callback action */
 } EspAction;
 
-#if DEPRECATED || 1
+#if DEPRECATED
 /**
     Define an action
     @description Actions are C procedures that are invoked when specific URIs are routed to the controller/action pair.
@@ -3023,7 +3005,7 @@ PUBLIC void espDefineAction(HttpRoute *route, cchar *targetKey, EspProc actionPr
         but an authenticated user is required. Set to NULL if an authenticated user is not required.
     @param actionProc EspProc callback procedure to invoke when the action is requested.
     @ingroup EspRoute
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void espAction(HttpRoute *route, cchar *targetKey, cchar *abilities, EspProc actionProc);
 
@@ -3046,7 +3028,7 @@ typedef struct EspAbbrev { int dummy; } EspAbbrev;
     @param ... arguments to the formatted target string
     @return A normalized, absolute Uri string containing scheme and host.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *absuri(cchar *target, ...);
 
@@ -3058,7 +3040,7 @@ PUBLIC cchar *absuri(cchar *target, ...);
     @param ... Arguments for fmt
     @return Zero if successful, otherwise a negative MPR error code. Returns MPR_ERR_ALREADY_EXISTS if the header already exists.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void addHeader(cchar *key, cchar *fmt, ...);
 
@@ -3067,7 +3049,7 @@ PUBLIC void addHeader(cchar *key, cchar *fmt, ...);
     @param name Name of the request parameter to set
     @param value Value to set.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void addParam(cchar *name, cchar *value);
 
@@ -3078,7 +3060,7 @@ PUBLIC void addParam(cchar *name, cchar *value);
     @param warn If true, warn the user via #sendResult.
     @return True if the user has all the required abilities
     @ingroup EspAbbrev
-    @stability prototype
+    @stability Stable
  */
 PUBLIC bool canUser(cchar *abilities, bool warn);
 
@@ -3092,7 +3074,7 @@ PUBLIC bool canUser(cchar *abilities, bool warn);
     @param data Json object with field values
     @return EdRec instance
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *createRec(cchar *tableName, MprJson *data);
 
@@ -3103,11 +3085,11 @@ PUBLIC EdiRec *createRec(cchar *tableName, MprJson *data);
     @param table Database table to update
     @return True if the update is successful.
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
 */
 PUBLIC bool createRecByParams(cchar *table);
 
-#if DEPRECATED || 1
+#if DEPRECATED
 /**
     Create a record from the request parameters
     @description A new record is created with the request parameters in the specified table.
@@ -3128,7 +3110,7 @@ PUBLIC bool createRecFromParams(cchar *table) ME_DEPRECATED("Use updateRecFields
     with the response. Note: Objects are stored in the session state using JSON serialization.
     @return Session ID string
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *createSession(void);
 
@@ -3136,14 +3118,14 @@ PUBLIC cchar *createSession(void);
     Destroy a session state object.
     @description This will emit an expired cookie to the client to force it to erase the session cookie.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void destroySession(void);
 
 /**
     Don't auto-finalize this request
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void dontAutoFinalize(void);
 
@@ -3152,7 +3134,7 @@ PUBLIC void dontAutoFinalize(void);
     @param message Prefix message to output
     @param grid EDI grid
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void dumpGrid(cchar *message, EdiGrid *grid);
 
@@ -3160,7 +3142,7 @@ PUBLIC void dumpGrid(cchar *message, EdiGrid *grid);
     Display request parameters to the debug log
     @param message Prefix message to output
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void dumpParams(cchar *message);
 
@@ -3169,7 +3151,7 @@ PUBLIC void dumpParams(cchar *message);
     @param message Prefix message to output
     @param rec Record to log
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void dumpRec(cchar *message, EdiRec *rec);
 
@@ -3179,7 +3161,7 @@ PUBLIC void dumpRec(cchar *message, EdiRec *rec);
     If the request has already been finalized, this call has no additional effect.
     This routine calls #espFinalize.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void finalize(void);
 
@@ -3195,7 +3177,7 @@ PUBLIC void finalize(void);
         Return false if there is an error feedback defined.
         This permits feedback to be chained as: sendResult(feedback("error", ...));
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool feedback(cchar *type, cchar *fmt, ...);
 
@@ -3207,7 +3189,7 @@ PUBLIC bool feedback(cchar *type, cchar *fmt, ...);
         field OP value AND field OP value .... LIMIT offset, limit
     @return An EDI sql style selection query string suitable for use with #findRec and #findGrid
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC cchar *findParams(void);
 
@@ -3215,14 +3197,14 @@ PUBLIC cchar *findParams(void);
     Flush transmit data.
     @description This writes any buffered data.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void flush(void);
 
 /**
     Get the auth object for the current route
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC HttpAuth *getAuth(void);
 
@@ -3231,7 +3213,7 @@ PUBLIC HttpAuth *getAuth(void);
     @param rec Database record.
     @return An MprList of column names in the given table. If there is no record defined, an empty list is returned.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprList *getColumns(EdiRec *rec);
 
@@ -3240,7 +3222,7 @@ PUBLIC MprList *getColumns(EdiRec *rec);
     @description Get the cookies defined in the current request.
     @return Return a string containing the cookies sent in the Http header of the last request.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getCookies(void);
 
@@ -3250,7 +3232,7 @@ PUBLIC cchar *getCookies(void);
     local data. Most EspAbbrev APIs take an HttpStream object as an argument.
     @return HttpStream stream instance object.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpStream *getStream(void);
 
@@ -3268,7 +3250,7 @@ PUBLIC HttpStream *getStream(void);
         data and in clients to get the response body length.
     @return A count of the response content data in bytes.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprOff getContentLength(void);
 
@@ -3277,7 +3259,7 @@ PUBLIC MprOff getContentLength(void);
     @description Get the content mime type of the receive body content (if any).
     @return Mime type of any receive content. Set to NULL if not posted data.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getContentType(void);
 
@@ -3285,7 +3267,7 @@ PUBLIC cchar *getContentType(void);
     Get the private data reference for the current request set via #setData
     @return Reference to private data
     @ingroup EspAbbrev
-    @stability prototype
+    @stability Stable
  */
 PUBLIC void *getData(void);
 
@@ -3293,7 +3275,7 @@ PUBLIC void *getData(void);
     Get the stream dispatcher object
     @return MprDispatcher stream dispatcher instance object.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprDispatcher *getDispatcher(void);
 
@@ -3303,7 +3285,7 @@ PUBLIC MprDispatcher *getDispatcher(void);
         are typically supported as per RFC 5424: "debug", "info", "notice", "warn", "error", "critical".
     @return Reference to private data
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getFeedback(cchar *type);
 
@@ -3313,7 +3295,7 @@ PUBLIC cchar *getFeedback(cchar *type);
     The database will be opened when the web server initializes and will be shared between all requests using the route.
     @return Edi EDI database handle
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC Edi *getDatabase(void);
 
@@ -3321,7 +3303,7 @@ PUBLIC Edi *getDatabase(void);
     Get the extended route EspRoute structure
     @return EspRoute instance
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EspRoute *getEspRoute(void);
 
@@ -3329,7 +3311,7 @@ PUBLIC EspRoute *getEspRoute(void);
     Get the default document root directory for the request route.
     @return A directory path name
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getDocuments(void);
 
@@ -3339,7 +3321,7 @@ PUBLIC cchar *getDocuments(void);
     @param field Field name to return
     @return String value for "field" in the current record.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getField(EdiRec *rec, cchar *field);
 
@@ -3348,7 +3330,7 @@ PUBLIC cchar *getField(EdiRec *rec, cchar *field);
     @description The current grid is defined via #setGrid
     @return EdiGrid instance
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *getGrid(void);
 
@@ -3358,7 +3340,7 @@ PUBLIC EdiGrid *getGrid(void);
     @param key Name of the header to retrieve. This should be a lower case header name. For example: "Connection".
     @return Value associated with the header key or null if the key did not exist in the response.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getHeader(cchar *key);
 
@@ -3367,7 +3349,7 @@ PUBLIC cchar *getHeader(cchar *key);
     @description This is a convenience API to return the Http method
     @return The HttpStream.rx.method property
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getMethod(void);
 
@@ -3376,7 +3358,7 @@ PUBLIC cchar *getMethod(void);
     @description This is a convenience API to return the query string for the current request.
     @return The espGetStream()->rx->parsedUri->query property
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getQuery(void);
 
@@ -3387,7 +3369,7 @@ PUBLIC cchar *getQuery(void);
         by uri("~").
     @return String URI back to the referring URI. If no referrer is defined, refers to the home URI.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getReferrer(void);
 
@@ -3395,14 +3377,14 @@ PUBLIC cchar *getReferrer(void);
     Get the ESP request object
     @return EspReq request instance object.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EspReq *getReq(void);
 
 /**
     Get the HttpRoute object for the current route
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC HttpRoute *getRoute(void);
 
@@ -3413,7 +3395,7 @@ PUBLIC HttpRoute *getRoute(void);
     To configure a route to require security tokens, call #httpSetRouteXsrf.
     @return the security token.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC cchar *getSecurityToken(void);
 
@@ -3423,7 +3405,7 @@ PUBLIC cchar *getSecurityToken(void);
     @param name Variable name to get
     @return The session variable value. Returns NULL if not set.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getSessionVar(cchar *name);
 
@@ -3433,14 +3415,14 @@ PUBLIC cchar *getSessionVar(cchar *name);
         one does not already exist.
     @return The session state identifier string.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getSessionID(void);
 
 /**
     Test if a field in the current record has input validation errors
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC cchar *getFieldError(cchar *field);
 
@@ -3450,7 +3432,7 @@ PUBLIC cchar *getFieldError(cchar *field);
         prefix.
     @return The espGetStream()->rx->pathInfo
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getPath(void);
 
@@ -3458,7 +3440,7 @@ PUBLIC cchar *getPath(void);
     Get the current database record
     @return EdiRec instance
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *getRec(void);
 
@@ -3476,7 +3458,7 @@ PUBLIC cchar *getConfig(cchar *field);
     @description Get the list of uploaded files.
     @return A list of HttpUploadFile objects.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprList *getUploads(void);
 
@@ -3485,7 +3467,7 @@ PUBLIC MprList *getUploads(void);
     @description This is a convenience API to return the request URI.
     @return The espGetStream()->rx->uri
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *getUri(void);
 
@@ -3493,7 +3475,7 @@ PUBLIC cchar *getUri(void);
     Test if a current grid has been defined
     @return "true" if a current grid has been defined
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool hasGrid(void);
 
@@ -3503,7 +3485,7 @@ PUBLIC bool hasGrid(void);
         valid "id" field.
     @return "true" if a current record with a valid "id" is defined.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool hasRec(void);
 
@@ -3519,7 +3501,7 @@ PUBLIC bool hasRec(void);
     @arg noescape Boolean Do not HTML escape the text before rendering.
     @arg ... Other options are converted and rendered as HTML attributes.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void input(cchar *field, cchar *options);
 
@@ -3530,7 +3512,7 @@ PUBLIC void input(cchar *field, cchar *options);
     This call should not be included in SPA client applications as the SPA framework should automatically
     handle the security token.
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void inputSecurityToken(void);
 
@@ -3541,7 +3523,7 @@ PUBLIC void inputSecurityToken(void);
     @param name Name of the request parameter to retrieve
     @return Integer containing the request parameter's value. Returns zero if not found.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int paramInt(cchar *name);
 #define intParam paramInt
@@ -3550,7 +3532,7 @@ PUBLIC int paramInt(cchar *name);
     Test if the user is authenticated
     @return True if the username and password have been authenticated.
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC bool isAuthenticated(void);
 
@@ -3558,7 +3540,7 @@ PUBLIC bool isAuthenticated(void);
     Test if the receive input stream is at end-of-file
     @return "true" if there is no more receive data to read
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool isEof(void);
 
@@ -3567,7 +3549,7 @@ PUBLIC bool isEof(void);
     @description This tests if #espFinalize or #httpFinalize has been called for a request.
     @return "true" if the request has been finalized.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool isFinalized(void);
 
@@ -3575,7 +3557,7 @@ PUBLIC bool isFinalized(void);
     Test if the stream is using SSL and is secure
     @return "true" if the stream is using SSL.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool isSecure(void);
 
@@ -3588,7 +3570,7 @@ PUBLIC bool isSecure(void);
     @param ... arguments
     @return MprHash instance
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprHash *makeHash(cchar *fmt, ...);
 
@@ -3599,7 +3581,7 @@ PUBLIC MprHash *makeHash(cchar *fmt, ...);
     @param ... arguments
     @return MprJson instance
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprJson *makeJson(cchar *fmt, ...);
 
@@ -3611,7 +3593,7 @@ PUBLIC MprJson *makeJson(cchar *fmt, ...);
     @return An EdiRec instance
     @example: rec = ediMakeRec("{ id: 1, title: 'Message One', body: 'Line one' }");
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *makeRec(cchar *content);
 
@@ -3676,7 +3658,7 @@ PUBLIC EdiRec *makeRec(cchar *content);
     makeUri("{ route: '~/STAR/edit', action: 'checkout', id: '99' }", 0); <br/>
     makeUri("{ template: '~/client/images/${theme}/background.jpg', theme: 'blue' }", 0);
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *makeUri(cchar *target);
 
@@ -3685,7 +3667,7 @@ PUBLIC cchar *makeUri(cchar *target);
     @param str String to hash
     @returns An allocated MD5 checksum string.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *md5(cchar *str);
 
@@ -3693,7 +3675,7 @@ PUBLIC cchar *md5(cchar *str);
     Generate a onetime random string
     @returns An MD5 encoded random string
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *nonce(void);
 
@@ -3703,7 +3685,7 @@ PUBLIC cchar *nonce(void);
     @param check Mode to compare with the current application mode.
     @return True if the current app mode matches the check mode
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC bool modeIs(cchar *check);
 
@@ -3715,7 +3697,7 @@ PUBLIC bool modeIs(cchar *check);
     @return String containing the request parameter's value. Caller should not free.
         Returns NULL if the parameter is not defined.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *param(cchar *name);
 
@@ -3726,7 +3708,7 @@ PUBLIC cchar *param(cchar *name);
     @param var Root property of the params collection. Set to NULL for the root collection.
     @return MprJson instance containing the request parameters
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprJson *params(cchar *var);
 
@@ -3740,7 +3722,7 @@ PUBLIC MprJson *params(cchar *var);
         OP is "==", "!=", "<", ">", "<=", ">=" or "><".
     @return A grid containing all table rows. Returns NULL if the table cannot be found.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *findGrid(cchar *tableName, cchar *select);
 
@@ -3754,7 +3736,7 @@ PUBLIC EdiGrid *findGrid(cchar *tableName, cchar *select);
         All fields may be matched by using the pseudo column name "*". OP is "==", "!=", "<", ">", "<=", ">=" or "><".
     @return Record instance of EdiRec.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *findRec(cchar *tableName, cchar *query);
 
@@ -3766,11 +3748,11 @@ PUBLIC EdiRec *findRec(cchar *tableName, cchar *query);
     @param key Key value of the record to read
     @return Record instance of EdiRec.
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC EdiRec *readRec(cchar *tableName, cchar *key);
 
-#if DEPRECATED || 1
+#if DEPRECATED
 /**
     Read matching records
     @description This runs a simple query on the database and returns matching records in a grid. The query selects
@@ -3808,7 +3790,7 @@ PUBLIC EdiRec *findRecWhere(cchar *tableName, cchar *fieldName, cchar *operation
     @param tableName Database table name
     @return A grid containing all table rows. Returns NULL if the table cannot be found.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *readTable(cchar *tableName) ME_DEPRECATED("Use findGrid instead");
 #endif
@@ -3821,7 +3803,7 @@ PUBLIC EdiGrid *readTable(cchar *tableName) ME_DEPRECATED("Use findGrid instead"
     @param size Size of the buffer
     @return A count of bytes read into the buffer
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize receive(char *buf, ssize size);
 
@@ -3831,7 +3813,7 @@ PUBLIC ssize receive(char *buf, ssize size);
     code is required, use #espRedirect.
     @param target New target uri for the client
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void redirect(cchar *target);
 
@@ -3839,7 +3821,7 @@ PUBLIC void redirect(cchar *target);
     Redirect the client back to the referrer
     @description Redirect the client to the referring URI.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void redirectBack(void);
 
@@ -3847,7 +3829,7 @@ PUBLIC void redirectBack(void);
     Remove a cookie
     @param name Cookie name
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC void removeCookie(cchar *name);
 
@@ -3863,7 +3845,7 @@ PUBLIC void removeCookie(cchar *name);
         All fields may be matched by using the pseudo column name "*". OP is "==", "!=", "<", ">", "<=", ">=" or "><".
     @return True if the removal succeeds, otherwise false.
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC bool removeRec(cchar *tableName, cchar *query);
 #endif
@@ -3877,7 +3859,7 @@ PUBLIC bool removeRec(cchar *tableName, cchar *query);
     @param key Record key value.
     @return True if the removal succeeds, otherwise false.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool removeRec(cchar *tableName, cchar *key);
 
@@ -3885,7 +3867,7 @@ PUBLIC bool removeRec(cchar *tableName, cchar *key);
     Remove a session state variable
     @param name Variable name to set
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC void removeSessionVar(cchar *name);
 
@@ -3897,7 +3879,7 @@ PUBLIC void removeSessionVar(cchar *name);
     @param ... Arguments for fmt
     @return A count of the bytes actually written
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize render(cchar *fmt, ...);
 
@@ -3907,7 +3889,7 @@ PUBLIC ssize render(cchar *fmt, ...);
         mode has been set to "manual".
     @return A count of the bytes actually written
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize renderCached(void);
 
@@ -3915,7 +3897,7 @@ PUBLIC ssize renderCached(void);
     Render the pak.json
     @return A count of the bytes actually written
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC ssize renderConfig(void);
 
@@ -3925,7 +3907,7 @@ PUBLIC ssize renderConfig(void);
     @param fmt Printf style message format
     @return A count of the bytes actually written
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void renderError(int status, cchar *fmt, ...);
 
@@ -3938,7 +3920,7 @@ PUBLIC void renderError(int status, cchar *fmt, ...);
         This may be set to any word, but the following feedback types are typically supported as per
         RFC 5424: "debug", "info", "notice", "warn", "error", "critical".
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void renderFeedback(cchar *types);
 
@@ -3950,7 +3932,7 @@ PUBLIC void renderFeedback(cchar *types);
     @param ... Arguments for fmt
     @return A count of the bytes actually written
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize renderFile(cchar *path);
 
@@ -3962,7 +3944,7 @@ PUBLIC ssize renderFile(cchar *path);
     @param ... Arguments for fmt
     @return A count of the bytes actually written
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize renderSafe(cchar *fmt, ...);
 
@@ -3973,7 +3955,7 @@ PUBLIC ssize renderSafe(cchar *fmt, ...);
     @param s String containing the data to write
     @return A count of the bytes actually written
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize renderString(cchar *s);
 
@@ -3984,7 +3966,7 @@ PUBLIC ssize renderString(cchar *s);
     @param name Request parameter variable name
     @return A count of the bytes actually written
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize renderVar(cchar *name);
 
@@ -3993,7 +3975,7 @@ PUBLIC ssize renderVar(cchar *name);
     @param view View name. The view name is interpreted relative to the matching route documents directory and may omit
         an ESP extension.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void renderView(cchar *view);
 
@@ -4007,7 +3989,7 @@ PUBLIC void renderView(cchar *view);
     @param flags MprCmd flags. Use MPR_CMD_DETACH to run in the background.
     @param timeout Time in milliseconds to wait for the command to complete and exit.
     @ingroup EspAbbrev
-    @stability Prototype
+    @stability Stable
  */
 PUBLIC int runCmd(cchar *command, char *input, char **output, char **error, MprTicks timeout, int flags);
 
@@ -4031,7 +4013,7 @@ PUBLIC void scripts(cchar *patterns);
     @param grid EDI grid
     @return Number of bytes sent
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC ssize sendGrid(EdiGrid *grid);
 
@@ -4042,7 +4024,7 @@ PUBLIC ssize sendGrid(EdiGrid *grid);
     @param rec EDI record
     @return Number of bytes sent
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC ssize sendRec(EdiRec *rec);
 
@@ -4056,7 +4038,7 @@ PUBLIC ssize sendRec(EdiRec *rec);
     The feedback messages are created via the espSetFeedback API. Field errors are created by ESP validations.
     @param status Request success status. Note: this is not the HTTP response status code.
     @ingroup EspReq
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC void sendResult(bool status);
 
@@ -4080,7 +4062,7 @@ PUBLIC void stylesheets(cchar *patterns);
     Client-side Javascript must then send this token as a request header in subsquent POST requests.
     To configure a route to require security tokens, call #httpSetRouteXsrf.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC void securityToken(void);
 
@@ -4090,7 +4072,7 @@ PUBLIC void securityToken(void);
     @param name Variable name to get
     @return The session variable value. Returns NULL if not set.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *session(cchar *name);
 
@@ -4106,7 +4088,7 @@ PUBLIC cchar *session(cchar *name);
     @param lifespan Lifespan of the cookie in seconds.
     @param isSecure Boolean Set to "true" if the cookie only applies for SSL based connections.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC void setCookie(cchar *name, cchar *value, cchar *path, cchar *domain, MprTicks lifespan, bool isSecure);
 
@@ -4114,7 +4096,7 @@ PUBLIC void setCookie(cchar *name, cchar *value, cchar *path, cchar *domain, Mpr
     Set the current request stream.
     @param stream The HttpStream stream object to define
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setStream(HttpStream *stream);
 
@@ -4123,7 +4105,7 @@ PUBLIC void setStream(HttpStream *stream);
     @description Set the mime type Http header in the transmission
     @param mimeType Mime type string
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setContentType(cchar *mimeType);
 
@@ -4131,7 +4113,7 @@ PUBLIC void setContentType(cchar *mimeType);
     Set a private data reference for the current request
     @return Reference to private data
     @ingroup EspAbbrev
-    @stability prototype
+    @stability Stable
  */
 PUBLIC void setData(void *data);
 
@@ -4144,7 +4126,7 @@ PUBLIC void setData(void *data);
     @param value Value to update
     @return The record instance if successful, otherwise NULL.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *setField(EdiRec *rec, cchar *fieldName, cchar *value);
 
@@ -4159,7 +4141,7 @@ PUBLIC EdiRec *setField(EdiRec *rec, cchar *fieldName, cchar *value);
     @param data Json object of field data.
     @return The record instance if successful, otherwise NULL.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *setFields(EdiRec *rec, MprJson *data);
 
@@ -4168,7 +4150,7 @@ PUBLIC EdiRec *setFields(EdiRec *rec, MprJson *data);
     @description This sets the current database which is used by many APIs that operate on the current grid.
     @return The grid instance. This permits chaining.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiGrid *setGrid(EdiGrid *grid);
 
@@ -4179,7 +4161,7 @@ PUBLIC EdiGrid *setGrid(EdiGrid *grid);
     @param fmt Printf style formatted string to use as the header key value
     @param ... Arguments for fmt
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setHeader(cchar *key, cchar *fmt, ...);
 
@@ -4190,7 +4172,7 @@ PUBLIC void setHeader(cchar *key, cchar *fmt, ...);
     @param name Name of the request parameter to set
     @param value Integer value to set.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setParamInt(cchar *name, int value);
 #define setIntParam setParamInt
@@ -4200,7 +4182,7 @@ PUBLIC void setParamInt(cchar *name, int value);
     This wraps the streamNotifier and calls espSetStream before invoking the notifier for stream events.
     @param notifier Callback function
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setNotifier(HttpNotifier notifier);
 
@@ -4212,7 +4194,7 @@ PUBLIC void setNotifier(HttpNotifier notifier);
     @param name Name of the request parameter to set
     @param value Value to set.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setParam(cchar *name, cchar *value);
 
@@ -4222,7 +4204,7 @@ PUBLIC void setParam(cchar *name, cchar *value);
         checkbox and dropdown()
     @return The grid instance. This permits chaining.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC EdiRec *setRec(EdiRec *rec);
 
@@ -4231,7 +4213,7 @@ PUBLIC EdiRec *setRec(EdiRec *rec);
     @param name Variable name to set
     @param value Value to set
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setSessionVar(cchar *name, cchar *value);
 
@@ -4240,7 +4222,7 @@ PUBLIC void setSessionVar(cchar *name, cchar *value);
     @description Set the Http response status for the request. This defaults to 200 (OK).
     @param status Http status code.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setStatus(int status);
 
@@ -4251,7 +4233,7 @@ PUBLIC void setStatus(int status);
     @param timeout Time in milliseconds to elapse before invoking the timeout
     @param data Argument to pass to proc
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void setTimeout(void *proc, MprTicks timeout, void *data);
 
@@ -4259,11 +4241,10 @@ PUBLIC void setTimeout(void *proc, MprTicks timeout, void *data);
     Show request details
     @description This echoes request details back to the client. This is useful as a debugging tool.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void showRequest(void);
 
-//  FUTURE - document
 PUBLIC EdiGrid *sortGrid(EdiGrid *grid, cchar *sortColumn, int sortOrder);
 
 /**
@@ -4273,7 +4254,7 @@ PUBLIC EdiGrid *sortGrid(EdiGrid *grid, cchar *sortColumn, int sortOrder);
     @param data Data to cache
     @param lifesecs Time in seconds to cache the data
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void updateCache(cchar *uri, cchar *data, int lifesecs);
 
@@ -4286,7 +4267,7 @@ PUBLIC void updateCache(cchar *uri, cchar *data, int lifesecs);
     @param value Value to write to the database field
     @return "true" if the field  can be successfully written.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool updateField(cchar *tableName, cchar *key, cchar *fieldName, cchar *value);
 
@@ -4300,7 +4281,7 @@ PUBLIC bool updateField(cchar *tableName, cchar *key, cchar *fieldName, cchar *v
     @param data Json object of fields to update
     @return "true" if the field  can be successfully written. Returns false if field validations fail.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool updateFields(cchar *tableName, MprJson *data);
 
@@ -4315,11 +4296,11 @@ PUBLIC bool updateFields(cchar *tableName, MprJson *data);
     @param rec Record to write to the database.
     @return "true" if the record can be successfully written.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC bool updateRec(EdiRec *rec);
 
-#if DEPRECATED || 1
+#if DEPRECATED
 /**
     Update a record from the request parameters
     @description The record identified by the params(id) is read and updated with the request parameters.
@@ -4375,7 +4356,7 @@ PUBLIC bool updateRecFromParams(cchar *table) ME_DEPRECATED("Use updateRecFields
     @param ... arguments to the formatted target string
     @return A normalized Uri string.
     @ingroup EspAbbrev
-    @stability Evolving
+    @stability Stable
     @examples:
     <pre>
     uri("http://example.com/index.html");
@@ -4404,16 +4385,6 @@ PUBLIC cchar *uri(cchar *target, ...);
  */
 #define espGetConn espGetStream
 #define espSetConn espSetStream
-
-#if DEPRECATED && REMOVE
-#define espGetFlash(stream, type) espGetFeedback(stream, type)
-#define espRenderFlash(stream, types) espRenderFeedback(stream, types)
-#define espSetFlashv(stream, type, fmt, args) espSetFeedbackv(stream, type, fmt, args)
-#define getFlash(type) getFeedback(type)
-#define renderFlash(types) renderFeedback(types)
-PUBLIC void espSetFlash(HttpStream *stream, cchar *type, cchar *fmt, ...);
-PUBLIC void flash(cchar *type, cchar *fmt, ...);
-#endif /* DEPRECATED */
 
 #ifdef __cplusplus
 } /* extern C */

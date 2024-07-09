@@ -27,12 +27,14 @@
             </ul>
             <p>The following operating systems may be supported by recompiling Appweb from source.</p>
             <ul>
-                <li>FreeBSD 10.X</li>
-                <li>Linux 3 and later</li>
-                <li>Mac OS 10.11 and later </li>
-                <li>VxWorks 7.X and later (unsupported)</li>
-                <li>Windows 8 and later</li>
+                <li>FreeBSD</li>
+                <li>Linux</li>
+                <li>Mac OS</li>
             </ul>
+
+            <p>Appweb is supported directly on these platforms. </p>
+            <p> Appweb has been ported to other platforms including VxWorks and Windows. On these platforms, the core Appweb software is supported only and not the entire integration with the O/S.</p>
+
             <p>The following CPU architectures are supported: arm, mips, ppc, xscale, x86, x64, sparc.</p>
 
             <h2>Run-time System Requirements</h2>

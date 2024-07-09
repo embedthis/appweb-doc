@@ -42,14 +42,18 @@
  */
 #define ME_CPU_UNKNOWN     0
 #define ME_CPU_ARM         1           /**< Arm */
-#define ME_CPU_ITANIUM     2           /**< Intel Itanium */
-#define ME_CPU_X86         3           /**< X86 */
-#define ME_CPU_X64         4           /**< AMD64 or EMT64 */
-#define ME_CPU_MIPS        5           /**< Mips */
-#define ME_CPU_PPC         6           /**< Power PC */
-#define ME_CPU_SPARC       7           /**< Sparc */
-#define ME_CPU_TIDSP       8           /**< TI DSP */
-#define ME_CPU_SH          9           /**< SuperH */
+#define ME_CPU_ARM64       2           /**< Arm64 */
+#define ME_CPU_ITANIUM     3           /**< Intel Itanium */
+#define ME_CPU_X86         4           /**< X86 */
+#define ME_CPU_X64         5           /**< AMD64 or EMT64 */
+#define ME_CPU_MIPS        6           /**< Mips */
+#define ME_CPU_PPC         7           /**< Power PC */
+#define ME_CPU_PPC64       8           /**< Power PC 64 */
+#define ME_CPU_SPARC       9           /**< Sparc */
+#define ME_CPU_TIDSP       10          /**< TI DSP */
+#define ME_CPU_SH          11          /**< SuperH */
+#define ME_CPU_RISCV       12          /**< RiscV */
+#define ME_CPU_RISCV64     13          /**< RiscV64 */
 
 /*
     Byte orderings
@@ -66,13 +70,13 @@
     #define ME_CPU_ARCH ME_CPU_ALPHA
     #define CPU_ENDIAN ME_LITTLE_ENDIAN
 
-#elif defined(__arm__)
-    #define ME_CPU "arm"
-    #define ME_CPU_ARCH ME_CPU_ARM
-    #define CPU_ENDIAN ME_LITTLE_ENDIAN
-
 #elif defined(__arm64__) || defined(__aarch64__)
     #define ME_CPU "arm64"
+    #define ME_CPU_ARCH ME_CPU_ARM64
+    #define CPU_ENDIAN ME_LITTLE_ENDIAN
+
+#elif defined(__arm__)
+    #define ME_CPU "arm"
     #define ME_CPU_ARCH ME_CPU_ARM
     #define CPU_ENDIAN ME_LITTLE_ENDIAN
 
@@ -96,10 +100,14 @@
     #define ME_CPU_ARCH ME_CPU_MIPS
     #define CPU_ENDIAN ME_BIG_ENDIAN
 
-#elif defined(__ppc__) || defined(__powerpc__) || defined(__ppc64__) || defined(__ppc)
+#elif defined(__ppc__) || defined(__powerpc__) || defined(__ppc)
     #define ME_CPU "ppc"
     #define ME_CPU_ARCH ME_CPU_PPC
     #define CPU_ENDIAN ME_BIG_ENDIAN
+
+#elif defined(__ppc64__)
+    #define CPU "ppc64"
+    #define CPU_ARCH CPU_PPC64
 
 #elif defined(__sparc__)
     #define ME_CPU "sparc"
@@ -117,6 +125,15 @@
     #define ME_CPU_ARCH ME_CPU_SH
     #define CPU_ENDIAN ME_LITTLE_ENDIAN
 
+#elif defined(__riscv_32)
+    #define ME_CPU "riscv"
+    #define ME_CPU_ARCH CPU_RISCV
+    #define ME_CPU_ENDIAN LITTLE_ENDIAN
+
+#elif defined(__riscv_64)
+    #define ME_CPU "riscv64"
+    #define ME_CPU_ARCH CPU_RISCV64
+    #define ME_CPU_ENDIAN LITTLE_ENDIAN
 #else
     #error "Cannot determine CPU type in osdep.h"
 #endif
@@ -311,7 +328,9 @@
         Use GNU extensions for:
             RTLD_DEFAULT for dlsym()
      */
+    #define __STDC_WANT_LIB_EXT2__ 1
     #define _GNU_SOURCE 1
+    #define __USE_XOPEN 1
     #if !ME_64
         #define _LARGEFILE64_SOURCE 1
         #ifdef __USE_FILE_OFFSET64
@@ -1037,7 +1056,7 @@ typedef int64 Ticks;
     #define ME_MAX_PATH         1024        /**< Reasonable filename size */
 #endif
 #ifndef ME_BUFSIZE
-    #define ME_BUFSIZE          4096        /**< Reasonable size for buffers */
+    #define ME_BUFSIZE          8192        /**< Reasonable size for buffers */
 #endif
 #ifndef ME_MAX_BUFFER
     #define ME_MAX_BUFFER       ME_BUFSIZE  /* DEPRECATE */
@@ -1360,7 +1379,7 @@ extern "C" {
         PUBLIC int gettimeofday(struct timeval *tv, struct timezone *tz);
     #endif
     PUBLIC char *strdup(const char *);
-    PUBLIC int sysClkRateGet();
+    PUBLIC int sysClkRateGet(void);
 
     #if _WRS_VXWORKS_MAJOR < 6
         #define NI_MAXHOST      128
@@ -1418,7 +1437,7 @@ extern "C" {
     extern long _get_osfhandle(int handle);
     extern char *getcwd(char* buffer, int maxlen);
     extern char *getenv(cchar *charstuff);
-    extern pid_t getpid();
+    extern pid_t getpid(void);
     extern long lseek(int handle, long offset, int origin);
     extern int mkdir(cchar *dir, int mode);
     extern time_t mktime(struct tm *pt);

@@ -338,6 +338,14 @@
                     </tr>
                     -->
                     <tr>
+                        <td><a href="dir/route.html#proxyConfig">ProxyConfig</a></td>
+                        <td>Configure a block of proxy settings</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#proxyConnect">ProxyConnect</a></td>
+                        <td>Configure proxy applications.</td>
+                    </tr>
+                    <tr>
                         <td><a href="dir/route.html#redirect">Redirect</a></td>
                         <td>Redirect requests to a new target.</td>
                     </tr>

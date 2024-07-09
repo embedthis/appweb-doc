@@ -1167,10 +1167,10 @@ Monitor "RequestsPerClient &gt; 200" 5sec deny</td>
                     <tr>
                         <td class="pivot">Example</td>
                         <td>ProxyConnect 127.0.0.1:9000<br/>
-                            &lt;ProxyConfig&gt;
-                                SSLCertificateFile      "${BIN_DIR}/test.crt"
-                                SSLCertificateKeyFile   "${BIN_DIR}/test.key"
-                            &lt;/ProxyConfig&gt;
+                            &lt;ProxyConfig&gt;<br/>
+                                SSLCertificateFile    "${BIN_DIR}/test.crt"<br/>
+                                SSLCertificateKeyFile "${BIN_DIR}/test.key"<br/>
+                            &lt;/ProxyConfig&gt;<br/>
                         </td>
                     </tr>
                     <tr>
@@ -1218,7 +1218,7 @@ Monitor "RequestsPerClient &gt; 200" 5sec deny</td>
                             <p>The "min" attribute specifies the minimum number of Proxy application instances to maintain. Appweb will launch proxied programs up to the maximum specified via the "max" attribute. After the "timeout" expires, Appweb will kill unwanted proxied programs to reduce resource load down to the minimum specified by "min". The default min is zero and and the default max is 1. The default timeout is 5 minutes.</p>
                             <p>The "multiplex" attribute defines how many simultaneous requests the proxied application can handle. The default is 1. When using a multiplex value greater than one, it is essential that your Proxy application can handle multiplexing and that the value stipulated in the FastConnect directive be equal or less than the capacity of your program.</p>
                             <p>The "maxRequests" attribute defines how many requests to serve before a launched Proxied application is restarted. The default is unlimited.</p>
-                            <p>The "ssl" attributes specifies the protocol to communicate with the proxy should use TLS. The "http2" attributes specifies the protocol should be HTTP/2 over TLS. The "http2" attribute implies "ssl". Use the <a href="proxyConfig">ProxyConfig</a> directive to define the SSL cipher parameters for the protocol.</p>
+                            <p>The "ssl" attributes specifies the protocol to communicate with the proxy should use TLS. The "http2" attributes specifies the protocol should be HTTP/2 over TLS. The "http2" attribute implies "ssl". Use the <a href="#proxyConfig">ProxyConfig</a> directive to define the SSL cipher parameters for the protocol.</p>
                             <p>Appweb will rewrite any Location HTTP headers returned from the application if a Canonical (public)
                                 URL is defined for the server on that route. Appweb will pass the canonical URL via the X-Canonical
                                 HTTP header to the application. The client IP address will also be passed via the X-Client header.</p>

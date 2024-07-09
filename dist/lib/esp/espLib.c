@@ -112,7 +112,6 @@ PUBLIC int ediAddValidation(Edi *edi, cchar *name, cchar *tableName, cchar *colu
     cchar               *errMsg, *vkey;
     int                 column, next;
 
-    //  FUTURE - should not be attached to "es". Should be unique per database.
     es = MPR->ediService;
     if ((vp = mprAllocObj(EdiValidation, manageValidation)) == 0) {
         return MPR_ERR_MEMORY;
@@ -685,7 +684,7 @@ PUBLIC EdiRec *ediReadRec(Edi *edi, cchar *tableName, cchar *key)
 }
 
 
-#if DEPRECATED || 1
+#if DEPRECATED
 PUBLIC EdiRec *ediFindRecWhere(Edi *edi, cchar *tableName, cchar *fieldName, cchar *operation, cchar *value)
 {
     EdiGrid *grid;
@@ -1557,7 +1556,6 @@ static int lookupGridField(EdiGrid *grid, cchar *name)
 }
 
 
-//  FUTURE - document
 PUBLIC EdiGrid *ediSortGrid(EdiGrid *grid, cchar *sortColumn, int sortOrder)
 {
     GridSort    gs;
@@ -2269,7 +2267,7 @@ PUBLIC EdiRec *readRec(cchar *tableName, cchar *key)
 }
 
 
-#if DEPRECATE || 1
+#if DEPRECATE
 PUBLIC EdiRec *findRecWhere(cchar *tableName, cchar *fieldName, cchar *operation, cchar *value)
 {
     return setRec(ediFindRecWhere(getDatabase(), tableName, fieldName, operation, value));
@@ -2605,7 +2603,7 @@ PUBLIC bool updateRec(EdiRec *rec)
 }
 
 
-#if DEPRECATED || 1
+#if DEPRECATED
 PUBLIC bool updateRecFromParams(cchar *table)
 {
     return updateRec(setFields(findRec(table, param("id")), params(NULL)));
@@ -3322,7 +3320,9 @@ PUBLIC void espAutoFinalize(HttpStream *stream)
 
 PUBLIC int espCache(HttpRoute *route, cchar *uri, int lifesecs, int flags)
 {
+#if ME_HTTP_CACHE
     httpAddCache(route, NULL, uri, NULL, NULL, 0, lifesecs * TPS, flags);
+#endif
     return 0;
 }
 
@@ -3454,12 +3454,9 @@ PUBLIC void espDefineView(HttpRoute *route, cchar *path, void *view)
     if (route->eroute) {
         eroute = ((EspRoute*) route->eroute)->top;
     } else {
-        if ((eroute = espRoute(route, 1)) == 0) {
-            /* Should never happen */
-            return;
-        }
+        eroute = espRoute(route, 1);
+        eroute = eroute->top;
     }
-    eroute = eroute->top;
     if (route) {
         path = mprGetPortablePath(path);
     }
@@ -5752,10 +5749,7 @@ PUBLIC EspRoute *espRoute(HttpRoute *route, bool create)
                 Create an ESP configuration on the top level parent so others can inherit
                 Load the compiler rules once for all
              */
-            espCreateRoute(rp);
-            if (rp != route) {
-                espInit(rp, 0, "esp.json");
-            }
+            rp->eroute = espCreateRoute(rp);
             break;
         }
     }
@@ -5953,9 +5947,9 @@ PUBLIC int espInit(HttpRoute *route, cchar *prefix, cchar *path)
         return MPR_ERR_BAD_ARGS;
     }
     lock(esp);
-    if ((eroute = espRoute(route, 0)) == 0) {
-        eroute = espCreateRoute(route);
-    }
+
+    eroute = espRoute(route, 1);
+
     if (prefix) {
         if (*prefix != '/') {
             prefix = sjoin("/", prefix, NULL);

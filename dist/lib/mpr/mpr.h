@@ -713,7 +713,7 @@ PUBLIC void mprAtomicOpen(void);
     @param model Memory model. Set to MPR_ATOMIC_RELAXED, MPR_ATOMIC_CONSUME, MPR_ATOMIC_ACQUIRE,
         MPR_ATOMIC_RELEASE, MPR_ATOMIC_ACQREL, MPR_ATOMIC_SEQUENTIAL
     @ingroup MprSync
-    @stability Evolving.
+    @stability Stable.
  */
 PUBLIC void mprAtomicBarrier(int model);
 
@@ -1876,7 +1876,7 @@ PUBLIC int scaselesscmp(cchar *s1, cchar *s2);
     @param pattern String pattern to search for.
     @return Returns a reference to the start of the pattern in the string. If not found, returns NULL.
     @ingroup MprString
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC char *scaselesscontains(cchar *str, cchar *pattern);
 
@@ -2451,158 +2451,6 @@ PUBLIC char *strim(cchar *str, cchar *set, int where);
  */
 PUBLIC char *supper(cchar *str);
 
-/************************************ Unicode *********************************/
-/*
-    Low-level unicode wide string support. Unicode characters are build-time configurable to be 1, 2 or 4 bytes
-
-    This API is not yet public
- */
-/* Allocating */
-PUBLIC wchar   *amtow(cchar *src, ssize *len);
-PUBLIC char    *awtom(wchar *src, ssize *len);
-
-#if ME_CHAR_LEN > 1
-#define multi(s) awtom(s, 0)
-#define wide(s)  amtow(s, 0)
-#else
-#define multi(s) (s)
-#define wide(s)  (s)
-#endif
-
-#if ME_CHAR_LEN > 1
-PUBLIC ssize   wtom(char *dest, ssize count, wchar *src, ssize len);
-PUBLIC ssize   mtow(wchar *dest, ssize count, cchar *src, ssize len);
-
-#if FUTURE
-PUBLIC wchar    *wfmt(wchar *fmt, ...);
-PUBLIC wchar    *itow(wchar *buf, ssize bufCount, int64 value, int radix);
-PUBLIC wchar    *wchr(wchar *s, int c);
-PUBLIC int      wcasecmp(wchar *s1, wchar *s2);
-PUBLIC wchar    *wclone(wchar *str);
-PUBLIC int      wcmp(wchar *s1, wchar *s2);
-PUBLIC wchar    *wcontains(wchar *str, wchar *pattern, ssize limit);
-PUBLIC ssize    wcopy(wchar *dest, ssize destMax, wchar *src);
-PUBLIC int      wends(wchar *str, wchar *suffix);
-PUBLIC wchar    *wfmtv(wchar *fmt, va_list arg);
-PUBLIC uint     whash(wchar *name, ssize len);
-PUBLIC uint     whashlower(wchar *name, ssize len);
-PUBLIC wchar    *wjoin(wchar *sep, ...);
-PUBLIC wchar    *wjoinv(wchar *sep, va_list args);
-PUBLIC ssize    wlen(wchar *s);
-#endif
-
-PUBLIC wchar    *wlower(wchar *s);
-PUBLIC int      wncaselesscmp(wchar *s1, wchar *s2, ssize len);
-PUBLIC int      wncmp(wchar *s1, wchar *s2, ssize len);
-PUBLIC ssize    wncopy(wchar *dest, ssize destCount, wchar *src, ssize len);
-PUBLIC wchar    *wpbrk(wchar *str, wchar *set);
-PUBLIC wchar    *wrchr(wchar *s, int c);
-PUBLIC wchar    *wrejoin(wchar *buf, wchar *sep, ...);
-PUBLIC wchar    *wrejoinv(wchar *buf, wchar *sep, va_list args);
-PUBLIC ssize    wspn(wchar *str, wchar *set);
-PUBLIC int      wstarts(wchar *str, wchar *prefix);
-PUBLIC wchar    *wsub(wchar *str, ssize offset, ssize len);
-PUBLIC int64    wtoi(wchar *str);
-PUBLIC int64    wtoiradix(wchar *str, int radix, int *err);
-PUBLIC wchar    *wtok(wchar *str, wchar *delim, wchar **last);
-PUBLIC wchar    *wtrim(wchar *str, wchar *set, int where);
-PUBLIC wchar    *wupper(wchar *s);
-
-#else
-
-/* CHAR_LEN == 1 */
-
-#define wtom(dest, count, src, len)         sncopy(dest, count, src, len)
-#define mtow(dest, count, src, len)         sncopy(dest, count, src, len)
-#define itowbuf(buf, bufCount, value, radix) itosbuf(buf, bufCount, value, radix)
-#define wchr(str, c)                        schr(str, c)
-#define wclone(str)                         sclone(str)
-#define wcasecmp(s1, s2)                    scaselesscmp(s1, s2)
-#define wcmp(s1, s2)                        scmp(s1, s2)
-#define wcontains(str, pattern)             scontains(str, pattern)
-#define wncontains(str, pattern, limit)     sncontains(str, pattern, limit)
-#define wcopy(dest, count, src)             scopy(dest, count, src)
-#define wends(str, suffix)                  sends(str, suffix)
-#define wfmt                                sfmt
-#define wfmtv(fmt, arg)                     sfmtv(fmt, arg)
-#define whash(name, len)                    shash(name, len)
-#define whashlower(name, len)               shashlower(name, len)
-#define wjoin                               sjoin
-#define wjoinv(sep, args)                   sjoinv(sep, args)
-#define wlen(str)                           slen(str)
-#define wlower(str)                         slower(str)
-#define wncmp(s1, s2, len)                  sncmp(s1, s2, len)
-#define wncaselesscmp(s1, s2, len)          sncaselesscmp(s1, s2, len)
-#define wncopy(dest, count, src, len)       sncopy(dest, count, src, len)
-#define wpbrk(str, set)                     spbrk(str, set)
-#define wrchr(str, c)                       srchr(str, c)
-#define wrejoin                             srejoin
-#define wrejoinv(buf, sep, args)            srejoinv(buf, sep, args)
-#define wspn(str, set)                      sspn(str, set)
-#define wstarts(str, prefix)                sstarts(str, prefix)
-#define wsub(str, offset, len)              ssub(str, offset, len)
-#define wtoi(str)                           stoi(str)
-#define wtoiradix(str, radix, err)          stoiradix(str, radix, err)
-#define wtok(str, delim, last)              stok(str, delim, last)
-#define wtrim(str, set, where)              strim(str, set, where)
-#define wupper(str)                         supper(str)
-
-#endif /* ME_CHAR_LEN > 1 */
-
-/********************************* Mixed Strings ******************************/
-/*
-    These routines operate on wide strings mixed with a multibyte/ascii operand
-    This API is not yet public
- */
-#if ME_CHAR_LEN > 1
-#if FUTURE
-PUBLIC int      mcaselesscmp(wchar *s1, cchar *s2);
-PUBLIC int      mcmp(wchar *s1, cchar *s2);
-PUBLIC wchar    *mcontains(wchar *str, cchar *pattern);
-PUBLIC wchar    *mncontains(wchar *str, cchar *pattern, ssize limit);
-PUBLIC ssize    mcopy(wchar *dest, ssize destMax, cchar *src);
-PUBLIC int      mends(wchar *str, cchar *suffix);
-PUBLIC wchar    *mfmt(cchar *fmt, ...);
-PUBLIC wchar    *mfmtv(cchar *fmt, va_list arg);
-PUBLIC wchar    *mjoin(cchar *str, ...);
-PUBLIC wchar    *mjoinv(wchar *buf, va_list args);
-PUBLIC int      mncmp(wchar *s1, cchar *s2, ssize len);
-PUBLIC int      mncaselesscmp(wchar *s1, cchar *s2, ssize len);
-PUBLIC ssize    mncopy(wchar *dest, ssize destMax, cchar *src, ssize len);
-PUBLIC wchar    *mpbrk(wchar *str, cchar *set);
-PUBLIC wchar    *mrejoin(wchar *buf, cchar *sep, ...);
-PUBLIC wchar    *mrejoinv(wchar *buf, cchar *sep, va_list args);
-PUBLIC ssize    mspn(wchar *str, cchar *set);
-PUBLIC int      mstarts(wchar *str, cchar *prefix);
-PUBLIC wchar    *mtok(wchar *str, cchar *delim, wchar **last);
-PUBLIC wchar    *mtrim(wchar *str, cchar *set, int where);
-#endif
-
-#else /* ME_CHAR_LEN <= 1 */
-
-#define mcaselesscmp(s1, s2)            scaselesscmp(s1, s2)
-#define mcmp(s1, s2)                    scmp(s1, s2)
-#define mcontains(str, pattern)         scontains(str, pattern)
-#define mncontains(str, pattern, limit) sncontains(str, pattern, limit)
-#define mcopy(dest, count, src)         scopy(dest, count, src)
-#define mends(str, suffix)              sends(str, suffix)
-#define mfmt                            sfmt
-#define mfmtv(fmt, arg)                 sfmtv(fmt, arg)
-#define mjoin                           sjoin
-#define mjoinv(sep, args)               sjoinv(sep, args)
-#define mncmp(s1, s2, len)              sncmp(s1, s2, len)
-#define mncaselesscmp(s1, s2, len)      sncaselesscmp(s1, s2, len)
-#define mncopy(dest, count, src, len)   sncopy(dest, count, src, len)
-#define mpbrk(str, set)                 spbrk(str, set)
-#define mrejoin                         srejoin
-#define mrejoinv(buf, sep, args)        srejoinv(buf, sep, args)
-#define mspn(str, set)                  sspn(str, set)
-#define mstarts(str, prefix)            sstarts(str, prefix)
-#define mtok(str, delim, last)          stok(str, delim, last)
-#define mtrim(str, set, where)          strim(str, set, where)
-
-#endif /* ME_CHAR_LEN <= 1 */
-
 /************************************ Formatting ******************************/
 /**
     Print a formatted message to the standard error channel
@@ -3121,62 +2969,6 @@ PUBLIC void mprSetBufRefillProc(MprBuf *buf, MprBufProc fn, void *arg);
     @stability Stable.
  */
 PUBLIC int mprSetBufSize(MprBuf *buf, ssize size, ssize maxSize);
-
-#if DOXYGEN || ME_CHAR_LEN > 1
-#if FUTURE
-/**
-    Add a wide null character to the buffer contents.
-    @description Add a null character but do not change the buffer content lengths. The null is added outside the
-        "official" content length. This is useful when calling #mprGetBufStart and using the returned pointer
-        as a string pointer.
-    @param buf Buffer created via mprCreateBuf
-    @ingroup MprBuf
-    @stability Evolving
-  */
-PUBLIC void mprAddNullToWideBuf(MprBuf *buf);
-
-/**
-    Put a wide character to the buffer.
-    @description Append a wide character to the buffer at the end position and increment the end pointer.
-    @param buf Buffer created via mprCreateBuf
-    @param c Character to append
-    @returns Zero if successful and otherwise a negative error code
-    @ingroup MprBuf
-    @stability Prototype
-  */
-PUBLIC int mprPutCharToWideBuf(MprBuf *buf, int c);
-
-/**
-    Put a wide string to the buffer.
-    @description Append a null terminated wide string to the buffer at the end position and increment the end pointer.
-    @param buf Buffer created via mprCreateBuf
-    @param str String to append
-    @returns Count of bytes written and otherwise a negative error code
-    @ingroup MprBuf
-    @stability Prototype
-*/
-PUBLIC ssize mprPutStringToWideBuf(MprBuf *buf, cchar *str);
-
-/**
-    Put a formatted wide string to the buffer.
-    @description Format a string and append to the buffer at the end position and increment the end pointer.
-    @param buf Buffer created via mprCreateBuf
-    @param fmt Printf style format string
-    @param ... Variable arguments for the format string
-    @returns Count of bytes written and otherwise a negative error code
-    @ingroup MprBuf
-    @stability Prototype
- */
-PUBLIC ssize mprPutFmtToWideBuf(MprBuf *buf, cchar *fmt, ...) PRINTF_ATTRIBUTE(2,3);
-
-#endif /* FUTURE */
-#else /* ME_CHAR_LEN == 1 */
-
-#define mprAddNullToWideBuf     mprAddNullToBuf
-#define mprPutCharToWideBuf     mprPutCharToBuf
-#define mprPutStringToWideBuf   mprPutStringToBuf
-#define mprPutFmtToWideBuf      mprPutToBuf
-#endif
 
 /*
     Macros for speed
@@ -6152,7 +5944,7 @@ PUBLIC void mprSignalDispatcher(MprDispatcher *dispatcher);
     @return Returns the event object. If called from a foreign thread, note that the event may have already run and the event object
         may have been collected by the GC. May return NULL if the dispatcher has already been destroyed.
     @ingroup MprEvent
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprEvent *mprCreateEvent(MprDispatcher *dispatcher, cchar *name, MprTicks period, void *proc, void *data, int flags);
 
@@ -6497,7 +6289,7 @@ PUBLIC void mprXmlSetParserHandler(MprXml *xp, MprXmlHandler h);
 /**
     JSON Object
     @defgroup MprJson MprJson
-    @stability Evolving
+    @stability Stable
     @see mprBlendJson mprGetJsonObj mprGetJson mprGetJsonLength mprLoadJson mprParseJson mprSetJsonError
         mprParseJsonEx mprParseJsonInto mprQueryJson mprRemoveJson mprSetJsonObj mprSetJson mprJsonToString mprLogJson
         mprReadJson mprWriteJsonObj mprWriteJson mprWriteJsonObj
@@ -6737,7 +6529,7 @@ PUBLIC MprJson *mprHashToJson(MprHash *hash);
     @param list MprList to hold environment strings. Set to NULL and this routine will create a list.
     @return A list of environment strings
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprList *mprJsonToEnv(MprJson *json, cchar *prefix, MprList *list);
 
@@ -6872,7 +6664,7 @@ PUBLIC MprJson *mprParseJsonInto(cchar *str, MprJson *obj);
         If setting properties, the original object is returned if the properties can be successfully defined. Otherwise,
         null is returned.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprJson *mprQueryJson(MprJson *obj, cchar *key, cchar *value, int type);
 
@@ -6887,7 +6679,7 @@ PUBLIC MprJson *mprQueryJson(MprJson *obj, cchar *key, cchar *value, int type);
     @return The matching JSON object. Returns NULL if a matching property is not found.
         Note this is a reference to the actaul JSON object and not a clone of the object.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprJson *mprReadJsonObj(MprJson *obj, cchar *name);
 
@@ -6901,7 +6693,7 @@ PUBLIC MprJson *mprReadJsonObj(MprJson *obj, cchar *name);
     @return The property value as a string. Returns NULL if a matching property is not found.
         Note this is a reference to the actaul JSON property value and not a clone of the value.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC cchar *mprReadJson(MprJson *obj, cchar *name);
 
@@ -6914,7 +6706,7 @@ PUBLIC cchar *mprReadJson(MprJson *obj, cchar *name);
     @param value Value to search for.
     @return The JSON object or null if not found.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprJson *mprReadJsonValue(MprJson *obj, cchar *value);
 
@@ -6937,7 +6729,7 @@ PUBLIC MprJson *mprRemoveJson(MprJson *obj, cchar *key);
     @param child JSON child to remove
     @return The removed child element.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprJson *mprRemoveJsonChild(MprJson *obj, MprJson *child);
 
@@ -6971,7 +6763,7 @@ PUBLIC char *mprSerialize(MprHash *hash, int flags);
     @param fmt Printf style format string
     @param ... Printf arguments
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void mprSetJsonError(MprJsonParser *jp, cchar *fmt, ...) PRINTF_ATTRIBUTE(2,3);
 
@@ -6984,7 +6776,7 @@ PUBLIC void mprSetJsonError(MprJsonParser *jp, cchar *fmt, ...) PRINTF_ATTRIBUTE
     @param value Property value to set.
     @return Zero if updated successfully.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int mprSetJsonObj(MprJson *obj, cchar *key, MprJson *value);
 
@@ -6999,7 +6791,7 @@ PUBLIC int mprSetJsonObj(MprJson *obj, cchar *key, MprJson *value);
     @param type Set to MPR_JSON_FALSE, MPR_JSON_NULL, MPR_JSON_NUMBER, MPR_JSON_STRING, MPR_JSON_TRUE, MPR_JSON_UNDEFINED.
     @return Zero if updated successfully.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int mprSetJson(MprJson *obj, cchar *key, cchar *value, int type);
 
@@ -7011,7 +6803,7 @@ PUBLIC int mprSetJson(MprJson *obj, cchar *key, cchar *value, int type);
     @param value Property value to set.
     @return Zero if updated successfully.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int mprWriteJsonObj(MprJson *obj, cchar *key, MprJson *value);
 
@@ -7024,7 +6816,7 @@ PUBLIC int mprWriteJsonObj(MprJson *obj, cchar *key, MprJson *value);
     @param type Set to MPR_JSON_FALSE, MPR_JSON_NULL, MPR_JSON_NUMBER, MPR_JSON_STRING, MPR_JSON_TRUE, MPR_JSON_UNDEFINED.
     @return Zero if updated successfully.
     @ingroup MprJson
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int mprWriteJson(MprJson *obj, cchar *key, cchar *value, int type);
 
@@ -7172,7 +6964,7 @@ PUBLIC cchar *mprGetThreadName(MprThread *thread);
     @param tp Thread object returned by #mprCreateThread. Set to NULL for the current thread.
     @param on Set to true to enable yielding
     @ingroup MprThread
-    @stability Evolving
+    @stability Stable
 */
 PUBLIC bool mprSetThreadYield(MprThread *tp, bool on);
 
@@ -7538,7 +7330,7 @@ typedef struct MprSocketProvider {
         @param ssl SSL configurations to use.
         @param flags Set to MPR_SOCKET_SERVER for server side use.
         @returns Zero if successful, otherwise a negative MPR error code.
-        @stability Evolving
+        @stability Stable
      */
     int  (*preload)(struct MprSsl *ssl, int flags);
 
@@ -7606,7 +7398,6 @@ typedef struct MprSocketService {
     MprSocketProvider *standardProvider;        /**< Socket provider for non-SSL connections */
     MprSocketProvider *sslProvider;             /**< Socket provider for SSL connections */
     MprSocketPrebind prebind;                   /**< Prebind callback */
-    MprList         *secureSockets;             /**< List of secured (matrixssl) sockets */
     MprMutex        *mutex;                     /**< Multithread locking */
     int             maxAccept;                  /**< Maximum number of accepted client socket connections */
     int             numAccept;                  /**< Count of client socket connections */
@@ -7643,7 +7434,7 @@ PUBLIC int mprSetMaxSocketAccept(int max);
     Set the prebind callback for a socket
     @param callback Callback to invoke
     @ingroup MprSocket
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void mprSetSocketPrebindCallback(MprSocketPrebind callback);
 
@@ -7679,6 +7470,7 @@ PUBLIC void mprSetSocketPrebindCallback(MprSocketPrebind callback);
 #define MPR_SOCKET_CERT_ERROR       0x10000 /**< Error when validating peer certificate */
 #define MPR_SOCKET_ERROR            0x20000 /**< Hard error (not just eof) */
 #define MPR_SOCKET_REUSE_PORT       0x40000 /**< Set SO_REUSEPORT option */
+#define MPR_SOCKET_INHERIT          0x80000 /**< Allow children processes to inherit */
 
 /**
     Socket Service
@@ -7715,6 +7507,7 @@ typedef struct MprSocket {
     struct MprSocket *listenSock;       /**< Listening socket */
     void            *sslSocket;         /**< Extended SSL socket state */
     struct MprSsl   *ssl;               /**< Selected SSL configuration */
+    cchar           *protocol;          /**< Selected SSL protocol */
     cchar           *cipher;            /**< Selected SSL cipher */
     cchar           *session;           /**< SSL session ID (dependent on SSL provider) */
     cchar           *peerName;          /**< Peer common SSL name */
@@ -8236,7 +8029,7 @@ PUBLIC ssize mprWriteSocketVector(MprSocket *sp, MprIOVec *iovec, int count);
 /**
     Callback function for SNI connections.
     @ingroup MprSsl
-    @stability Evolving
+    @stability Stable
  */
 typedef struct MprSsl *(*MprMatchSsl)(MprSocket *sp, cchar *hostname);
 
@@ -8324,14 +8117,14 @@ PUBLIC int mprSslInit(void *unused, MprModule *module);
 /**
     Preload SSL configuration
     @ingroup MprSsl
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int mprPreloadSsl(struct MprSsl *ssl, int flags);
 
 /**
     Set the ALPN protocols for SSL
     @ingroup MprSsl
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void mprSetSslAlpn(struct MprSsl *ssl, cchar *protocols);
 
@@ -8414,7 +8207,7 @@ PUBLIC void mprSetSslLogLevel(struct MprSsl *ssl, int level);
     @param ssl SSL configuration instance
     @param match MprMatchSsl callback.
     @ingroup MprSsl
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void mprSetSslMatch(struct MprSsl *ssl, MprMatchSsl match);
 
@@ -8489,16 +8282,6 @@ PUBLIC void mprVerifySslIssuer(struct MprSsl *ssl, bool on);
  */
 PUBLIC void mprVerifySslPeer(struct MprSsl *ssl, cchar *mode);
 
-//  DEPRECATE EST, MATRIXSSL, NONOSSL
-#if ME_COM_EST
-    PUBLIC int mprCreateEstModule(void);
-#endif
-#if ME_COM_MATRIXSSL
-    PUBLIC int mprCreateMatrixSslModule(void);
-#endif
-#if ME_COM_NANOSSL
-    PUBLIC int mprCreateNanoSslModule(void);
-#endif
 #if ME_COM_OPENSSL
     PUBLIC int mprCreateOpenSslModule(void);
 #endif
@@ -9510,7 +9293,7 @@ PUBLIC ssize mprWriteCmdBlock(MprCmd *cmd, int channel, cchar *buf, ssize bufsiz
     @param data Cached item data
     @param event Event of interest.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
  */
 typedef void (*MprCacheProc)(struct MprCache *cache, cchar *key, cchar *data, int event);
 
@@ -9541,7 +9324,7 @@ typedef struct MprCache {
     @param options Set of option flags. Use #MPR_CACHE_SHARED to select a global shared cache object.
     @return A cache instance object. On error, return null.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC MprCache *mprCreateCache(int options);
 
@@ -9556,7 +9339,7 @@ PUBLIC int mprCreateCacheService(void);
     Destroy a new cache object
     @param cache The cache instance object returned from #mprCreateCache.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void *mprDestroyCache(MprCache *cache);
 
@@ -9568,7 +9351,7 @@ PUBLIC void *mprDestroyCache(MprCache *cache);
     @return Zero if the expiry is successfully updated. Return MPR_ERR_CANT_FIND if the cache item is not present in the
         cache.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int mprExpireCacheItem(MprCache *cache, cchar *key, MprTicks expires);
 
@@ -9578,7 +9361,7 @@ PUBLIC int mprExpireCacheItem(MprCache *cache, cchar *key, MprTicks expires);
     @param numKeys Number of keys currently stored
     @param mem Memory in use to store keys
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
     @internal
  */
 PUBLIC void mprGetCacheStats(MprCache *cache, int *numKeys, ssize *mem);
@@ -9590,7 +9373,7 @@ PUBLIC void mprGetCacheStats(MprCache *cache, int *numKeys, ssize *mem);
     @param amount Numeric amount to increment the cache item. This may be a negative number to decrement the item.
     @return The new value for the cache item after incrementing.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int64 mprIncCache(MprCache *cache, cchar *key, int64 amount);
 
@@ -9605,7 +9388,7 @@ PUBLIC int64 mprIncCache(MprCache *cache, cchar *key, int64 amount);
         if not required. Cache items have a version number that is incremented every time the item is updated.
     @return The cache item value
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC char *mprLookupCache(MprCache *cache, cchar *key, MprTime *modified, int64 *version);
 
@@ -9614,7 +9397,7 @@ PUBLIC char *mprLookupCache(MprCache *cache, cchar *key, MprTime *modified, int6
     @description Prune the cache and discard all cached items
     @param cache The cache instance object returned from #mprCreateCache.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC void mprPruneCache(MprCache *cache);
 
@@ -9628,7 +9411,7 @@ PUBLIC void mprPruneCache(MprCache *cache);
         if not required. Cache items have a version number that is incremented every time the item is updated.
     @return The cache item value
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC char *mprReadCache(MprCache *cache, cchar *key, MprTime *modified, int64 *version);
 
@@ -9638,7 +9421,7 @@ PUBLIC char *mprReadCache(MprCache *cache, cchar *key, MprTime *modified, int64 
     @param key Cache item key. If set to null, then remove all keys from the cache.
     @return True if the cache item was removed.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC bool mprRemoveCache(MprCache *cache, cchar *key);
 
@@ -9652,7 +9435,7 @@ PUBLIC bool mprRemoveCache(MprCache *cache, cchar *key);
 
         (*MprCacheProc)(MprCache *cache, cchar *key, cchar *data, int event);
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC void mprSetCacheNotify(MprCache *cache, MprCacheProc notify);
 
@@ -9665,7 +9448,7 @@ PUBLIC void mprSetCacheNotify(MprCache *cache, MprCacheProc notify);
     @param resolution Set the cache item pruner resolution. This defines how frequently the cache manager will check
         items for expiration.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
   */
 PUBLIC void mprSetCacheLimits(MprCache *cache, int64 keys, MprTicks lifespan, int64 memory, int resolution);
 
@@ -9675,7 +9458,7 @@ PUBLIC void mprSetCacheLimits(MprCache *cache, int64 keys, MprTicks lifespan, in
     @param key Cache item key to write
     @param link Managed memory reference. May be NULL.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC int mprSetCacheLink(MprCache *cache, cchar *key, void *link);
 
@@ -9701,7 +9484,7 @@ PUBLIC int mprSetCacheLink(MprCache *cache, cchar *key, void *link);
         MPR error code is returned. #MPR_ERR_BAD_STATE will be returned if an invalid version number is supplied.
         #MPR_ERR_ALREADY_EXISTS will be returned if #MPR_CACHE_ADD is specified and the cache item already exists.
     @ingroup MprCache
-    @stability Evolving
+    @stability Stable
  */
 PUBLIC ssize mprWriteCache(MprCache *cache, cchar *key, cchar *value, MprTime modified, MprTicks lifespan,
         int64 version, int options);

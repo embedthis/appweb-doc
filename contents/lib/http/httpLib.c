@@ -658,7 +658,11 @@ static void httpTimer(Http *http, MprEvent *event)
                     stream->timeout = HTTP_INACTIVITY_TIMEOUT;
                     abort = 1;
                 } else if ((http->now - stream->started) > limits->requestTimeout) {
-                    stream->timeout = HTTP_REQUEST_TIMEOUT;
+                    if (stream->state > HTTP_STATE_FIRST && stream->state < HTTP_STATE_COMPLETE) {
+                        stream->timeout = HTTP_REQUEST_TIMEOUT;
+                    } else {
+                        stream->timeout = HTTP_INACTIVITY_TIMEOUT;
+                    }
                     abort = 1;
                 } else if (!event) {
                     /* Called directly from httpStop to stop streams */
@@ -3008,7 +3012,6 @@ static void outgoingChunkService(HttpQueue *q)
             httpJoinPackets(q, tx->chunkSize);
             packet = httpGetPacket(q);
 
-            //  FUTURE - may not be required
             if (httpGetPacketLength(packet) > tx->chunkSize) {
                 httpResizePacket(q, packet, tx->chunkSize);
             }
@@ -5767,11 +5770,6 @@ PUBLIC int httpInitParser()
     httpAddConfig("http.limits.webSocketsPacket", parseLimitsWebSocketsPacket);
     httpAddConfig("http.limits.webSocketsFrame", parseLimitsWebSocketsFrame);
 #endif
-
-#if DEPRECATED
-    httpAddConfig("http.server.log", parseLog);
-    httpAddConfig("http.limits.buffer", parseLimitsPacket);
-#endif
     return 0;
 }
 
@@ -7297,8 +7295,8 @@ PUBLIC void httpNetError(HttpNet *net, cchar *fmt, ...)
 #endif
         if (httpIsServer(net)) {
             for (ITERATE_ITEMS(net->streams, stream, next)) {
-                httpFinalizeConnector(stream);
                 httpError(stream, HTTP_ABORT | HTTP_CODE_COMMS_ERROR, "%s", msg);
+                httpFinalizeConnector(stream);
             }
             httpMonitorNetEvent(net, HTTP_COUNTER_BAD_REQUEST_ERRORS, 1);
         }
@@ -8872,15 +8870,21 @@ static void incomingHttp1Service(HttpQueue *q)
         httpJoinPackets(q, -1);
     }
     for (packet = httpGetPacket(q); packet; packet = httpGetPacket(q)) {
+        //  Protect against handlers that yield in readyHandler
+        mprAddRoot(packet);
         if (stream->state < HTTP_STATE_PARSED) {
             if (!parseHeaders1(q, packet)) {
                 httpPutBackPacket(q, packet);
+                mprRemoveRoot(packet);
                 return;
             }
             if (httpGetPacketLength(packet) == 0) {
+                mprRemoveRoot(packet);
                 continue;
             }
         }
+        mprRemoveRoot(packet);
+
         if (!httpWillQueueAcceptPacket(q, stream->inputq, packet)) {
             httpPutBackPacket(q, packet);
             //  Re-enabled in tailFilter
@@ -9126,7 +9130,7 @@ static void parseFields(HttpQueue *q, HttpPacket *packet)
             httpBadRequestError(stream, HTTP_CLOSE | HTTP_CODE_BAD_REQUEST, "Bad header value");
             return;
         }
-        if (scaselessmatch(key, "set-cookie")) {
+        if (scaselessmatch(key, "set-cookie") || scaselessmatch(key, "cookie")) {
             mprAddDuplicateKey(rx->headers, key, sclone(value));
         } else {
             mprAddKey(rx->headers, key, sclone(value));
@@ -9267,6 +9271,7 @@ PUBLIC void httpCreateHeaders1(HttpQueue *q, HttpPacket *packet)
     buf = packet->content;
 
     tx->responded = 1;
+    parsedUri = tx->parsedUri;
 
     if (tx->chunkSize <= 0 && q->count > 0 && tx->length < 0) {
         /* No content length and there appears to be output data -- must close connection to signify EOF */
@@ -9287,10 +9292,9 @@ PUBLIC void httpCreateHeaders1(HttpQueue *q, HttpPacket *packet)
         mprPutStringToBuf(buf, httpLookupStatus(tx->status));
         /* Server tracing of status happens in the "complete" event */
 
-    } else {
+    } else if (tx->parsedUri) {
         mprPutStringToBuf(buf, tx->method);
         mprPutCharToBuf(buf, ' ');
-        parsedUri = tx->parsedUri;
         if (http->proxyHost && *http->proxyHost) {
             if (parsedUri->query && *parsedUri->query) {
                 mprPutToBuf(buf, "http://%s:%d%s?%s %s", http->proxyHost, http->proxyPort,
@@ -10600,9 +10604,6 @@ static void parsePushFrame(HttpQueue *q, HttpPacket *packet)
     } else {
         sendGoAway(net->socketq, HTTP2_PROTOCOL_ERROR, "PUSH frames not implemented");
     }
-#if FUTURE
-    stream->h2State = H2_RESERVED;
-#endif
 }
 
 
@@ -11001,14 +11002,6 @@ static void sendSettingsFrame(HttpQueue *q)
     mprPutUint16ToBuf(packet->content, HTTP2_HEADER_TABLE_SIZE_SETTING);
     mprPutUint32ToBuf(packet->content, (uint32) HTTP2_TABLE_SIZE);
 
-#if FUTURE
-    mprPutUint32ToBuf(packet->content, HTTP2_TABLE_SIZE);
-    mprPutUint16ToBuf(packet->content, HTTP2_MAX_HEADER_SIZE_SETTING);
-    mprPutUint32ToBuf(packet->content, (uint32) net->limits->headerSize);
-    mprPutUint16ToBuf(packet->content, HTTP2_ENABLE_PUSH_SETTING);
-    mprPutUint32ToBuf(packet->content, 0);
-#endif
-
     sendFrame(q, defineFrame(q, packet, HTTP2_SETTINGS_FRAME, 0, 0));
 }
 
@@ -11181,12 +11174,6 @@ static void encodeHeader(HttpStream *stream, HttpPacket *packet, cchar *key, cch
         encodeInt(packet, httpSetPrefix(6), 6, 0);
         encodeString(packet, key, 1);
         encodeString(packet, value, 0);
-#if FUTURE
-        //  no indexing
-        encodeInt(packet, 0, 4, 0);
-        encodeString(packet, key, 1);
-        encodeString(packet, value, 0);
-#endif
     }
 }
 
@@ -11571,26 +11558,6 @@ static int decodeBits(uchar *state, uchar *ending, uint bits, uchar **dstp);
 static int decodeHuff(uchar *state, uchar *src, int len, uchar *dst, uint last);
 
 /*********************************** Code *************************************/
-
-#if FUTURE
-#if ME_64
-    #if (ME_ENDIAN == ME_LITTLE_ENDIAN)
-        #define encodeBuf(dst, buf) \
-            ((dst)[0] = (uchar) ((buf) >> 56), \
-            (dst)[1] = (uchar) ((buf) >> 48),  \
-            (dst)[2] = (uchar) ((buf) >> 40),  \
-            (dst)[3] = (uchar) ((buf) >> 32),  \
-            (dst)[4] = (uchar) ((buf) >> 24),  \
-            (dst)[5] = (uchar) ((buf) >> 16),  \
-            (dst)[6] = (uchar) ((buf) >> 8),   \
-            (dst)[7] = (uchar)  (buf))
-    #else /* BIG_ENDIAN */
-        #define encodeBuf(dst, buf) (*(uint64 *) (dst) = (buf))
-    #endif
-#else /* 32 bit */
-    #define encodeBuf(dst, buf) (*(uint *) (dst) = htonl(buf))
-#endif
-#endif /* FUTURE */
 
 #define encodeBuf(dst, buf) (*(uint *) (dst) = htonl(buf))
 
@@ -13259,12 +13226,6 @@ static void invokeDefenses(HttpMonitor *monitor, MprHash *args)
 
         /*  WARNING: yields */
         remedyProc(args);
-
-#if FUTURE
-        if (http->monitorCallback) {
-            (http->monitorCallback)(monitor, defense, args);
-        }
-#endif
     }
 }
 
@@ -14055,7 +14016,7 @@ PUBLIC void httpDestroyNet(HttpNet *net)
     if (net->callback) {
         net->callback(net, HTTP_NET_DESTROY);
     }
-    if (!net->destroyed && !net->borrowed) {
+    if (!net->destroyed) {
         if (httpIsServer(net)) {
             for (ITERATE_ITEMS(net->streams, stream, next)) {
                 mprRemoveItem(net->streams, stream);
@@ -14118,10 +14079,6 @@ static void manageNet(HttpNet *net, int flags)
         mprMark(net->frame);
         mprMark(net->rxHeaders);
         mprMark(net->txHeaders);
-#endif
-#if DEPRECATED
-        mprMark(net->pool);
-        mprMark(net->ejs);
 #endif
     }
 }
@@ -14330,59 +14287,7 @@ PUBLIC void httpSetNetContext(HttpNet *net, void *context)
 }
 
 
-#if DEPRECATED
-/*
-    Used by ejs
- */
-PUBLIC void httpUseWorker(HttpNet *net, MprDispatcher *dispatcher, MprEvent *event)
-{
-    lock(net->http);
-    net->oldDispatcher = net->dispatcher;
-    net->dispatcher = dispatcher;
-    net->worker = 1;
-    assert(!net->workerEvent);
-    net->workerEvent = event;
-    unlock(net->http);
-}
-
-
-PUBLIC void httpUsePrimary(HttpNet *net)
-{
-    lock(net->http);
-    assert(net->worker);
-    assert(net->oldDispatcher && net->dispatcher != net->oldDispatcher);
-    net->dispatcher = net->oldDispatcher;
-    net->oldDispatcher = 0;
-    net->worker = 0;
-    unlock(net->http);
-}
-#endif
-
-
-#if DEPRECATED
-PUBLIC void httpBorrowNet(HttpNet *net)
-{
-    assert(!net->borrowed);
-    if (!net->borrowed) {
-        mprAddRoot(net);
-        net->borrowed = 1;
-    }
-}
-
-
-PUBLIC void httpReturnNet(HttpNet *net)
-{
-    assert(net->borrowed);
-    if (net->borrowed) {
-        net->borrowed = 0;
-        mprRemoveRoot(net);
-        httpEnableNetEvents(net);
-    }
-}
-#endif
-
-
-#if DEPRECATE || 1
+#if DEPRECATE
 /*
     Steal the socket object from a network. This disconnects the socket from management by the Http service.
     It is the callers responsibility to call mprCloseSocket when required.
@@ -14398,7 +14303,7 @@ PUBLIC MprSocket *httpStealSocket(HttpNet *net)
     assert(net->sock);
     assert(!net->destroyed);
 
-    if (!net->destroyed && !net->borrowed) {
+    if (!net->destroyed) {
         lock(net->http);
         for (ITERATE_ITEMS(net->streams, stream, next)) {
             httpDestroyStream(stream);
@@ -14727,18 +14632,18 @@ static HttpPacket *readPacket(HttpNet *net)
             httpSetNetEof(net);
         }
 #if ME_COM_SSL
-        if (net->sock->secured && !net->secure && net->sock->cipher) {
+        if (net->sock->secured && !net->secure) {
             MprSocket   *sock;
             net->secure = 1;
             sock = net->sock;
             if (sock->peerCert) {
                 httpLog(net->trace, "rx.net.ssl", "context",
-                    "msg:Connection secured, cipher:%s, peerName:%s, subject:%s, issuer:%s, session:%s",
-                    sock->cipher, sock->peerName, sock->peerCert, sock->peerCertIssuer, sock->session);
-            } else {
-                httpLog(net->trace, "rx.net.ssl", "context", "msg:Connection secured, cipher:%s, session:%s", sock->cipher, sock->session);
+                    "msg:Connection secured, protocol:%s, cipher:%s, peerName:%s, subject:%s, issuer:%s, session:%s",
+                    sock->protocol, sock->cipher, sock->peerName, sock->peerCert, sock->peerCertIssuer, sock->session);
+            } else if (sock->cipher) {
+                httpLog(net->trace, "rx.net.ssl", "context", "msg:Connection secured, protocol:%s, cipher:%s, session:%s", sock->protocol, sock->cipher, sock->session);
             }
-            if (mprGetLogLevel() >= 5) {
+            if (mprGetLogLevel() >= 5 && sock->cipher) {
                 mprLog("info http ssl", 6, "SSL State: %s", mprGetSocketState(sock));
             }
         }
@@ -14914,6 +14819,7 @@ static void freeNetPackets(HttpQueue *q, ssize written)
 
     net = q->net;
     bytes = written;
+    stream = 0;
 
     while ((packet = q->first) != 0) {
         stream = packet->stream;
@@ -15184,7 +15090,7 @@ PUBLIC int httpGetNetEventMask(HttpNet *net)
  */
 PUBLIC void httpEnableNetEvents(HttpNet *net)
 {
-    if (mprShouldAbortRequests() || net->destroyed || net->borrowed || netBanned(net)) {
+    if (mprShouldAbortRequests() || net->destroyed || netBanned(net)) {
         return;
     }
     httpSetupWaitHandler(net, httpGetNetEventMask(net));
@@ -17820,7 +17726,6 @@ PUBLIC bool httpResumeQueue(HttpQueue *q, bool schedule)
 PUBLIC HttpQueue *httpFindNextQueue(HttpQueue *q)
 {
     for (q = q->nextQ; q; q = q->nextQ) {
-        //  FUTURE - should really be service && count
         if (q->service || q->count) {
             return q;
         }
@@ -17838,7 +17743,6 @@ PUBLIC HttpQueue *httpFindNextQueue(HttpQueue *q)
 PUBLIC HttpQueue *httpFindPreviousQueue(HttpQueue *q)
 {
     for (q = q->prevQ; q; q = q->prevQ) {
-        //  FUTURE - should really be service && count
         if (q->service || q->count) {
             return q;
         }
@@ -18684,6 +18588,7 @@ PUBLIC HttpRoute *httpCreateInheritedRoute(HttpRoute *parent)
     route->envPrefix = parent->envPrefix;
     route->eroute = parent->eroute;
     route->errorDocuments = parent->errorDocuments;
+    route->extended = parent->extended;
     route->extensions = parent->extensions;
     route->flags = parent->flags & ~(HTTP_ROUTE_FREE_PATTERN);
     route->handler = parent->handler;
@@ -18754,6 +18659,7 @@ static void manageRoute(HttpRoute *route, int flags)
         mprMark(route->documents);
         mprMark(route->envPrefix);
         mprMark(route->eroute);
+        mprMark(route->extended);
         mprMark(route->errorDocuments);
         mprMark(route->extensions);
         mprMark(route->handler);
@@ -19716,9 +19622,6 @@ PUBLIC void httpResetRoutePipeline(HttpRoute *route)
     }
     if (!route->parent || route->headers != route->parent->headers) {
         route->headers = 0;
-#if FUTURE
-        httpAddRouteResponseHeader(route, HTTP_ROUTE_ADD_HEADER, "Content-Security-Policy", "default-src 'self'");
-#endif
         httpAddRouteResponseHeader(route, HTTP_ROUTE_ADD_HEADER, "X-XSS-Protection", "1; mode=block");
         httpAddRouteResponseHeader(route, HTTP_ROUTE_ADD_HEADER, "X-Frame-Options", "SAMEORIGIN");
         httpAddRouteResponseHeader(route, HTTP_ROUTE_ADD_HEADER, "X-Content-Type-Options", "nosniff");
@@ -23327,7 +23230,7 @@ PUBLIC HttpStream *httpCreateStream(HttpNet *net, bool peerCreated)
  */
 PUBLIC void httpDestroyStream(HttpStream *stream)
 {
-    if (!stream->destroyed && !stream->net->borrowed) {
+    if (!stream->destroyed) {
         HTTP_NOTIFY(stream, HTTP_EVENT_DESTROY, 0);
         if (stream->tx) {
             httpClosePipeline(stream);
@@ -23403,9 +23306,6 @@ PUBLIC void httpResetServerStream(HttpStream *stream)
     assert(httpServerStream(stream));
     assert(stream->state == HTTP_STATE_COMPLETE);
 
-    if (stream->net->borrowed) {
-        return;
-    }
     HTTP_NOTIFY(stream, HTTP_EVENT_DESTROY, 0);
 
     if (stream->tx) {
@@ -23465,6 +23365,7 @@ static void prepareStream(HttpStream *stream, MprHash *headers)
     stream->destroyed = 0;
     stream->streamID = 0;
     stream->state = 0;
+    stream->targetState = 0;
 
     resetQueues(stream);
     httpSetState(stream, HTTP_STATE_BEGIN);
@@ -23581,7 +23482,7 @@ static void streamTimeout(HttpStream *stream, MprEvent *mprEvent)
         msg = sfmt("%s exceeded timeout %lld sec", prefix, limits->requestTimeout / 1000);
         event = "timeout.duration";
     }
-    if (stream->state < HTTP_STATE_FIRST) {
+    if (stream->state < HTTP_STATE_FIRST || stream->state >= HTTP_STATE_COMPLETE) {
         /*
             Connection is idle
          */
@@ -24402,7 +24303,6 @@ PUBLIC void httpLogTxPacket(HttpNet *net, ssize len)
         len -= bytes;
     }
     if (net->ioFile) {
-        //  MOB - need to read file data here
         formatTrace(trace, "tx.net", "packet", flags, "FILE", 4, NULL);
     }
     flushTrace(trace);
@@ -25195,7 +25095,12 @@ static void updateHdr(HttpStream *stream, cchar *key, cchar *value)
     if (schr(value, '$')) {
         value = httpExpandVars(stream, value);
     }
-    mprAddKey(stream->tx->headers, key, value);
+    //  Proxy may send "cookie"
+    if (scaselessmatch(key, "set-cookie") || scaselessmatch(key, "cookie")) {
+        mprAddDuplicateKey(stream->tx->headers, key, value);
+    } else {
+        mprAddKey(stream->tx->headers, key, value);
+    }
 }
 
 
@@ -26636,9 +26541,9 @@ static int writeToFile(HttpQueue *q, char *data, ssize len)
 
     if ((file->size + len) > limits->uploadSize) {
         /*
-            Abort the connection as we don't want the load of receiving the entire body
+            Close the connection as we don't want the load of receiving the entire body
          */
-        httpLimitError(stream, HTTP_ABORT | HTTP_CODE_REQUEST_TOO_LARGE, "Uploaded file exceeds maximum %lld", limits->uploadSize);
+        httpLimitError(stream, HTTP_CLOSE | HTTP_CODE_REQUEST_TOO_LARGE, "Uploaded file exceeds maximum %lld", limits->uploadSize);
         return MPR_ERR_CANT_WRITE;
     }
     if (len > 0) {
@@ -28973,20 +28878,6 @@ static void incomingWebSockData(HttpQueue *q, HttpPacket *packet)
                 packet = ws->currentFrame;
                 content = packet->content;
             }
-#if FUTURE
-            if (packet->type == WS_MSG_TEXT) {
-                /*
-                    Validate the frame for fast-fail, provided the last frame does not have a partial codepoint.
-                 */
-                if (!ws->partialUTF) {
-                    if (!validateText(stream, packet)) {
-                        error = WS_STATUS_INVALID_UTF8;
-                        break;
-                    }
-                    ws->partialUTF = 0;
-                }
-            }
-#endif
             frameLen = httpGetPacketLength(packet);
             assert(frameLen <= ws->frameLength);
             if (frameLen == ws->frameLength) {

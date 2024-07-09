@@ -2470,24 +2470,17 @@ static int sslCipherSuiteDirective(MaState *state, cchar *key, cchar *value)
 
 
 /*
-    SSLVerifyClient [on|off]
+    SSLVerifyClient [none|optional|require]
  */
 static int sslVerifyClientDirective(MaState *state, cchar *key, cchar *value)
 {
-    bool    on;
-
-    on = 0;
     checkSsl(state);
-    if (scaselesscmp(value, "require") == 0) {
-        on = 1;
-    } else if (scaselesscmp(value, "none") == 0) {
-        on = 0;
-    } else {
-        if (!maTokenize(state, value, "%B", &on)) {
-            return MPR_ERR_BAD_SYNTAX;
-        }
+    if (smatch(value, "on")) {
+        value = "require";
+    } else if (smatch(value, "off")) {
+        value = "none";
     }
-    mprVerifySslPeer(state->route->ssl, on);
+    mprVerifySslPeer(state->route->ssl, value);
     return 0;
 }
 
